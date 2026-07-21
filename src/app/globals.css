@@ -898,6 +898,11 @@ button {
   height: 3.75rem;
 }
 
+/* Google Play's VI asset has less transparent canvas padding than its EN asset. */
+html:lang(vi) .store-button[data-platform="android"] .store-button__badge {
+  height: 3.26rem;
+}
+
 .store-button__status {
   max-width: 10.5rem;
   color: var(--text-muted);
