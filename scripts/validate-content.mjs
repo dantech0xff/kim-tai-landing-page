@@ -94,14 +94,107 @@ const allowedStoreHosts = {
   ios: "apps.apple.com",
   android: "play.google.com",
 };
+const expectedBadgeExtensions = {
+  ios: ".svg",
+  android: ".png",
+};
+const storeIdentityRules = {
+  ios: {
+    field: "appStoreId",
+    label: "App Store ID",
+    matchesListing: (url, identity) =>
+      url.pathname.endsWith(`/id${identity}`) ||
+      url.pathname.endsWith(`/id${identity}/`),
+    valid: (identity) =>
+      typeof identity === "string" && /^\d+$/.test(identity),
+  },
+  android: {
+    field: "packageName",
+    label: "Android package name",
+    matchesListing: (url, identity) => {
+      const listingPath =
+        url.pathname === "/store/apps/details" ||
+        url.pathname === "/store/apps/details/";
+      const listingIds = url.searchParams.getAll("id");
+      return listingPath && listingIds.length === 1 && listingIds[0] === identity;
+    },
+    valid: (identity) =>
+      typeof identity === "string" &&
+      /^[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z][A-Za-z0-9_]*)+$/.test(identity),
+  },
+};
 
 for (const [platform, download] of Object.entries(site.downloads ?? {})) {
+  if (!allowedStoreHosts[platform]) {
+    errors.push(`Unsupported download platform: ${platform}.`);
+    continue;
+  }
+
+  for (const locale of expectedLocales) {
+    const badge = download.badges?.[locale];
+    if (!badge) {
+      errors.push(`Download ${platform} is missing its ${locale} store badge.`);
+      continue;
+    }
+    if (
+      !badge.src?.startsWith("/badges/") ||
+      path.extname(badge.src).toLowerCase() !== expectedBadgeExtensions[platform]
+    ) {
+      errors.push(
+        `Download ${platform} ${locale} badge must reference an official ${expectedBadgeExtensions[platform]} asset under /badges/.`,
+      );
+    }
+    if (
+      !Number.isFinite(badge.width) ||
+      badge.width <= 0 ||
+      !Number.isFinite(badge.height) ||
+      badge.height <= 0
+    ) {
+      errors.push(`Download ${platform} ${locale} badge requires positive dimensions.`);
+    }
+    if (badge.src?.startsWith("/badges/")) {
+      try {
+        await access(path.join(root, "public", badge.src.slice(1)));
+      } catch {
+        errors.push(`Download ${platform} ${locale} badge does not exist: ${badge.src}`);
+      }
+    }
+  }
+
+  const identityRule = storeIdentityRules[platform];
+  const identity = download[identityRule.field];
+  const hasIdentity =
+    identity !== undefined && identity !== null && identity !== "";
+  const hasValidIdentity = identityRule.valid(identity);
+
+  if (hasIdentity && !hasValidIdentity) {
+    errors.push(`Download ${platform} has an invalid ${identityRule.label}.`);
+  }
+  if ((download.directUrl || download.published) && !hasIdentity) {
+    errors.push(
+      `Download ${platform} requires ${identityRule.field} when a direct URL is configured or published.`,
+    );
+  }
+
   if (download.directUrl) {
     try {
       const url = new URL(download.directUrl);
       const expectedHost = allowedStoreHosts[platform];
-      if (url.protocol !== "https:" || url.hostname !== expectedHost) {
+      const hasVerifiedOrigin =
+        url.protocol === "https:" &&
+        url.hostname === expectedHost &&
+        !url.port &&
+        !url.username &&
+        !url.password;
+      if (!hasVerifiedOrigin) {
         errors.push(`Download ${platform} must use a verified https://${expectedHost} URL.`);
+      } else if (
+        hasValidIdentity &&
+        !identityRule.matchesListing(url, identity)
+      ) {
+        errors.push(
+          `Download ${platform} direct URL must match its ${identityRule.field} listing exactly.`,
+        );
       }
     } catch {
       errors.push(`Download ${platform} has an invalid direct URL.`);

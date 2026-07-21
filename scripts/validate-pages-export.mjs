@@ -4,6 +4,9 @@ import process from "node:process";
 
 const root = process.cwd();
 const outputDirectory = path.join(root, process.env.PAGES_OUTPUT_DIR ?? "out");
+const site = JSON.parse(
+  await readFile(path.join(root, "src/content/site.json"), "utf8"),
+);
 const [repositoryOwner = "", repositoryName = ""] =
   (process.env.GITHUB_REPOSITORY ?? "").split("/");
 
@@ -21,6 +24,32 @@ const routeDefinitions = locales.flatMap((locale) => [
 ]);
 const routePath = (locale, slug = "") =>
   `${basePath}/${locale}/${slug ? `${slug}/` : ""}`;
+const badgeFiles = Object.entries(site.downloads ?? {}).flatMap(
+  ([platform, download]) =>
+    Object.entries(download.badges ?? {}).map(([locale, badge]) => {
+      const source = badge?.src;
+      if (typeof source !== "string" || source.includes("\\")) {
+        throw new Error(`Download ${platform} ${locale} has an invalid badge path.`);
+      }
+
+      const normalizedSource = path.posix.normalize(source);
+      const relativeBadgePath = path.posix.relative("/badges", normalizedSource);
+      if (
+        normalizedSource !== source ||
+        !source.startsWith("/badges/") ||
+        !relativeBadgePath ||
+        relativeBadgePath === ".." ||
+        relativeBadgePath.startsWith("../") ||
+        path.posix.isAbsolute(relativeBadgePath)
+      ) {
+        throw new Error(
+          `Download ${platform} ${locale} badge must remain under /badges: ${String(source)}`,
+        );
+      }
+
+      return path.posix.join("badges", relativeBadgePath);
+    }),
+);
 const expectedFiles = [
   "index.html",
   "404.html",
@@ -30,6 +59,7 @@ const expectedFiles = [
   "icons/kim-tai-apple-touch-icon.png",
   "icons/kim-tai-pwa-192.png",
   "icons/kim-tai-pwa-512.png",
+  ...new Set(badgeFiles),
   "images/app-overview.png",
   "images/app-market.png",
   "images/app-settings.png",
@@ -66,7 +96,7 @@ if (
 for (const { file, locale, slug } of routeDefinitions) {
   const html = await readFile(path.join(outputDirectory, file), "utf8");
   const absoluteAssetPaths = Array.from(
-    html.matchAll(/(?:href|src)="(\/[^"]+)"/g),
+    html.matchAll(/\s(?:href|src)="(\/[^"]+)"/g),
     (match) => match[1],
   );
   const invalidPaths = absoluteAssetPaths.filter(

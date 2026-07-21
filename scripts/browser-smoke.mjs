@@ -29,9 +29,18 @@ const mobile = {
   width: 390,
 };
 
+const narrowMobile = {
+  deviceScaleFactor: 2,
+  height: 568,
+  mobile: true,
+  name: "mobile-320",
+  touch: true,
+  width: 320,
+};
+
 const desktop = {
   deviceScaleFactor: 1,
-  height: 1000,
+  height: 900,
   mobile: false,
   name: "desktop-1440",
   touch: false,
@@ -511,6 +520,19 @@ async function pageSnapshot() {
         visibility: style.visibility,
       };
     };
+    const rectSnapshot = (selector) => {
+      const element = document.querySelector(selector);
+      if (!(element instanceof HTMLElement)) return null;
+      const rect = element.getBoundingClientRect();
+      return {
+        bottom: Number(rect.bottom.toFixed(2)),
+        height: Number(rect.height.toFixed(2)),
+        left: Number(rect.left.toFixed(2)),
+        right: Number(rect.right.toFixed(2)),
+        top: Number(rect.top.toFixed(2)),
+        width: Number(rect.width.toFixed(2)),
+      };
+    };
 
     const initialScrollX = window.scrollX;
     const initialScrollY = window.scrollY;
@@ -528,8 +550,8 @@ async function pageSnapshot() {
       controls: { count: controls.length, undersized: undersizedControls, unnamed: unnamedControls },
       criticalContent: {
         brandGlyph: criticalSnapshot(".brand-glyph"),
+        heroStoreButton: criticalSnapshot('[data-store-placement="hero"] .store-button'),
         mintCard: criticalSnapshot(".feature-card--mint"),
-        primaryButton: criticalSnapshot(".primary-button"),
       },
       device: {
         clientHeight: document.documentElement.clientHeight,
@@ -545,6 +567,20 @@ async function pageSnapshot() {
         title: document.title,
       },
       images,
+      hero: {
+        copy: rectSnapshot(".hero-copy"),
+        grid: rectSnapshot(".hero-grid"),
+        miniCards: Array.from(document.querySelectorAll(".hero-mini-card")).map((element) => {
+          const rect = element.getBoundingClientRect();
+          return {
+            bottom: Number(rect.bottom.toFixed(2)),
+            height: Number(rect.height.toFixed(2)),
+            top: Number(rect.top.toFixed(2)),
+          };
+        }),
+        shell: rectSnapshot(".hero-shell"),
+        visual: rectSnapshot(".hero-visual"),
+      },
       landmarks: {
         footer: document.querySelectorAll("footer").length,
         h1: document.querySelectorAll("h1").length,
@@ -571,10 +607,31 @@ async function pageSnapshot() {
         robotsContent: document.querySelector('meta[name="robots"]')?.content ?? "",
         storeButtons: Array.from(document.querySelectorAll(".store-button")).map((element) => ({
           ariaDisabled: element.getAttribute("aria-disabled"),
+          badge: (() => {
+            const image = element.querySelector("img");
+            if (!(image instanceof HTMLImageElement)) return null;
+            const rect = image.getBoundingClientRect();
+            return {
+              alt: image.alt,
+              complete: image.complete,
+              currentSrc: image.currentSrc,
+              naturalHeight: image.naturalHeight,
+              naturalWidth: image.naturalWidth,
+              renderedHeight: Number(rect.height.toFixed(2)),
+              renderedWidth: Number(rect.width.toFixed(2)),
+            };
+          })(),
+          badgeSrc: element.getAttribute("data-badge-src") ?? "",
           hasHref: element.hasAttribute("href"),
+          href: element.getAttribute("href") ?? "",
+          placement: element.closest("[data-store-placement]")?.getAttribute("data-store-placement") ?? "",
+          platform: element.getAttribute("data-platform") ?? "",
+          published: element.getAttribute("data-published"),
+          rel: element.getAttribute("rel") ?? "",
           role: element.getAttribute("role"),
           tabIndex: element.tabIndex,
           tag: element.tagName.toLowerCase(),
+          target: element.getAttribute("target") ?? "",
           text: (element.textContent || "").replace(/\\s+/g, " ").trim(),
         })),
       },
@@ -628,6 +685,23 @@ function assertTheme(snapshot, expectedDark, expectedSaved, label) {
     ratio !== null && ratio >= 4.5,
     { background: snapshot.body.backgroundColor, foreground: snapshot.body.color, ratio: ratio?.toFixed(2) },
   );
+}
+
+function isInertStoreButton(button) {
+  return button.tag === "div" &&
+    button.ariaDisabled === "true" &&
+    !button.hasHref &&
+    button.tabIndex === -1;
+}
+
+function isActiveStoreButton(button) {
+  const relTokens = button.rel.toLowerCase().split(/\s+/).filter(Boolean);
+  return button.tag === "a" &&
+    button.hasHref &&
+    Boolean(button.href) &&
+    button.ariaDisabled === null &&
+    button.target === "_blank" &&
+    relTokens.includes("noreferrer");
 }
 
 function assertPage(snapshot, { device, expectedAlternate, expectedLang, expectedPath, label }) {
@@ -687,13 +761,45 @@ function assertPage(snapshot, { device, expectedAlternate, expectedLang, expecte
     snapshot.controls.unnamed,
   );
   check(
-    `${label}: unpublished stores are inert`,
-    snapshot.releaseSurfaces.storeButtons.length === 2 &&
+    `${label}: store controls match their published state`,
+    snapshot.releaseSurfaces.storeButtons.length === 4 &&
       snapshot.releaseSurfaces.storeButtons.every(
-        (button) => button.tag === "div" && button.ariaDisabled === "true" &&
-          !button.hasHref && button.tabIndex === -1,
+        (button) => button.published === "true"
+          ? isActiveStoreButton(button)
+          : button.published === "false" && isInertStoreButton(button),
       ),
     snapshot.releaseSurfaces.storeButtons,
+  );
+  const expectedStorePairs = ["hero:ios", "hero:android", "download:ios", "download:android"];
+  const actualStorePairs = snapshot.releaseSurfaces.storeButtons
+    .map((button) => `${button.placement}:${button.platform}`)
+    .sort();
+  check(
+    `${label}: hero and download expose both store platforms`,
+    actualStorePairs.length === expectedStorePairs.length &&
+      expectedStorePairs.sort().every((pair, index) => actualStorePairs[index] === pair),
+    actualStorePairs,
+  );
+  check(
+    `${label}: official localized store badges rendered`,
+    snapshot.releaseSurfaces.storeButtons.every((button) => {
+      const badge = button.badge;
+      if (!badge?.complete || badge.naturalWidth <= 0 || badge.naturalHeight <= 0 ||
+          badge.renderedWidth <= 0 || badge.renderedHeight < 39.5 ||
+          !button.badgeSrc.startsWith("/badges/")) return false;
+      try {
+        const renderedBadgePath = decodeURIComponent(new URL(badge.currentSrc).pathname);
+        return renderedBadgePath === `${smokeBasePath}${button.badgeSrc}`;
+      } catch {
+        return false;
+      }
+    }),
+    snapshot.releaseSurfaces.storeButtons.map(({ badge, badgeSrc, placement, platform }) => ({
+      badge,
+      badgeSrc,
+      placement,
+      platform,
+    })),
   );
   check(
     `${label}: three app screenshots rendered`,
@@ -710,6 +816,20 @@ function assertPage(snapshot, { device, expectedAlternate, expectedLang, expecte
     snapshot.visibleBorders.length === 0,
     snapshot.visibleBorders,
   );
+  if (device.width >= 1200) {
+    const heroRects = [
+      snapshot.hero.shell,
+      snapshot.hero.grid,
+      snapshot.hero.copy,
+      snapshot.hero.visual,
+      ...snapshot.hero.miniCards,
+    ];
+    check(
+      `${label}: full hero fits first viewport`,
+      heroRects.every((rect) => rect && rect.top >= -0.5 && rect.bottom <= snapshot.device.innerHeight + 0.5),
+      { hero: snapshot.hero, viewportHeight: snapshot.device.innerHeight },
+    );
+  }
 }
 
 function assertTelemetry(telemetry, expectedPath, label) {
@@ -833,21 +953,21 @@ async function toggleTheme(expectedDark, expectedSaved, label) {
 }
 
 function assertCriticalDarkContent(snapshot, label) {
-  const { brandGlyph, mintCard, primaryButton } = snapshot.criticalContent;
-  const fixedDarkColor = "rgb(16, 42, 36)";
+  const { brandGlyph, heroStoreButton, mintCard } = snapshot.criticalContent;
   check(
-    `${label}: brand mark and gold-surface foreground content`,
-    Boolean(brandGlyph && primaryButton &&
+    `${label}: brand mark and official hero store badge`,
+    Boolean(brandGlyph && heroStoreButton &&
       brandGlyph.display !== "none" && brandGlyph.opacity === "1" &&
       brandGlyph.visibility === "visible" && brandGlyph.image?.complete &&
       brandGlyph.image.naturalWidth > 0 && brandGlyph.image.naturalHeight > 0 &&
       decodeURIComponent(brandGlyph.image.currentSrc).includes(
         `${smokeBasePath}/icons/kim-tai-brand-mark.png`,
       ) &&
-      primaryButton.color === fixedDarkColor && primaryButton.innerText.length > 0 &&
-      primaryButton.display !== "none" && primaryButton.opacity === "1" &&
-      primaryButton.visibility === "visible"),
-    { brandGlyph, primaryButton },
+      heroStoreButton.image?.complete && heroStoreButton.image.naturalWidth > 0 &&
+      heroStoreButton.image.naturalHeight > 0 && heroStoreButton.innerText.length > 0 &&
+      heroStoreButton.display !== "none" && heroStoreButton.opacity === "1" &&
+      heroStoreButton.visibility === "visible"),
+    { brandGlyph, heroStoreButton },
   );
   const mintRatio = mintCard
     ? contrastRatio(mintCard.color, mintCard.backgroundColor)
@@ -994,9 +1114,40 @@ async function run() {
   });
   assertTelemetry(enMobileTelemetry, enPath, "EN mobile dark");
 
+  await setDeviceMetrics(narrowMobile);
+  await setColorScheme("light");
+  await clearOriginStorage();
+  const viNarrowTelemetry = await navigate(viPath, "vi-mobile-320-light");
+  await scrollThroughScreenshots();
+  const viNarrowLight = await pageSnapshot();
+  assertTheme(viNarrowLight, false, null, "VI mobile 320 light");
+  assertPage(viNarrowLight, {
+    device: narrowMobile,
+    expectedAlternate: "en",
+    expectedLang: "vi-VN",
+    expectedPath: viPath,
+    label: "VI mobile 320 light",
+  });
+  assertTelemetry(viNarrowTelemetry, viPath, "VI mobile 320 light");
+
   await setDeviceMetrics(desktop);
   await setColorScheme("light");
   await clearOriginStorage();
+
+  const viDesktopTelemetry = await navigate(viPath, "vi-desktop-light");
+  await scrollThroughScreenshots();
+  const viDesktopLight = await pageSnapshot();
+  assertTheme(viDesktopLight, false, null, "VI desktop light");
+  assertPage(viDesktopLight, {
+    device: desktop,
+    expectedAlternate: "en",
+    expectedLang: "vi-VN",
+    expectedPath: viPath,
+    label: "VI desktop light",
+  });
+  await captureScreenshot("kim-tai-vi-desktop-light.png", "VI desktop light");
+  assertTelemetry(viDesktopTelemetry, viPath, "VI desktop light");
+
   const enDesktopTelemetry = await navigate(enPath, "en-desktop-light");
   await scrollThroughScreenshots();
   const enDesktopLight = await pageSnapshot();
@@ -1010,6 +1161,22 @@ async function run() {
   });
   await captureScreenshot("kim-tai-en-desktop-light.png", "EN desktop light");
   assertTelemetry(enDesktopTelemetry, enPath, "EN desktop light");
+
+  await setColorScheme("dark");
+  await clearOriginStorage();
+  const viDesktopDarkTelemetry = await navigate(viPath, "vi-desktop-dark");
+  await scrollThroughScreenshots();
+  const viDesktopDark = await pageSnapshot();
+  assertTheme(viDesktopDark, true, null, "VI desktop dark");
+  assertPage(viDesktopDark, {
+    device: desktop,
+    expectedAlternate: "en",
+    expectedLang: "vi-VN",
+    expectedPath: viPath,
+    label: "VI desktop dark",
+  });
+  assertCriticalDarkContent(viDesktopDark, "VI desktop dark");
+  assertTelemetry(viDesktopDarkTelemetry, viPath, "VI desktop dark");
 }
 
 async function cleanup() {
