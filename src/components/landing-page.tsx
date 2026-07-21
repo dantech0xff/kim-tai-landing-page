@@ -57,16 +57,11 @@ export function LandingPage({ locale }: LandingPageProps) {
               </h1>
               <p className="hero-description">{copy.hero.description}</p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link className="primary-button" href="#download">
-                  {copy.hero.primaryCta}
-                  <AppIcon name="arrow-down" size={19} />
-                </Link>
-                <Link className="secondary-button" href="#features">
-                  {copy.hero.secondaryCta}
-                  <AppIcon name="arrow-up-right" size={18} />
-                </Link>
-              </div>
+              <StoreButtons locale={locale} placement="hero" />
+              <Link className="hero-secondary-link" href="#features">
+                {copy.hero.secondaryCta}
+                <AppIcon name="arrow-up-right" size={17} />
+              </Link>
 
               <p className="hero-trust-note">
                 <AppIcon name="check" size={18} />
@@ -224,7 +219,7 @@ export function LandingPage({ locale }: LandingPageProps) {
                 {copy.download.title}
               </h2>
               <p className="download-description">{copy.download.description}</p>
-              <StoreButtons locale={locale} />
+              <StoreButtons locale={locale} placement="download" />
               <p className="mt-5 max-w-2xl text-sm leading-6 opacity-75">
                 {copy.download.externalNote}
               </p>

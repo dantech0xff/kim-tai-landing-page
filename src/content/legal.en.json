@@ -174,7 +174,7 @@
           "id": "store-links",
           "title": "4. App-store links",
           "paragraphs": [
-            "Until a direct release URL is configured, download buttons open official App Store or Google Play search results. Verify the app name, publisher, and requested permissions before installation.",
+            "Until a verified direct release URL is configured, download buttons remain disabled and show a pending-release status. Once enabled, verify the app name, publisher, and requested permissions before installation.",
             "App stores are third parties with their own terms and policies. Kim Tài does not control store availability, review processes, or data processed by those stores."
           ],
           "items": []

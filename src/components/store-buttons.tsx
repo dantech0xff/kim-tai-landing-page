@@ -1,4 +1,6 @@
-import { AppIcon } from "@/components/app-icon";
+import Image from "next/image";
+
+import { withBasePath } from "@/lib/base-path";
 import {
   getPublishedDownloadUrl,
   getSiteCopy,
@@ -8,9 +10,13 @@ import {
 
 interface StoreButtonsProps {
   locale: Locale;
+  placement?: "hero" | "download";
 }
 
-export function StoreButtons({ locale }: StoreButtonsProps) {
+export function StoreButtons({
+  locale,
+  placement = "download",
+}: StoreButtonsProps) {
   const copy = getSiteCopy(locale).download;
   const platforms = [
     {
@@ -26,25 +32,33 @@ export function StoreButtons({ locale }: StoreButtonsProps) {
   ] as const;
 
   return (
-    <div className="mt-8 grid gap-3 sm:grid-cols-2">
+    <div
+      aria-label={copy.title}
+      className={`store-buttons store-buttons--${placement}`}
+      data-store-placement={placement}
+      role="group"
+    >
       {platforms.map(({ id, label, config }) => {
         const href = getPublishedDownloadUrl(id);
+        const badge = config.badges[locale];
+        const accessibleLabel = href
+          ? label
+          : `${label}: ${copy.comingSoon}`;
         const content = (
           <>
-            <span className="store-button__icon">
-              <AppIcon name="arrow-down" size={22} />
+            <span aria-hidden="true" className="store-button__artwork">
+              <Image
+                alt=""
+                className="store-button__badge"
+                height={badge.height}
+                src={withBasePath(badge.src)}
+                unoptimized
+                width={badge.width}
+              />
             </span>
-            <span className="min-w-0">
-              <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.14em] opacity-70">
-                {href ? config.platform : copy.comingSoon}
-              </span>
-              <span className="mt-1 block text-sm font-semibold sm:text-base">
-                {label}
-              </span>
+            <span className="store-button__status">
+              {href ? config.platform : copy.comingSoon}
             </span>
-            {href && (
-              <AppIcon className="ml-auto shrink-0 opacity-70" name="external" size={18} />
-            )}
           </>
         );
 
@@ -52,8 +66,13 @@ export function StoreButtons({ locale }: StoreButtonsProps) {
           return (
             <div
               aria-disabled="true"
+              aria-label={accessibleLabel}
               className="store-button store-button--disabled"
+              data-badge-src={badge.src}
+              data-platform={id}
+              data-published={config.published ? "true" : "false"}
               key={id}
+              role="link"
             >
               {content}
             </div>
@@ -62,7 +81,11 @@ export function StoreButtons({ locale }: StoreButtonsProps) {
 
         return (
           <a
+            aria-label={accessibleLabel}
             className="store-button"
+            data-badge-src={badge.src}
+            data-platform={id}
+            data-published={config.published ? "true" : "false"}
             href={href}
             key={id}
             rel="noreferrer"

@@ -1,6 +1,7 @@
 import legalEnJson from "@/content/legal.en.json";
 import legalViJson from "@/content/legal.vi.json";
 import siteJson from "@/content/site.json";
+import { isVerifiedStoreUrl } from "@/lib/store-url";
 
 export const locales = ["vi", "en"] as const;
 export const legalSlugs = [
@@ -58,27 +59,22 @@ export const siteConfig = siteJson;
 
 export type DownloadPlatform = keyof typeof siteConfig.downloads;
 
-const verifiedStoreHosts: Record<DownloadPlatform, string> = {
-  ios: "apps.apple.com",
-  android: "play.google.com",
-};
-
-export function getPublishedDownloadUrl(platform: DownloadPlatform) {
+export function getPublishedDownloadUrl(
+  platform: DownloadPlatform,
+): string | null {
   const download = siteConfig.downloads[platform];
   if (!download.published || !download.directUrl) return null;
 
-  try {
-    const url = new URL(download.directUrl);
-    if (
-      url.protocol !== "https:" ||
-      url.hostname !== verifiedStoreHosts[platform]
-    ) {
-      return null;
-    }
-    return url.toString();
-  } catch {
+  const expectedIdentity =
+    platform === "ios"
+      ? siteConfig.downloads.ios.appStoreId
+      : siteConfig.downloads.android.packageName;
+
+  if (!isVerifiedStoreUrl(platform, download.directUrl, expectedIdentity)) {
     return null;
   }
+
+  return new URL(download.directUrl).toString();
 }
 
 export function isLocale(value: string): value is Locale {

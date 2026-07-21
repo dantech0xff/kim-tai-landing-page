@@ -59,13 +59,39 @@
   "downloads": {
     "ios": {
       "platform": "iPhone",
+      "appStoreId": "",
       "directUrl": "",
-      "published": false
+      "published": false,
+      "badges": {
+        "vi": {
+          "src": "/badges/app-store-vi.svg",
+          "width": 120,
+          "height": 40
+        },
+        "en": {
+          "src": "/badges/app-store-en.svg",
+          "width": 120,
+          "height": 40
+        }
+      }
     },
     "android": {
       "platform": "Android",
+      "packageName": "",
       "directUrl": "",
-      "published": false
+      "published": false,
+      "badges": {
+        "vi": {
+          "src": "/badges/google-play-vi.png",
+          "width": 646,
+          "height": 250
+        },
+        "en": {
+          "src": "/badges/google-play-en.png",
+          "width": 646,
+          "height": 250
+        }
+      }
     }
   },
   "screenshots": {
@@ -107,7 +133,6 @@
         "titleStart": "Biết mình đang giữ gì,",
         "titleAccent": "đáng giá bao nhiêu.",
         "description": "Ghi sổ, theo dõi giá tham khảo và nhìn rõ biến động danh mục vàng — ngay trên thiết bị của bạn.",
-        "primaryCta": "Tìm bản phát hành",
         "secondaryCta": "Khám phá tính năng",
         "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
         "visualLabel": "Màn hình tổng quan tài sản vàng trong ứng dụng Kim Tài",
@@ -237,7 +262,6 @@
         "titleStart": "Know what you hold—",
         "titleAccent": "and what it is worth.",
         "description": "Record holdings, follow reference prices, and see how your gold portfolio moves, right on your device.",
-        "primaryCta": "Find the release",
         "secondaryCta": "Explore features",
         "trustNote": "Holdings stay on your device · Prices are for reference only",
         "visualLabel": "Kim Tài app screen showing a gold portfolio overview",

@@ -174,7 +174,7 @@
           "id": "store-links",
           "title": "4. Liên kết cửa hàng ứng dụng",
           "paragraphs": [
-            "Khi chưa cấu hình URL phát hành trực tiếp, nút tải mở trang tìm kiếm chính thức của App Store hoặc Google Play. Bạn cần kiểm tra đúng tên ứng dụng, nhà phát hành và quyền truy cập trước khi cài đặt.",
+            "Khi chưa cấu hình URL phát hành trực tiếp đã xác minh, nút tải được vô hiệu hoá và hiển thị trạng thái đang chờ phát hành. Sau khi nút được kích hoạt, bạn cần kiểm tra đúng tên ứng dụng, nhà phát hành và quyền truy cập trước khi cài đặt.",
             "Cửa hàng ứng dụng là bên thứ ba, áp dụng điều khoản và chính sách riêng. Kim Tài không kiểm soát tính sẵn sàng, quy trình duyệt hoặc dữ liệu do cửa hàng đó xử lý."
           ],
           "items": []
