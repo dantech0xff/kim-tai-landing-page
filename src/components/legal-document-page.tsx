@@ -80,18 +80,6 @@ export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
           </div>
         </div>
 
-        {(!siteConfig.release.ready || !siteConfig.operator.configured) && (
-          <aside className="release-warning" aria-label={copy.legalUi.previewTitle}>
-            <span className="release-warning__icon">
-              <AppIcon name="sliders" size={22} />
-            </span>
-            <div>
-              <h2>{copy.legalUi.previewTitle}</h2>
-              <p>{copy.legalUi.previewBody}</p>
-            </div>
-          </aside>
-        )}
-
         {operatorDetails.length > 0 && (
           <section className="operator-details" aria-labelledby="operator-details-title">
             <h2 id="operator-details-title">
@@ -168,7 +156,6 @@ export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
                   </a>
                 ))}
               </div>
-              <p className="legal-note">{copy.legalUi.notLegalAdvice}</p>
             </section>
           </article>
         </div>

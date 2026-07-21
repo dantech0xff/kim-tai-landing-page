@@ -1267,39 +1267,6 @@ html:lang(vi) .store-button[data-platform="android"] .store-button__badge {
   font-weight: 600;
 }
 
-.release-warning {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
-  margin-top: 3rem;
-  padding: 1.25rem;
-  border-radius: 1.4rem;
-  background: var(--surface-gold);
-  color: var(--text);
-}
-
-.release-warning__icon {
-  display: grid;
-  width: 2.9rem;
-  height: 2.9rem;
-  place-items: center;
-  border-radius: 1rem;
-  background: var(--accent-gold-bright);
-  color: #102a24;
-}
-
-.release-warning h2 {
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.release-warning p {
-  margin-top: 0.35rem;
-  color: var(--text-muted);
-  font-size: 0.84rem;
-  line-height: 1.6;
-}
-
 .operator-details {
   margin-top: 1rem;
   padding: 1.25rem;
@@ -1478,12 +1445,6 @@ html:lang(vi) .store-button[data-platform="android"] .store-button__badge {
   color: var(--text-muted);
   font-size: 0.72rem;
   line-height: 1.5;
-}
-
-.legal-note {
-  padding: 1rem;
-  border-radius: 1.1rem;
-  background: var(--surface-gold);
 }
 
 @media (hover: hover) and (pointer: fine) {

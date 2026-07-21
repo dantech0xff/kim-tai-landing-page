@@ -257,9 +257,6 @@
         "effectiveDate": "Có hiệu lực từ",
         "contents": "Trong tài liệu này",
         "sourceHeading": "Nguồn pháp lý chính thức",
-        "previewTitle": "Thông tin phát hành đang được hoàn thiện",
-        "previewBody": "Chủ thể và kênh liên hệ công khai được hiển thị bên dưới. Thông tin pháp lý còn lại sẽ được bổ sung trước khi phát hành chính thức.",
-        "notLegalAdvice": "Nội dung này là mẫu thông tin sản phẩm, không thay thế ý kiến tư vấn pháp lý cho mô hình vận hành thực tế.",
         "operatorDetails": {
           "heading": "Thông tin đơn vị vận hành",
           "publicHeading": "Thông tin công khai",
@@ -418,9 +415,6 @@
         "effectiveDate": "Effective from",
         "contents": "In this document",
         "sourceHeading": "Official legal sources",
-        "previewTitle": "Release information is being completed",
-        "previewBody": "The public identity and contact channel are shown below. The remaining legal details will be completed before the official release.",
-        "notLegalAdvice": "This product-information template does not replace legal advice for the actual operating model.",
         "operatorDetails": {
           "heading": "Operator details",
           "publicHeading": "Public information",
