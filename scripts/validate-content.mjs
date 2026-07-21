@@ -88,6 +88,13 @@ for (const locale of expectedLocales) {
     errors.push(`Locale ${locale} has incomplete Hero screenshot labels.`);
   }
 
+  const publicOperatorLabels = copy?.legalUi?.operatorDetails;
+  for (const field of ["publicHeading", "publicName", "facebook", "facebookCta"]) {
+    if (!publicOperatorLabels?.[field]?.trim()) {
+      errors.push(`Locale ${locale} is missing operatorDetails.${field}.`);
+    }
+  }
+
   const visuals = copy?.featureVisuals;
   if (!visuals?.illustrationLabel) {
     errors.push(`Locale ${locale} is missing the simulated-illustration label.`);
@@ -288,13 +295,42 @@ const requiredOperatorFields = [
   "privacyEmail",
 ];
 
+if (!site.operator?.publicName?.trim()) {
+  errors.push("A public operator identity is required.");
+}
+
+const rawFacebookUrl = site.operator?.facebookUrl;
+const facebookUrl = rawFacebookUrl?.trim();
+if (!facebookUrl) {
+  errors.push("A public Facebook contact URL is required.");
+} else {
+  try {
+    const url = new URL(facebookUrl);
+    if (
+      url.protocol !== "https:" ||
+      !["facebook.com", "www.facebook.com"].includes(url.hostname.toLowerCase()) ||
+      url.username ||
+      url.password ||
+      url.port
+    ) {
+      errors.push(
+        "Operator facebookUrl must be an HTTPS facebook.com URL without credentials or a custom port.",
+      );
+    } else if (rawFacebookUrl !== url.href) {
+      errors.push("Operator facebookUrl must use its normalized absolute URL form.");
+    }
+  } catch {
+    errors.push("Operator facebookUrl must be a valid absolute URL.");
+  }
+}
+
 if (site.operator?.configured || site.release?.ready) {
   for (const field of requiredOperatorFields) {
     if (!site.operator?.[field]?.trim()) {
       errors.push(`Configured operator is missing ${field}.`);
     }
   }
-  if (site.operator?.legalName === "Đơn vị vận hành Kim Tài") {
+  if (site.operator?.legalName?.trim() === "Đơn vị vận hành Kim Tài") {
     errors.push("Replace the generic operator legal name before release.");
   }
 }

@@ -24,6 +24,13 @@ const routeDefinitions = locales.flatMap((locale) => [
 ]);
 const routePath = (locale, slug = "") =>
   `${basePath}/${locale}/${slug ? `${slug}/` : ""}`;
+const escapeHtml = (value) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#x27;");
 const badgeFiles = Object.entries(site.downloads ?? {}).flatMap(
   ([platform, download]) =>
     Object.entries(download.badges ?? {}).map(([locale, badge]) => {
@@ -128,6 +135,36 @@ for (const { file, locale, slug } of routeDefinitions) {
       throw new Error(
         `${file} does not declare the ${alternateLocale} alternate URL ${expectedAlternate}.`,
       );
+    }
+  }
+
+  if (slug) {
+    const operatorCopy = site.locales?.[locale]?.legalUi?.operatorDetails;
+    const operatorSection = html.match(
+      /<section class="operator-details"[\s\S]*?<\/section>/,
+    )?.[0];
+    const facebookLink = operatorSection?.match(/<a\s+([^>]*)>([\s\S]*?)<\/a>/);
+    const linkAttributes = new Map(
+      Array.from(facebookLink?.[1].matchAll(/([A-Za-z:-]+)="([^"]*)"/g) ?? []).map(
+        ([, name, value]) => [name, value],
+      ),
+    );
+    const relTokens = new Set(linkAttributes.get("rel")?.split(/\s+/) ?? []);
+    if (
+      !operatorSection ||
+      !operatorSection.includes(
+        `<h2 id="operator-details-title">${escapeHtml(operatorCopy.publicHeading)}</h2>`,
+      ) ||
+      !operatorSection.includes(
+        `<dt>${escapeHtml(operatorCopy.publicName)}</dt><dd>${escapeHtml(site.operator.publicName)}</dd>`,
+      ) ||
+      !operatorSection.includes(`<dt>${escapeHtml(operatorCopy.facebook)}</dt>`) ||
+      !facebookLink?.[2].startsWith(`${escapeHtml(operatorCopy.facebookCta)}<svg`) ||
+      linkAttributes.get("href") !== escapeHtml(site.operator.facebookUrl) ||
+      linkAttributes.get("target") !== "_blank" ||
+      !relTokens.has("noreferrer")
+    ) {
+      throw new Error(`${file} does not render the configured public operator contact.`);
     }
   }
 }
