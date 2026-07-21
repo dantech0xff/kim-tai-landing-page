@@ -61,14 +61,16 @@ Các trang ngôn ngữ và pháp lý đều được dựng tĩnh khi build.
 | `src/content/legal.vi.json` | Ba tài liệu pháp lý tiếng Việt và nguồn luật chính thức |
 | `src/content/legal.en.json` | Bản tiếng Anh tham khảo của ba tài liệu pháp lý |
 
-Ảnh ứng dụng nằm trong `public/images/`; bộ nhận diện web nằm trong `public/icons/`. Đường dẫn, kích thước logo giao diện, favicon, Apple touch icon và PWA icon đều được khai báo tại `site.json`.
+Ảnh ứng dụng nằm trong `public/images/`; bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset này đều được khai báo tại `site.json`.
 
 Hai ảnh nhận diện gốc được giữ tại `public/icons/kim-tai-brand-mark.png` (nền trong suốt, dùng trên giao diện) và `public/icons/kim-tai-app-icon.png` (nền tối, nguồn tạo các icon web chuẩn 32/180/192/512 px).
+
+Badge App Store lấy từ [Apple Marketing Tools](https://toolbox.marketingtools.apple.com/) và badge Google Play lấy từ [Google Play badge guidelines](https://partnermarketinghub.withgoogle.com/brands/google-play/visual-identity/badge-guidelines/). Artwork được dùng nguyên bản, không đổi màu hoặc dựng lại bằng CSS.
 
 ### Việc bắt buộc trước khi phát hành
 
 1. Điền tên pháp lý, mã đăng ký, địa chỉ và email thật trong `operator`, sau đó đặt `operator.configured` thành `true`.
-2. Thay `downloads.*.directUrl` bằng URL App Store/Google Play thật, đặt `published` thành `true` và đặt `release.ready` thành `true` khi ứng dụng đã được duyệt. Khi chưa có URL trực tiếp đã xác minh, nút tải được vô hiệu hoá để tránh dẫn tới ứng dụng giả mạo.
+2. Điền `downloads.ios.appStoreId` và `downloads.android.packageName`, sau đó thay `downloads.*.directUrl` bằng URL trang ứng dụng khớp chính xác với các định danh này. Chỉ đặt `published` và `release.ready` thành `true` sau khi ứng dụng được duyệt. Khi chưa có URL trực tiếp đã xác minh, nút tải được vô hiệu hoá để tránh dẫn tới ứng dụng giả mạo.
 3. Đối chiếu các khẳng định trong `productFacts` và tài liệu quyền riêng tư với luồng dữ liệu thật của ứng dụng, SDK bên thứ ba, thời hạn lưu giữ, vị trí máy chủ và hoạt động chuyển dữ liệu ra nước ngoài.
 4. Nhờ cố vấn pháp lý Việt Nam duyệt bản cuối theo đúng pháp nhân và mô hình vận hành thực tế.
 5. Chạy lại toàn bộ lệnh kiểm tra ở trên. `validate:content` cố ý cảnh báo cho đến khi thông tin phát hành được hoàn tất; khi `release.ready` bật, thiếu pháp nhân hoặc link tải thật sẽ trở thành lỗi build.
