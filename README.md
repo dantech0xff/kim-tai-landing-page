@@ -1,6 +1,6 @@
 # Kim Tài — Tick Vàng Online
 
-Website giới thiệu song ngữ cho ứng dụng Kim Tài, được xây bằng Next.js App Router và Tailwind CSS. Giao diện dùng bento grid không viền, hỗ trợ sáng/tối, tối ưu responsive và sử dụng ba ảnh chụp ứng dụng do dự án cung cấp.
+Website giới thiệu song ngữ cho ứng dụng Kim Tài, được xây bằng Next.js App Router và Tailwind CSS. Giao diện dùng bento grid không viền, hỗ trợ sáng/tối và tối ưu responsive. Ba ảnh chụp ứng dụng được gom thành một cụm màn hình trong Hero; các bento tính năng phía dưới dùng biểu đồ mô phỏng cấu hình bằng JSON.
 
 ## Chạy dự án
 
@@ -61,7 +61,7 @@ Các trang ngôn ngữ và pháp lý đều được dựng tĩnh khi build.
 | `src/content/legal.vi.json` | Ba tài liệu pháp lý tiếng Việt và nguồn luật chính thức |
 | `src/content/legal.en.json` | Bản tiếng Anh tham khảo của ba tài liệu pháp lý |
 
-Ảnh ứng dụng nằm trong `public/images/`; bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset này đều được khai báo tại `site.json`.
+Ảnh ứng dụng nằm trong `public/images/` và chỉ được hiển thị trong Hero. Dữ liệu cho bốn biểu đồ mô phỏng nằm ở `locales.*.featureVisuals` trong `site.json`; các số liệu này chỉ minh hoạ cách trình bày, không phải giá vàng hoặc dữ liệu thị trường thực. Bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset đều được khai báo tại `site.json`.
 
 Hai ảnh nhận diện gốc được giữ tại `public/icons/kim-tai-brand-mark.png` (nền trong suốt, dùng trên giao diện) và `public/icons/kim-tai-app-icon.png` (nền tối, nguồn tạo các icon web chuẩn 32/180/192/512 px).
 
