@@ -394,10 +394,11 @@ async function reload(name) {
 }
 
 async function scrollThroughScreenshots() {
-  const count = await evaluate(`document.querySelectorAll(".app-screenshot img").length`);
+  const assetSelector = ".app-screenshot img, .store-button img";
+  const count = await evaluate(`document.querySelectorAll("${assetSelector}").length`);
   for (let index = 0; index < count; index += 1) {
     await evaluate(`(() => {
-      const image = document.querySelectorAll(".app-screenshot img")[${index}];
+      const image = document.querySelectorAll("${assetSelector}")[${index}];
       image?.scrollIntoView({ block: "center", inline: "nearest" });
       return Boolean(image);
     })()`);
@@ -405,10 +406,10 @@ async function scrollThroughScreenshots() {
   }
   await waitFor(
     async () =>
-      evaluate(`Array.from(document.querySelectorAll(".app-screenshot img")).every(
+      evaluate(`Array.from(document.querySelectorAll("${assetSelector}")).every(
         (image) => image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
       )`),
-    "all three app screenshots to load",
+    "all app screenshots and store badges to load",
   );
   await scrollToTop();
 }
@@ -490,6 +491,7 @@ async function pageSnapshot() {
         alt: image.alt,
         complete: image.complete,
         currentSrc: image.currentSrc,
+        inHero: Boolean(image.closest(".hero-visual")),
         naturalHeight: image.naturalHeight,
         naturalWidth: image.naturalWidth,
         renderedHeight: Number(rect.height.toFixed(2)),
@@ -567,6 +569,18 @@ async function pageSnapshot() {
         title: document.title,
       },
       images,
+      featureArea: {
+        screenshotCount: document.querySelectorAll("#features .app-screenshot").length,
+        simulations: Array.from(document.querySelectorAll("#features .feature-simulation")).map(
+          (element) => ({
+            ariaLabel: element.getAttribute("aria-label") ?? "",
+            role: element.getAttribute("role") ?? "",
+            variant: Array.from(element.classList).find((name) =>
+              name.startsWith("feature-simulation--")
+            ) ?? "",
+          }),
+        ),
+      },
       hero: {
         copy: rectSnapshot(".hero-copy"),
         grid: rectSnapshot(".hero-grid"),
@@ -802,14 +816,26 @@ function assertPage(snapshot, { device, expectedAlternate, expectedLang, expecte
     })),
   );
   check(
-    `${label}: three app screenshots rendered`,
+    `${label}: all three app screenshots render only in Hero`,
     snapshot.images.length === 3 &&
       snapshot.images.every(
         (image) =>
           image.complete && image.naturalWidth > 0 && image.naturalHeight > 0 &&
-          image.renderedWidth > 0 && image.renderedHeight > 0,
+          image.renderedWidth > 0 && image.renderedHeight > 0 && image.inHero,
+      ) &&
+      snapshot.featureArea.screenshotCount === 0,
+    { featureScreenshotCount: snapshot.featureArea.screenshotCount, images: snapshot.images },
+  );
+  check(
+    `${label}: four accessible simulated visuals replace feature screenshots`,
+    snapshot.featureArea.simulations.length === 4 &&
+      snapshot.featureArea.simulations.every(
+        (simulation) =>
+          simulation.role === "img" &&
+          simulation.ariaLabel.length > 0 &&
+          simulation.variant.length > 0,
       ),
-    snapshot.images,
+    snapshot.featureArea.simulations,
   );
   check(
     `${label}: no visible structural borders`,

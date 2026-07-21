@@ -21,6 +21,13 @@ const expectedLegalSlugs = [
 
 const errors = [];
 const warnings = [];
+const expectedFeatureIds = ["portfolio", "market", "local-first", "personalize"];
+const isPercentageSeries = (values, minimumLength = 3) =>
+  Array.isArray(values) &&
+  values.length >= minimumLength &&
+  values.every(
+    (value) => Number.isFinite(value) && value >= 0 && value <= 100,
+  );
 
 if (!site.brand?.name || !site.brand?.productName || !site.brand?.tagline) {
   errors.push("Brand name, product name, and tagline are required.");
@@ -62,13 +69,73 @@ for (const locale of expectedLocales) {
   if (copy?.features?.length !== 4) {
     errors.push(`Locale ${locale} must define exactly four feature records.`);
   }
+  const featureIds = copy?.features?.map((feature) => feature.id) ?? [];
   if (
-    !copy?.ledgerVisual?.primaryPurity ||
-    !copy?.ledgerVisual?.quantity ||
-    !copy?.ledgerVisual?.secondaryPurity ||
-    !copy?.ledgerVisual?.status
+    featureIds.length !== expectedFeatureIds.length ||
+    !expectedFeatureIds.every((featureId) => featureIds.includes(featureId))
   ) {
-    errors.push(`Locale ${locale} has incomplete ledger visual data.`);
+    errors.push(`Locale ${locale} must define the expected four feature IDs.`);
+  }
+  if (copy?.features?.some((feature) => "image" in feature)) {
+    errors.push(`Locale ${locale} feature records must not place screenshots below the Hero.`);
+  }
+  if (
+    !copy?.hero?.galleryLabel ||
+    !copy?.hero?.screens?.overview ||
+    !copy?.hero?.screens?.market ||
+    !copy?.hero?.screens?.settings
+  ) {
+    errors.push(`Locale ${locale} has incomplete Hero screenshot labels.`);
+  }
+
+  const visuals = copy?.featureVisuals;
+  if (!visuals?.illustrationLabel) {
+    errors.push(`Locale ${locale} is missing the simulated-illustration label.`);
+  }
+  if (
+    !visuals?.portfolio?.title ||
+    !visuals?.portfolio?.primaryPurity ||
+    !visuals?.portfolio?.quantity ||
+    !visuals?.portfolio?.secondaryPurity ||
+    !visuals?.portfolio?.status ||
+    !isPercentageSeries(visuals?.portfolio?.bars, 4) ||
+    visuals.portfolio.bars.length !== 4
+  ) {
+    errors.push(`Locale ${locale} has incomplete portfolio simulation data.`);
+  }
+  if (
+    !visuals?.market?.title ||
+    !visuals?.market?.primary ||
+    !visuals?.market?.secondary ||
+    !visuals?.market?.summary ||
+    !visuals?.market?.note ||
+    !isPercentageSeries(visuals?.market?.primarySeries, 4) ||
+    !isPercentageSeries(visuals?.market?.secondarySeries, 4) ||
+    visuals.market.primarySeries.length !== visuals.market.secondarySeries.length
+  ) {
+    errors.push(`Locale ${locale} has incomplete market simulation data.`);
+  }
+  if (
+    !visuals?.local?.title ||
+    !visuals?.local?.status ||
+    visuals?.local?.steps?.length !== 3 ||
+    visuals.local.steps.some((step) => !step?.trim())
+  ) {
+    errors.push(`Locale ${locale} has incomplete local-flow simulation data.`);
+  }
+  if (
+    !visuals?.personalize?.title ||
+    visuals?.personalize?.rows?.length !== 3 ||
+    visuals.personalize.rows.some(
+      (row) =>
+        !row?.label?.trim() ||
+        !row?.value?.trim() ||
+        !Number.isFinite(row.position) ||
+        row.position < 0 ||
+        row.position > 100,
+    )
+  ) {
+    errors.push(`Locale ${locale} has incomplete personalization simulation data.`);
   }
 }
 
