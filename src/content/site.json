@@ -135,7 +135,12 @@
         "description": "Ghi sổ, theo dõi giá tham khảo và nhìn rõ biến động danh mục vàng — ngay trên thiết bị của bạn.",
         "secondaryCta": "Khám phá tính năng",
         "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
-        "visualLabel": "Màn hình tổng quan tài sản vàng trong ứng dụng Kim Tài",
+        "galleryLabel": "Ba màn hình chính của ứng dụng Kim Tài",
+        "screens": {
+          "overview": "Màn hình tổng quan tài sản vàng trong ứng dụng Kim Tài",
+          "market": "Màn hình giá vàng tham khảo theo nhà cung cấp trong ứng dụng Kim Tài",
+          "settings": "Màn hình cài đặt ngôn ngữ, đơn vị và nhắc ghi sổ trong ứng dụng Kim Tài"
+        },
         "floatingLabel": "9999 · 24K",
         "floatingValue": "Một sổ. Nhiều loại vàng."
       },
@@ -144,11 +149,38 @@
         "title": "Từ sổ sở hữu đến nhịp thị trường.",
         "description": "Kim Tài gom những việc bạn thường phải ghi nhớ rời rạc vào một không gian gọn, dễ đọc và luôn trong tầm tay."
       },
-      "ledgerVisual": {
-        "primaryPurity": "9999",
-        "quantity": "100 Chỉ",
-        "secondaryPurity": "24K",
-        "status": "Đã ghi sổ"
+      "featureVisuals": {
+        "illustrationLabel": "Minh hoạ mô phỏng",
+        "portfolio": {
+          "title": "Cấu trúc sổ vàng",
+          "primaryPurity": "9999",
+          "quantity": "100 Chỉ",
+          "secondaryPurity": "24K",
+          "status": "Đã ghi sổ",
+          "bars": [38, 66, 52, 88]
+        },
+        "market": {
+          "title": "Nhịp giá tham khảo",
+          "primary": "Giá mua",
+          "secondary": "Giá bán",
+          "summary": "Hai đường cùng tăng theo nhịp mô phỏng; đường giá bán nằm cao hơn đường giá mua.",
+          "note": "Đường biểu diễn mô phỏng · không phải giá thực",
+          "primarySeries": [42, 48, 45, 58, 54, 68, 64, 76],
+          "secondarySeries": [58, 61, 57, 69, 66, 78, 73, 84]
+        },
+        "local": {
+          "title": "Luồng dữ liệu cục bộ",
+          "steps": ["Bạn ghi", "Thiết bị", "Bạn xem"],
+          "status": "Lưu trên thiết bị"
+        },
+        "personalize": {
+          "title": "Bộ điều chỉnh cá nhân",
+          "rows": [
+            { "label": "Ngôn ngữ", "value": "VI · EN", "position": 64 },
+            { "label": "Đơn vị", "value": "Chỉ · Lượng", "position": 38 },
+            { "label": "Nhắc ghi sổ", "value": "Tuỳ chọn", "position": 77 }
+          ]
+        }
       },
       "features": [
         {
@@ -158,7 +190,6 @@
           "title": "Biết tổng vốn và giá trị tạm tính trong một lần nhìn.",
           "description": "Ghi lại số lượng theo Chỉ hoặc Lượng, tách 9999 và 24K, rồi xem giá trị danh mục theo mức giá bán tham khảo hiện có.",
           "stat": "Sổ vàng cá nhân",
-          "image": "overview",
           "tone": "forest"
         },
         {
@@ -168,7 +199,6 @@
           "title": "Lọc thị trường theo nơi bán và loại vàng bạn quan tâm.",
           "description": "Theo dõi bảng giá theo nhà cung cấp, khu vực và sản phẩm; nhìn rõ giá mua vào, bán ra cùng thời điểm cập nhật.",
           "stat": "DOJI · PNJ",
-          "image": "market",
           "tone": "gold"
         },
         {
@@ -178,7 +208,6 @@
           "title": "Danh mục vàng ở lại trên thiết bị.",
           "description": "Số lượng và giá vốn bạn ghi trong ứng dụng được lưu cục bộ trên thiết bị theo mô tả hiện tại của sản phẩm.",
           "stat": "Local-first",
-          "image": "",
           "tone": "mint"
         },
         {
@@ -188,7 +217,6 @@
           "title": "Nhắc ghi sổ, đổi ngôn ngữ và chọn đơn vị mặc định.",
           "description": "Cá nhân hoá lịch nhắc, Tiếng Việt hoặc English, Chỉ hoặc Lượng và nguồn giá ưu tiên ngay trong phần cài đặt.",
           "stat": "VI · EN",
-          "image": "settings",
           "tone": "coral"
         }
       ],
@@ -264,7 +292,12 @@
         "description": "Record holdings, follow reference prices, and see how your gold portfolio moves, right on your device.",
         "secondaryCta": "Explore features",
         "trustNote": "Holdings stay on your device · Prices are for reference only",
-        "visualLabel": "Kim Tài app screen showing a gold portfolio overview",
+        "galleryLabel": "Three primary screens from the Kim Tài app",
+        "screens": {
+          "overview": "Kim Tài app screen showing a gold portfolio overview",
+          "market": "Kim Tài app screen showing reference gold prices by provider",
+          "settings": "Kim Tài app screen showing language, unit, and logging reminder settings"
+        },
         "floatingLabel": "9999 · 24K",
         "floatingValue": "One book. Many kinds of gold."
       },
@@ -273,11 +306,38 @@
         "title": "From your holdings book to the market pulse.",
         "description": "Kim Tài brings the details you usually track in separate places into one calm, readable space."
       },
-      "ledgerVisual": {
-        "primaryPurity": "9999",
-        "quantity": "100 Chỉ",
-        "secondaryPurity": "24K",
-        "status": "Recorded"
+      "featureVisuals": {
+        "illustrationLabel": "Simulated illustration",
+        "portfolio": {
+          "title": "Gold book composition",
+          "primaryPurity": "9999",
+          "quantity": "100 Chỉ",
+          "secondaryPurity": "24K",
+          "status": "Recorded",
+          "bars": [38, 66, 52, 88]
+        },
+        "market": {
+          "title": "Reference price rhythm",
+          "primary": "Buy reference",
+          "secondary": "Sell reference",
+          "summary": "Both lines rise through the simulated rhythm, with the sell reference above the buy reference.",
+          "note": "Simulated lines · not actual prices",
+          "primarySeries": [42, 48, 45, 58, 54, 68, 64, 76],
+          "secondarySeries": [58, 61, 57, 69, 66, 78, 73, 84]
+        },
+        "local": {
+          "title": "Local data flow",
+          "steps": ["You record", "Your device", "You review"],
+          "status": "Stored on device"
+        },
+        "personalize": {
+          "title": "Personal calibration",
+          "rows": [
+            { "label": "Language", "value": "VI · EN", "position": 64 },
+            { "label": "Unit", "value": "Chỉ · Lượng", "position": 38 },
+            { "label": "Log reminder", "value": "Optional", "position": 77 }
+          ]
+        }
       },
       "features": [
         {
@@ -287,7 +347,6 @@
           "title": "See your cost and estimated value in one glance.",
           "description": "Record quantities in Chỉ or Lượng, separate 9999 from 24K, and estimate portfolio value using the available reference selling price.",
           "stat": "Your gold book",
-          "image": "overview",
           "tone": "forest"
         },
         {
@@ -297,7 +356,6 @@
           "title": "Filter the market by seller and gold type.",
           "description": "Browse listed prices by provider, region, and product, with buy, sell, and update-time context kept visible.",
           "stat": "DOJI · PNJ",
-          "image": "market",
           "tone": "gold"
         },
         {
@@ -307,7 +365,6 @@
           "title": "Your gold portfolio stays on your device.",
           "description": "The quantities and cost details you enter are stored locally on the device under the product's current design.",
           "stat": "Local-first",
-          "image": "",
           "tone": "mint"
         },
         {
@@ -317,7 +374,6 @@
           "title": "Set reminders, language, and your preferred unit.",
           "description": "Choose a logging reminder, Vietnamese or English, Chỉ or Lượng, and a preferred price source from settings.",
           "stat": "VI · EN",
-          "image": "settings",
           "tone": "coral"
         }
       ],

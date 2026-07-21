@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { AppIcon } from "@/components/app-icon";
 import { AppScreenshot } from "@/components/app-screenshot";
+import { FeatureSimulation } from "@/components/feature-simulations";
 import { OrbitMotif } from "@/components/orbit-motif";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -9,21 +10,21 @@ import { StoreButtons } from "@/components/store-buttons";
 import {
   getLegalPath,
   getSiteCopy,
+  type FeatureId,
   type FeatureIcon,
   type LocalizedFeature,
   type Locale,
-  type ScreenshotKey,
 } from "@/lib/content";
 
 interface LandingPageProps {
   locale: Locale;
 }
 
-const featureCardClasses: Record<string, string> = {
+const featureCardClasses: Record<FeatureId, string> = {
   portfolio: "feature-card--portfolio md:col-span-5 lg:col-span-5",
-  market: "feature-card--market md:col-span-7 lg:col-span-7 md:row-span-2",
-  "local-first": "feature-card--local md:col-span-5 lg:col-span-5",
-  personalize: "feature-card--settings md:col-span-12 lg:col-span-12",
+  market: "feature-card--market md:col-span-7 lg:col-span-7",
+  "local-first": "feature-card--local md:col-span-4 lg:col-span-4",
+  personalize: "feature-card--settings md:col-span-8 lg:col-span-8",
 };
 
 const featureIconMap: Record<FeatureIcon, "ledger" | "trend" | "device" | "sliders"> = {
@@ -35,9 +36,12 @@ const featureIconMap: Record<FeatureIcon, "ledger" | "trend" | "device" | "slide
 
 export function LandingPage({ locale }: LandingPageProps) {
   const copy = getSiteCopy(locale);
-  const [portfolio, market, localFirst, personalize] =
-    copy.features as LocalizedFeature[];
-  const ledgerVisual = copy.ledgerVisual;
+  const features = copy.features as LocalizedFeature[];
+  const featuresById = Object.fromEntries(
+    features.map((feature) => [feature.id, feature]),
+  ) as Record<FeatureId, LocalizedFeature>;
+  const portfolio = featuresById.portfolio;
+  const market = featuresById.market;
 
   return (
     <>
@@ -69,16 +73,36 @@ export function LandingPage({ locale }: LandingPageProps) {
               </p>
             </div>
 
-            <div className="hero-visual">
+            <div
+              aria-label={copy.hero.galleryLabel}
+              className="hero-visual"
+              role="group"
+            >
               <OrbitMotif className="hero-orbit" />
-              <div className="hero-phone-pedestal">
+              <div className="hero-screen-deck">
                 <AppScreenshot
-                  alt={copy.hero.visualLabel}
-                  className="hero-phone"
+                  alt={copy.hero.screens.overview}
+                  className="hero-screen hero-screen--overview"
                   imageClassName="object-top"
                   imageKey="overview"
                   priority
-                  sizes="(max-width: 767px) 86vw, (max-width: 1199px) 42vw, 470px"
+                  sizes="(max-width: 767px) 58vw, (max-width: 1199px) 28vw, 250px"
+                />
+                <AppScreenshot
+                  alt={copy.hero.screens.market}
+                  className="hero-screen hero-screen--market"
+                  imageClassName="object-top"
+                  imageKey="market"
+                  priority
+                  sizes="(max-width: 767px) 42vw, (max-width: 1199px) 20vw, 210px"
+                />
+                <AppScreenshot
+                  alt={copy.hero.screens.settings}
+                  className="hero-screen hero-screen--settings"
+                  imageClassName="object-top"
+                  imageKey="settings"
+                  priority
+                  sizes="(max-width: 767px) 42vw, (max-width: 1199px) 20vw, 210px"
                 />
               </div>
               <div className="hero-float-card">
@@ -115,7 +139,7 @@ export function LandingPage({ locale }: LandingPageProps) {
           </div>
 
           <div className="feature-grid">
-            {[portfolio, market, localFirst, personalize].map((feature) => (
+            {features.map((feature) => (
               <article
                 className={`feature-card feature-card--${feature.tone} ${featureCardClasses[feature.id]}`}
                 key={feature.id}
@@ -132,54 +156,10 @@ export function LandingPage({ locale }: LandingPageProps) {
                   <p className="feature-description">{feature.description}</p>
                 </div>
 
-                {feature.id === "portfolio" && (
-                  <div className="ledger-visual" aria-hidden="true">
-                    <div className="ledger-visual__total">
-                      <span>{ledgerVisual.primaryPurity}</span>
-                      <strong>{ledgerVisual.quantity}</strong>
-                    </div>
-                    <div className="ledger-visual__bars">
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                    <div className="ledger-visual__caption">
-                      <span>{ledgerVisual.secondaryPurity}</span>
-                      <span>{ledgerVisual.status}</span>
-                    </div>
-                  </div>
-                )}
-
-                {feature.id === "local-first" && (
-                  <div className="local-visual" aria-hidden="true">
-                    <div className="local-visual__device">
-                      <AppIcon name="device" size={50} />
-                      <span className="local-visual__check">
-                        <AppIcon name="check" size={21} />
-                      </span>
-                    </div>
-                    <OrbitMotif compact />
-                  </div>
-                )}
-
-                {feature.image && feature.id !== "portfolio" && (
-                  <AppScreenshot
-                    alt={`${feature.eyebrow}: ${feature.title}`}
-                    className={`feature-shot feature-shot--${feature.id}`}
-                    imageClassName={
-                      feature.id === "market"
-                        ? "object-[50%_24%]"
-                        : "object-[50%_22%]"
-                    }
-                    imageKey={feature.image as ScreenshotKey}
-                    sizes={
-                      feature.id === "market"
-                        ? "(max-width: 767px) 92vw, (max-width: 1199px) 55vw, 720px"
-                        : "(max-width: 767px) 92vw, (max-width: 1199px) 80vw, 1040px"
-                    }
-                  />
-                )}
+                <FeatureSimulation
+                  featureId={feature.id}
+                  visuals={copy.featureVisuals}
+                />
               </article>
             ))}
           </div>

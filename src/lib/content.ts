@@ -14,15 +14,15 @@ export type Locale = (typeof locales)[number];
 export type LegalSlug = (typeof legalSlugs)[number];
 export type ScreenshotKey = "overview" | "settings" | "market";
 export type FeatureIcon = "ledger" | "trend" | "device" | "sliders";
+export type FeatureId = "portfolio" | "market" | "local-first" | "personalize";
 
 export interface LocalizedFeature {
-  id: string;
+  id: FeatureId;
   icon: FeatureIcon;
   eyebrow: string;
   title: string;
   description: string;
   stat: string;
-  image: ScreenshotKey | "";
   tone: "forest" | "gold" | "mint" | "coral";
 }
 
