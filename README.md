@@ -23,6 +23,27 @@ npm run build
 npm run start
 ```
 
+## GitHub Pages
+
+Website được triển khai miễn phí tại:
+
+<https://dantech0xff.github.io/kim-tai-landing-page/>
+
+Mỗi lần push vào nhánh `main`, workflow `Deploy to GitHub Pages` sẽ tự build static export, kiểm tra toàn bộ route và asset dưới subpath `/kim-tai-landing-page`, rồi phát hành lên GitHub Pages. Có thể chạy lại thủ công từ tab **Actions** trên GitHub.
+
+Kiểm tra bản GitHub Pages ở máy local:
+
+```bash
+GITHUB_PAGES=true \
+GITHUB_REPOSITORY=dantech0xff/kim-tai-landing-page \
+npm run build
+
+GITHUB_REPOSITORY=dantech0xff/kim-tai-landing-page \
+npm run validate:pages
+```
+
+Xem [hướng dẫn triển khai](docs/deployment.md) để biết quy trình phát hành, rollback và các lưu ý trước khi bật lập chỉ mục.
+
 ## Tuyến trang
 
 - `/vi` và `/en`: trang giới thiệu sản phẩm.
@@ -51,6 +72,8 @@ Hai ảnh nhận diện gốc được giữ tại `public/icons/kim-tai-brand-m
 3. Đối chiếu các khẳng định trong `productFacts` và tài liệu quyền riêng tư với luồng dữ liệu thật của ứng dụng, SDK bên thứ ba, thời hạn lưu giữ, vị trí máy chủ và hoạt động chuyển dữ liệu ra nước ngoài.
 4. Nhờ cố vấn pháp lý Việt Nam duyệt bản cuối theo đúng pháp nhân và mô hình vận hành thực tế.
 5. Chạy lại toàn bộ lệnh kiểm tra ở trên. `validate:content` cố ý cảnh báo cho đến khi thông tin phát hành được hoàn tất; khi `release.ready` bật, thiếu pháp nhân hoặc link tải thật sẽ trở thành lỗi build.
+
+GitHub Pages hiện có thể dùng làm bản xem trước công khai. Website vẫn phát `noindex` và vô hiệu hoá nút tải cho đến khi các điều kiện phát hành ở trên được hoàn tất.
 
 ## Ghi chú pháp lý
 

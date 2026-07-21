@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { withBasePath } from "@/lib/base-path";
 import { siteConfig } from "@/lib/content";
 
 interface BrandMarkProps {
@@ -12,7 +13,7 @@ export function BrandMark({ compact = false }: BrandMarkProps) {
       <span className="brand-glyph" aria-hidden="true">
         <Image
           className="brand-glyph__image"
-          src={siteConfig.icons.brandMark.src}
+          src={withBasePath(siteConfig.icons.brandMark.src)}
           alt=""
           width={siteConfig.icons.brandMark.width}
           height={siteConfig.icons.brandMark.height}

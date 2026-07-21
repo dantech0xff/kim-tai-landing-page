@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { siteOrigin, withBasePath } from "@/lib/base-path";
 import { getSiteCopy, isLocale, locales, siteConfig } from "@/lib/content";
 
 interface LocaleLayoutProps {
@@ -46,31 +47,32 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     },
     description: copy.metadata.description,
     applicationName: siteConfig.brand.productName,
+    metadataBase: new URL(siteOrigin),
     alternates: {
-      canonical: `/${locale}`,
+      canonical: withBasePath(`/${locale}/`),
       languages: {
-        vi: "/vi",
-        en: "/en",
+        vi: withBasePath("/vi/"),
+        en: withBasePath("/en/"),
       },
     },
     icons: {
       icon: [
         {
-          url: siteConfig.icons.favicon.src,
+          url: withBasePath(siteConfig.icons.favicon.src),
           sizes: siteConfig.icons.favicon.sizes,
           type: siteConfig.icons.favicon.type,
         },
       ],
       shortcut: [
         {
-          url: siteConfig.icons.favicon.src,
+          url: withBasePath(siteConfig.icons.favicon.src),
           sizes: siteConfig.icons.favicon.sizes,
           type: siteConfig.icons.favicon.type,
         },
       ],
       apple: [
         {
-          url: siteConfig.icons.appleTouch.src,
+          url: withBasePath(siteConfig.icons.appleTouch.src),
           sizes: siteConfig.icons.appleTouch.sizes,
           type: siteConfig.icons.appleTouch.type,
         },

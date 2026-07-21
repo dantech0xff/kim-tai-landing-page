@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { siteConfig, type ScreenshotKey } from "@/lib/content";
+import { withBasePath } from "@/lib/base-path";
 
 interface AppScreenshotProps {
   alt: string;
@@ -29,7 +30,7 @@ export function AppScreenshot({
         fill
         priority={priority}
         sizes={sizes}
-        src={image.src}
+        src={withBasePath(image.src)}
       />
     </div>
   );

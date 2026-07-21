@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { LegalDocumentPage } from "@/components/legal-document-page";
+import { withBasePath } from "@/lib/base-path";
 import {
   getLegalDocument,
   isLegalSlug,
@@ -28,10 +29,10 @@ export async function generateMetadata({ params }: LegalPageProps): Promise<Meta
     title: document.shortTitle,
     description: document.description,
     alternates: {
-      canonical: `/${locale}/${legal}`,
+      canonical: withBasePath(`/${locale}/${legal}/`),
       languages: {
-        vi: `/vi/${legal}`,
-        en: `/en/${legal}`,
+        vi: withBasePath(`/vi/${legal}/`),
+        en: withBasePath(`/en/${legal}/`),
       },
     },
   };
@@ -43,4 +44,3 @@ export default async function LegalPage({ params }: LegalPageProps) {
 
   return <LegalDocumentPage locale={locale} slug={legal} />;
 }
-

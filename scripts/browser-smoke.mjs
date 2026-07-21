@@ -9,6 +9,13 @@ const chromeExecutable =
   process.env.CHROME_PATH ??
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const baseUrl = new URL(process.env.SMOKE_BASE_URL ?? "http://127.0.0.1:3100");
+const configuredBasePath = process.env.SMOKE_BASE_PATH?.trim() ?? "";
+const smokeBasePath = configuredBasePath
+  ? `/${configuredBasePath.replace(/^\/+|\/+$/g, "")}`
+  : "";
+const canonicalOrigin = new URL(
+  process.env.SMOKE_CANONICAL_ORIGIN ?? "http://localhost:3000",
+).origin;
 const visualizationDirectory =
   process.env.SMOKE_SCREENSHOT_DIR ??
   path.join(os.tmpdir(), "kim-tai-browser-smoke");
@@ -36,6 +43,9 @@ const screenshots = [];
 let chrome;
 let profileDirectory;
 let session;
+
+const localePath = (locale) => `${smokeBasePath}/${locale}${smokeBasePath ? "/" : ""}`;
+const metadataLocalePath = (locale) => `${smokeBasePath}/${locale}/`;
 
 function formatDetail(detail) {
   if (typeof detail === "string") return detail;
@@ -287,6 +297,7 @@ async function clearOriginStorage() {
 }
 
 function createTelemetry(name) {
+  const requestUrls = new Map();
   const telemetry = {
     consoleErrors: [],
     exceptions: [],
@@ -297,6 +308,9 @@ function createTelemetry(name) {
   };
 
   const removers = [
+    session.on("Network.requestWillBeSent", (event) => {
+      requestUrls.set(event.requestId, event.request.url);
+    }),
     session.on("Runtime.consoleAPICalled", (event) => {
       if (event.type !== "error" && event.type !== "warning") return;
       telemetry.consoleErrors.push({
@@ -321,6 +335,7 @@ function createTelemetry(name) {
         canceled: event.canceled ?? false,
         errorText: event.errorText,
         type: event.type,
+        url: requestUrls.get(event.requestId) ?? "",
       });
     }),
     session.on("Network.responseReceived", (event) => {
@@ -545,6 +560,10 @@ async function pageSnapshot() {
         pathname: location.pathname,
       },
       releaseSurfaces: {
+        alternateLinks: Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]')).map(
+          (link) => ({ href: link.href, hrefLang: link.hreflang }),
+        ),
+        canonicalHref: document.querySelector('link[rel="canonical"]')?.href ?? "",
         iconLinks: Array.from(
           document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]'),
         ).map((link) => ({ href: link.href, rel: link.rel, sizes: link.sizes.value })),
@@ -617,7 +636,7 @@ function assertPage(snapshot, { device, expectedAlternate, expectedLang, expecte
     : "";
   check(`${label}: route pathname`, snapshot.locale.pathname === expectedPath, snapshot.locale.pathname);
   check(`${label}: html lang`, snapshot.locale.htmlLang === expectedLang, snapshot.locale.htmlLang);
-  check(`${label}: locale switch href`, languagePath === `/${expectedAlternate}`, languagePath);
+  check(`${label}: locale switch href`, languagePath === localePath(expectedAlternate), languagePath);
   check(
     `${label}: locale switch hreflang`,
     snapshot.locale.languageHrefLang === expectedAlternate,
@@ -700,6 +719,10 @@ function assertTelemetry(telemetry, expectedPath, label) {
       response.type === "Document" && new URL(response.url).pathname === expectedPath,
   );
   const imageResponses = telemetry.data.responses.filter((response) => response.type === "Image");
+  const failedResponses = telemetry.data.responses.filter((response) => response.status >= 400);
+  const actionableNetworkFailures = telemetry.data.networkFailures.filter(
+    (failure) => !(failure.canceled && failure.errorText === "net::ERR_ABORTED"),
+  );
   check(`${label}: document HTTP 200`, documentResponse?.status === 200, documentResponse ?? null);
   check(
     `${label}: no console or hydration errors`,
@@ -713,9 +736,14 @@ function assertTelemetry(telemetry, expectedPath, label) {
   );
   check(
     `${label}: no failed network requests`,
-    telemetry.data.networkFailures.length === 0 &&
+    actionableNetworkFailures.length === 0 && failedResponses.length === 0 &&
       imageResponses.every((response) => response.status >= 200 && response.status < 400),
-    { imageResponses, networkFailures: telemetry.data.networkFailures },
+    {
+      canceledRequests: telemetry.data.networkFailures.filter((failure) => failure.canceled),
+      failedResponses,
+      imageResponses,
+      networkFailures: actionableNetworkFailures,
+    },
   );
 }
 
@@ -813,7 +841,9 @@ function assertCriticalDarkContent(snapshot, label) {
       brandGlyph.display !== "none" && brandGlyph.opacity === "1" &&
       brandGlyph.visibility === "visible" && brandGlyph.image?.complete &&
       brandGlyph.image.naturalWidth > 0 && brandGlyph.image.naturalHeight > 0 &&
-      brandGlyph.image.currentSrc.includes("kim-tai-brand-mark.png") &&
+      decodeURIComponent(brandGlyph.image.currentSrc).includes(
+        `${smokeBasePath}/icons/kim-tai-brand-mark.png`,
+      ) &&
       primaryButton.color === fixedDarkColor && primaryButton.innerText.length > 0 &&
       primaryButton.display !== "none" && primaryButton.opacity === "1" &&
       primaryButton.visibility === "visible"),
@@ -853,22 +883,49 @@ async function assertPreviewMetadata(snapshot, label) {
   check(
     `${label}: web manifest`,
     Boolean(manifest && manifest.status === 200 &&
+      new URL(manifestHref).pathname === `${smokeBasePath}/manifest.webmanifest` &&
       manifest.body?.name === "Kim Tài - Tick Vàng Online" &&
-      manifest.body?.short_name === "Kim Tài" && manifest.body?.start_url === "/vi" &&
+      manifest.body?.short_name === "Kim Tài" &&
+      manifest.body?.start_url === metadataLocalePath("vi") &&
+      manifest.body?.scope === `${smokeBasePath}/` &&
       manifest.body?.display === "standalone" && manifest.body?.icons?.length === 2 &&
-      manifest.body.icons.some((icon) => icon.src.endsWith("kim-tai-pwa-192.png") && icon.sizes === "192x192") &&
-      manifest.body.icons.some((icon) => icon.src.endsWith("kim-tai-pwa-512.png") && icon.sizes === "512x512")),
+      manifest.body.icons.some((icon) =>
+        icon.src === `${smokeBasePath}/icons/kim-tai-pwa-192.png` && icon.sizes === "192x192") &&
+      manifest.body.icons.some((icon) =>
+        icon.src === `${smokeBasePath}/icons/kim-tai-pwa-512.png` && icon.sizes === "512x512")),
     { href: manifestHref, manifest },
   );
   check(
     `${label}: browser and Apple icons`,
     snapshot.releaseSurfaces.iconLinks.some((icon) =>
-      icon.rel === "icon" && icon.href.includes("kim-tai-favicon-32.png") && icon.sizes === "32x32") &&
+      icon.rel === "icon" && new URL(icon.href).pathname ===
+        `${smokeBasePath}/icons/kim-tai-favicon-32.png` && icon.sizes === "32x32") &&
       snapshot.releaseSurfaces.iconLinks.some((icon) =>
-        icon.rel === "apple-touch-icon" && icon.href.includes("kim-tai-apple-touch-icon.png") &&
+        icon.rel === "apple-touch-icon" && new URL(icon.href).pathname ===
+        `${smokeBasePath}/icons/kim-tai-apple-touch-icon.png` &&
         icon.sizes === "180x180"),
     snapshot.releaseSurfaces.iconLinks,
   );
+  check(
+    `${label}: canonical and language alternates`,
+    snapshot.releaseSurfaces.canonicalHref ===
+      `${canonicalOrigin}${metadataLocalePath("vi")}` &&
+      snapshot.releaseSurfaces.alternateLinks.some((link) =>
+        link.hrefLang === "vi" && link.href === `${canonicalOrigin}${metadataLocalePath("vi")}`) &&
+      snapshot.releaseSurfaces.alternateLinks.some((link) =>
+        link.hrefLang === "en" && link.href === `${canonicalOrigin}${metadataLocalePath("en")}`),
+    {
+      alternates: snapshot.releaseSurfaces.alternateLinks,
+      canonical: snapshot.releaseSurfaces.canonicalHref,
+    },
+  );
+}
+
+async function assertDefaultLocaleRedirect() {
+  const telemetry = await navigate(`${smokeBasePath}/`, "default-locale-redirect");
+  const pathname = await evaluate("location.pathname");
+  check("Default locale redirect", pathname === localePath("vi"), pathname);
+  assertTelemetry(telemetry, localePath("vi"), "Default locale redirect");
 }
 
 async function run() {
@@ -882,8 +939,12 @@ async function run() {
   await setDeviceMetrics(mobile);
   await setColorScheme("light");
   await clearOriginStorage();
+  await assertDefaultLocaleRedirect();
 
-  const viMobileTelemetry = await navigate("/vi", "vi-mobile-light");
+  const viPath = localePath("vi");
+  const enPath = localePath("en");
+
+  const viMobileTelemetry = await navigate(viPath, "vi-mobile-light");
   const viMobileInitial = await pageSnapshot();
   assertTheme(viMobileInitial, false, null, "VI mobile light");
   await captureScreenshot("kim-tai-vi-mobile-light.png", "VI mobile light");
@@ -900,27 +961,27 @@ async function run() {
     device: mobile,
     expectedAlternate: "en",
     expectedLang: "vi-VN",
-    expectedPath: "/vi",
+    expectedPath: viPath,
     label: "VI mobile light",
   });
   await assertPreviewMetadata(viMobilePage, "VI mobile light");
-  assertTelemetry(viMobileTelemetry, "/vi", "VI mobile light");
+  assertTelemetry(viMobileTelemetry, viPath, "VI mobile light");
 
   const persistedDarkTelemetry = await reload("vi-mobile-dark-persisted");
   const persistedDark = await pageSnapshot();
   assertTheme(persistedDark, true, "dark", "VI mobile persisted dark");
-  assertTelemetry(persistedDarkTelemetry, "/vi", "VI mobile persisted dark");
+  assertTelemetry(persistedDarkTelemetry, viPath, "VI mobile persisted dark");
 
   await toggleTheme(false, "light", "VI mobile light toggle");
   await setColorScheme("dark");
   const persistedLightTelemetry = await reload("vi-mobile-light-persisted");
   const persistedLight = await pageSnapshot();
   assertTheme(persistedLight, false, "light", "VI mobile persisted light");
-  assertTelemetry(persistedLightTelemetry, "/vi", "VI mobile persisted light");
+  assertTelemetry(persistedLightTelemetry, viPath, "VI mobile persisted light");
 
   await clearOriginStorage();
   await setColorScheme("dark");
-  const enMobileTelemetry = await navigate("/en", "en-mobile-dark");
+  const enMobileTelemetry = await navigate(enPath, "en-mobile-dark");
   await scrollThroughScreenshots();
   const enMobileDark = await pageSnapshot();
   assertTheme(enMobileDark, true, null, "EN mobile dark");
@@ -928,15 +989,15 @@ async function run() {
     device: mobile,
     expectedAlternate: "vi",
     expectedLang: "en",
-    expectedPath: "/en",
+    expectedPath: enPath,
     label: "EN mobile dark",
   });
-  assertTelemetry(enMobileTelemetry, "/en", "EN mobile dark");
+  assertTelemetry(enMobileTelemetry, enPath, "EN mobile dark");
 
   await setDeviceMetrics(desktop);
   await setColorScheme("light");
   await clearOriginStorage();
-  const enDesktopTelemetry = await navigate("/en", "en-desktop-light");
+  const enDesktopTelemetry = await navigate(enPath, "en-desktop-light");
   await scrollThroughScreenshots();
   const enDesktopLight = await pageSnapshot();
   assertTheme(enDesktopLight, false, null, "EN desktop light");
@@ -944,11 +1005,11 @@ async function run() {
     device: desktop,
     expectedAlternate: "vi",
     expectedLang: "en",
-    expectedPath: "/en",
+    expectedPath: enPath,
     label: "EN desktop light",
   });
   await captureScreenshot("kim-tai-en-desktop-light.png", "EN desktop light");
-  assertTelemetry(enDesktopTelemetry, "/en", "EN desktop light");
+  assertTelemetry(enDesktopTelemetry, enPath, "EN desktop light");
 }
 
 async function cleanup() {
