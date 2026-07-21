@@ -63,6 +63,8 @@ Các trang ngôn ngữ và pháp lý đều được dựng tĩnh khi build.
 
 Ảnh ứng dụng nằm trong `public/images/` và chỉ được hiển thị trong Hero. Dữ liệu cho bốn biểu đồ mô phỏng nằm ở `locales.*.featureVisuals` trong `site.json`; các số liệu này chỉ minh hoạ cách trình bày, không phải giá vàng hoặc dữ liệu thị trường thực. Bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset đều được khai báo tại `site.json`.
 
+Trong chế độ preview, `operator.publicName` và `operator.facebookUrl` là hai thông tin công khai được hiển thị trên các trang pháp lý; Facebook cũng được dùng làm kênh hỗ trợ tạm thời. Chúng không thay thế tên pháp lý, mã đăng ký, địa chỉ hoặc kênh bảo vệ dữ liệu cần có trước khi đặt `operator.configured` thành `true`.
+
 Hai ảnh nhận diện gốc được giữ tại `public/icons/kim-tai-brand-mark.png` (nền trong suốt, dùng trên giao diện) và `public/icons/kim-tai-app-icon.png` (nền tối, nguồn tạo các icon web chuẩn 32/180/192/512 px).
 
 Badge App Store lấy từ [Apple Marketing Tools](https://toolbox.marketingtools.apple.com/) và badge Google Play lấy từ [Google Play badge guidelines](https://partnermarketinghub.withgoogle.com/brands/google-play/visual-identity/badge-guidelines/). Artwork được dùng nguyên bản, không đổi màu hoặc dựng lại bằng CSS.
