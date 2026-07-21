@@ -1,0 +1,368 @@
+{
+  "sources": [
+    {
+      "id": "personal-data-law",
+      "title": "Law on Personal Data Protection No. 91/2025/QH15",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=214590&orggroupid=1&pageid=27160",
+      "note": "Effective 1 January 2026."
+    },
+    {
+      "id": "personal-data-decree",
+      "title": "Decree No. 356/2025/ND-CP",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=216387&pageid=27160",
+      "note": "Decree 356/2025/ND-CP is effective from 1 January 2026; Decree 13/2023/ND-CP ceased to have effect on that date."
+    },
+    {
+      "id": "consumer-law",
+      "title": "Law on Protection of Consumers' Rights No. 19/2023/QH15",
+      "url": "https://vanban.chinhphu.vn/?docid=208363&pageid=27160",
+      "note": "Effective 1 July 2024."
+    },
+    {
+      "id": "electronic-transactions-law",
+      "title": "Law on Electronic Transactions No. 20/2023/QH15",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=208421&orggroupid=1&pageid=27160",
+      "note": "Effective 1 July 2024."
+    },
+    {
+      "id": "cybersecurity-law",
+      "title": "Cybersecurity Law No. 116/2025/QH15",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=216499&orggroupid=1&pageid=27160",
+      "note": "Cybersecurity Law 116/2025/QH15 is effective from 1 July 2026; Law 86/2015/QH13 on network information security and Cybersecurity Law 24/2018/QH14 ceased to have effect on that date."
+    }
+  ],
+  "documents": {
+    "terms-of-service": {
+      "slug": "terms-of-service",
+      "shortTitle": "Terms of Service",
+      "title": "Kim Tài Terms of Service",
+      "description": "The rules governing your use of Kim Tài - Tick Vàng Online.",
+      "version": "1.0",
+      "sourceIds": ["consumer-law", "electronic-transactions-law"],
+      "sections": [
+        {
+          "id": "scope",
+          "title": "1. Scope and provider",
+          "paragraphs": [
+            "These Terms govern use of {{appName}}, provided by {{operatorLegalName}}. Registration number: {{operatorRegistrationNumber}}. Registered address: {{operatorRegisteredAddress}}. Telephone: {{operatorPhone}}. Support channel: {{supportContact}}.",
+            "The Privacy Policy is a separate document. Accepting these Terms does not by itself constitute consent to personal-data processing."
+          ],
+          "items": []
+        },
+        {
+          "id": "acceptance",
+          "title": "2. Acceptance and review",
+          "paragraphs": [
+            "You become bound only after the Terms are presented clearly and you take the acceptance action required by the App, to the extent permitted by law. You must have a reasonable opportunity to read, download, or retain the current version.",
+            "If you do not agree, do not continue using the App. Acceptance of these Terms does not replace separate consent for personal-data processing where consent is legally required.",
+            "The operator retains the version of the Terms you accepted for the period in which they remain effective and, as required by applicable law, provides a copy within seven working days after receiving a valid request. The time, version, and method of acceptance may be recorded as evidence of formation."
+          ],
+          "items": []
+        },
+        {
+          "id": "service",
+          "title": "3. The service",
+          "paragraphs": [
+            "The App helps record a personal gold portfolio, display estimated values, view reference buy/sell prices by source, and personalize language, unit, or reminder settings.",
+            "The App is not an exchange or custodian. It does not buy or sell gold, set transaction prices, or provide investment, tax, or legal advice."
+          ],
+          "items": []
+        },
+        {
+          "id": "reference-prices",
+          "title": "4. Reference prices and third-party sources",
+          "paragraphs": [
+            "Prices, timestamps, provider names, and estimates are for reference only. Data may be delayed, incomplete, or different by region, product, or source conditions.",
+            "Confirm directly with the relevant gold business before making a transaction decision. Displaying a source name does not by itself indicate agency, sponsorship, or endorsement between that source and Kim Tài."
+          ],
+          "items": []
+        },
+        {
+          "id": "local-data",
+          "title": "5. On-device data and backups",
+          "paragraphs": [
+            "Under the current product design, portfolio information you enter is stored on the device. You are responsible for protecting the device, maintaining suitable backups, and checking data before uninstalling the App, changing devices, or resetting the device.",
+            "Functions such as fetching reference prices, opening an app store, or contacting support may require a network connection and may be subject to third-party policies. See the Privacy Policy for data-processing details."
+          ],
+          "items": []
+        },
+        {
+          "id": "permitted-use",
+          "title": "6. Permitted use",
+          "paragraphs": [
+            "You may use the App for personal, lawful purposes and in line with its documentation."
+          ],
+          "items": [
+            "Do not disrupt, damage, probe without authorization, or bypass safeguards protecting the App or related services.",
+            "Do not copy, resell, rent, commercially exploit, or create derivative products from the App without a lawful right.",
+            "Do not use the App to provide deceptive information, infringe another person's rights, or perform prohibited acts."
+          ]
+        },
+        {
+          "id": "availability",
+          "title": "7. Updates and availability",
+          "paragraphs": [
+            "We may update, suspend, or change functions to fix defects, protect security, or comply with law. If a change materially affects your rights, we will provide reasonable notice and seek renewed acceptance where required.",
+            "No promise is made that every price source or function will always be available. Mandatory consumer rights remain unaffected.",
+            "You may stop using and uninstall the App at any time. A change to general transaction conditions does not bind you unless it has been notified or accepted as required by law; if you disagree, you may terminate without losing rights already accrued."
+          ],
+          "items": []
+        },
+        {
+          "id": "intellectual-property",
+          "title": "8. Intellectual property",
+          "paragraphs": [
+            "The App, interface, source code, Kim Tài-created content, and related marks are protected by applicable law. Portfolio data you enter remains yours; rights to use that data arise only as needed to deliver functions you request and as described in the Privacy Policy."
+          ],
+          "items": []
+        },
+        {
+          "id": "liability",
+          "title": "9. Responsibility and consumer rights",
+          "paragraphs": [
+            "To the extent permitted by law, we are not responsible for decisions to buy, sell, or hold gold based on reference data, or for data loss caused by a lost, damaged, reset, or erased device outside our reasonable control.",
+            "Nothing in these Terms excludes liability that cannot lawfully be excluded, restricts complaint or court rights, or reduces mandatory consumer protections under Vietnamese law. Ambiguities are interpreted in the consumer's favor where applicable."
+          ],
+          "items": []
+        },
+        {
+          "id": "law-disputes",
+          "title": "10. Governing law, complaints, and language",
+          "paragraphs": [
+            "These Terms are governed by Vietnamese law. Complaints may be sent through {{supportContact}}; the parties should first seek a good-faith resolution without limiting either party's right to approach a competent authority or court.",
+            "The Vietnamese version is used to interpret and apply this document. However, if the Vietnamese and English versions differ and applicable law requires the version more favorable to the consumer to prevail, the more favorable wording applies."
+          ],
+          "items": []
+        }
+      ]
+    },
+    "terms-and-conditions": {
+      "slug": "terms-and-conditions",
+      "shortTitle": "Terms and Conditions",
+      "title": "Website Terms and Conditions",
+      "description": "Conditions that apply when visiting the Kim Tài product site and using its download links.",
+      "version": "1.0",
+      "sourceIds": ["consumer-law", "electronic-transactions-law"],
+      "sections": [
+        {
+          "id": "website-scope",
+          "title": "1. Website scope",
+          "paragraphs": [
+            "These conditions apply to the website introducing {{appName}}. App use is separately governed by the Terms of Service; personal-data processing is described in the Privacy Policy.",
+            "The website currently provides information and app-store links only. It does not create accounts, accept orders or payments, broker transactions, or trade gold."
+          ],
+          "items": []
+        },
+        {
+          "id": "site-use",
+          "title": "2. Using the website",
+          "paragraphs": [
+            "You may access and share public links for lawful purposes. Do not overload or disrupt the site, gain unauthorized access, scrape beyond reasonable limits, or use content in a way that misrepresents Kim Tài's origin or functions."
+          ],
+          "items": []
+        },
+        {
+          "id": "product-information",
+          "title": "3. Product information",
+          "paragraphs": [
+            "Screenshots and descriptions reflect the design supplied when the site was updated. Release functionality may vary by platform, version, or region.",
+            "Figures visible inside screenshots illustrate the product interface. They are not current market data, performance promises, or results from an actual user."
+          ],
+          "items": []
+        },
+        {
+          "id": "store-links",
+          "title": "4. App-store links",
+          "paragraphs": [
+            "Until a direct release URL is configured, download buttons open official App Store or Google Play search results. Verify the app name, publisher, and requested permissions before installation.",
+            "App stores are third parties with their own terms and policies. Kim Tài does not control store availability, review processes, or data processed by those stores."
+          ],
+          "items": []
+        },
+        {
+          "id": "third-parties",
+          "title": "5. Price sources and third-party content",
+          "paragraphs": [
+            "Business or price-source names visible in screenshots only help explain the App's reference-price function. Unless separately confirmed in writing, they do not indicate partnership, sponsorship, or endorsement.",
+            "External links may change outside our control. Verify the official source before relying on external information."
+          ],
+          "items": []
+        },
+        {
+          "id": "no-advice",
+          "title": "6. No advice or transaction quote",
+          "paragraphs": [
+            "The website and App do not give investment recommendations, forecast returns, certify gold quality, or provide executable quotes. Evaluate information independently and seek qualified advice where appropriate."
+          ],
+          "items": []
+        },
+        {
+          "id": "content-rights",
+          "title": "7. Content and brand rights",
+          "paragraphs": [
+            "Original content, design, icons, and the Kim Tài name belong to their respective owners. You may not imply agency, create an impersonating app, or infringe intellectual-property rights. Fair quotation and mandatory legal rights remain unaffected."
+          ],
+          "items": []
+        },
+        {
+          "id": "site-availability",
+          "title": "8. Availability and changes",
+          "paragraphs": [
+            "The website may be maintained or updated. Material changes to transaction conditions or consumer rights will be published with reasonable advance notice; changes will not be applied retroactively to reduce rights already lawfully accrued."
+          ],
+          "items": []
+        },
+        {
+          "id": "consumer-rights",
+          "title": "9. Consumer rights",
+          "paragraphs": [
+            "Nothing here restricts your right to accurate information, complaints, court action, compensation, or other mandatory protections under the Law on Protection of Consumers' Rights and related law."
+          ],
+          "items": []
+        },
+        {
+          "id": "governing-terms",
+          "title": "10. Governing law and contact",
+          "paragraphs": [
+            "These conditions are governed by Vietnamese law. Disputes should first be addressed through good-faith discussion without removing the right to approach a competent authority.",
+            "The Vietnamese version is used to interpret and apply this document. However, if the Vietnamese and English versions differ and applicable law requires the version more favorable to the consumer to prevail, the more favorable wording applies.",
+            "The website operator is {{operatorLegalName}}. Registration number: {{operatorRegistrationNumber}}. Registered address: {{operatorRegisteredAddress}}. Telephone: {{operatorPhone}}. Support channel: {{supportContact}}."
+          ],
+          "items": []
+        }
+      ]
+    },
+    "privacy-policy": {
+      "slug": "privacy-policy",
+      "shortTitle": "Privacy Policy",
+      "title": "Kim Tài Privacy Policy",
+      "description": "Transparent information about personal data on the Kim Tài website and in the App.",
+      "version": "1.0",
+      "sourceIds": ["personal-data-law", "personal-data-decree", "consumer-law", "cybersecurity-law"],
+      "sections": [
+        {
+          "id": "controller",
+          "title": "1. Scope and data controller",
+          "paragraphs": [
+            "This Policy applies to the website and {{appName}}. The data controller for the processing described in this Policy is {{operatorLegalName}}, registration number {{operatorRegistrationNumber}}, registered at {{operatorRegisteredAddress}}. Personal-data requests may be sent to {{privacyContact}}.",
+            "We process data only for specific, clear purposes and for a period appropriate to those purposes, using safeguards proportionate to the processing under Vietnamese law."
+          ],
+          "items": []
+        },
+        {
+          "id": "data-categories",
+          "title": "2. Data categories that may be involved",
+          "paragraphs": [
+            "Under the current configuration, the website does not create accounts, take orders or payments, enable advertising, or install user-analytics tools."
+          ],
+          "items": [
+            "Gold-portfolio data entered in the App, such as gold type, quantity, unit, cost, and related notes; under the current design this is stored locally on the device.",
+            "Minimum technical data needed when a device requests reference prices or opens a third-party service, potentially including IP address, request time, device/browser details, and security logs depending on the actual implementation.",
+            "Information you choose to send to support, such as your name, contact details, request content, and attachments.",
+            "Local preferences such as language, unit, preferred price source, reminder schedule, and appearance."
+          ]
+        },
+        {
+          "id": "purposes",
+          "title": "3. Processing purposes",
+          "paragraphs": [
+            "Data is processed only for notified purposes that are necessary to deliver functions you request."
+          ],
+          "items": [
+            "Display and calculate your portfolio on the device.",
+            "Retrieve and present reference-price data from configured sources.",
+            "Remember preferences, run reminders, and maintain service security and stability.",
+            "Receive, verify, and resolve support requests or complaints.",
+            "Meet legal obligations and lawful requests from competent authorities."
+          ]
+        },
+        {
+          "id": "legal-basis-consent",
+          "title": "4. Processing grounds and consent",
+          "paragraphs": [
+            "Where consent is required, we will provide a clear and specific notice before processing and allow you to agree or refuse. Personal-data consent is separate from accepting the Terms of Service and from optional marketing choices.",
+            "Where processing is not based on consent, we process data without consent only when a specific case under Article 19 of Law 91/2025/QH15 or another applicable rule actually applies, for example when necessary to perform an agreement with you or comply with a legal duty. The operator must identify and document the specific case; “lawful rights and interests” is not a standalone processing basis outside the statutory cases."
+          ],
+          "items": []
+        },
+        {
+          "id": "local-storage",
+          "title": "5. Local storage and your control",
+          "paragraphs": [
+            "Portfolio data stored on your device is not automatically data received by the operator. You may view, edit, or erase it using App functions or the platform's app-data controls.",
+            "Back up data appropriately before uninstalling the App, replacing the device, or resetting it. If a later version adds cloud sync, accounts, or remote backup, this Policy must be updated and disclosed before that feature is used."
+          ],
+          "items": []
+        },
+        {
+          "id": "recipients",
+          "title": "6. Recipients and third-party services",
+          "paragraphs": [
+            "The website may link to the App Store and Google Play. The App may connect to reference-price sources or infrastructure providers. Those parties process data under their own role and policies.",
+            "The actual list of hosting, support, price, analytics, notification, and other processors must be disclosed before release. We do not sell personal data and will not make consent a condition for a function that does not need the relevant data, unless law requires otherwise."
+          ],
+          "items": []
+        },
+        {
+          "id": "cross-border",
+          "title": "7. Cross-border personal-data transfers",
+          "paragraphs": [
+            "The current configuration does not confirm any transfer of personal data outside Vietnam. Before a cross-border transfer is introduced, the operator must identify the destination, recipient, purpose, safeguards, and complete the impact documentation required by Law 91/2025/QH15 and Decree 356/2025/ND-CP where applicable.",
+            "If you choose to open an app store or third-party website, you interact directly with that provider under its privacy notice."
+          ],
+          "items": []
+        },
+        {
+          "id": "retention",
+          "title": "8. Retention and deletion",
+          "paragraphs": [
+            "Local portfolio data remains on the device until you erase or reset it or uninstall the App under the platform's behavior. Support data or logs actually received by the operator are retained only as needed for the stated purpose, dispute handling, system security, or legal duties.",
+            "Specific periods for each system, backup, and log must be filled in after the real data flows are inventoried. When a period ends, data must be erased, destroyed, or anonymized as required."
+          ],
+          "items": []
+        },
+        {
+          "id": "rights",
+          "title": "9. Data-subject rights",
+          "paragraphs": [
+            "Under the Personal Data Protection Law 91/2025/QH15, and subject to its procedures and limits, you have the right to:"
+          ],
+          "items": [
+            "Know about processing; agree or refuse; and request withdrawal of consent.",
+            "View, correct, or request correction; and request provision, erasure, or restriction of personal data.",
+            "Object to processing; complain, report, bring a claim, and seek compensation as provided by law.",
+            "Protect your personal data and ask competent authorities, organizations, or relevant persons to apply protective measures as provided by law."
+          ]
+        },
+        {
+          "id": "children",
+          "title": "10. Children and represented persons",
+          "paragraphs": [
+            "The App is intended for adults managing personal assets and is not actively directed to children. Where data of a child, a person lacking or having limited civil capacity, or a person with cognitive difficulties is involved, the data subject's rights are exercised by the legal representative and under the special conditions of applicable law.",
+            "If inappropriate collection is identified, the operator will stop processing and erase or otherwise handle the data as lawfully required."
+          ],
+          "items": []
+        },
+        {
+          "id": "security-incidents",
+          "title": "11. Security and incidents",
+          "paragraphs": [
+            "We apply organizational, technical, and human safeguards proportionate to the processing, such as access limits, software updates, log management, and incident procedures. No system can be guaranteed absolutely secure.",
+            "For a reportable breach or incident, the operator will assess, remediate, and notify the relevant authority or data subject in the time and form required by law. Cybersecurity Law 116/2025/QH15 applies from 1 July 2026."
+          ],
+          "items": []
+        },
+        {
+          "id": "contact-changes",
+          "title": "12. Requests, contact, and Policy changes",
+          "paragraphs": [
+            "Send personal-data requests to {{privacyContact}} and other support requests to {{supportContact}}. We may reasonably verify identity before acting on a data request to protect your data.",
+            "If this Policy changes materially, we will publish the new version, effective date, and appropriate advance notice. A changed purpose or consent basis will be handled separately as required by law; continued use does not automatically replace renewed consent where consent is required.",
+            "The Vietnamese version is used to interpret and apply this document. However, if the Vietnamese and English versions differ and applicable law requires the version more favorable to the consumer to prevail, the more favorable wording applies."
+          ],
+          "items": []
+        }
+      ]
+    }
+  }
+}

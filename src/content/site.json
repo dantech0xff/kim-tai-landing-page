@@ -1,0 +1,350 @@
+{
+  "brand": {
+    "name": "Kim Tài",
+    "productName": "Kim Tài - Tick Vàng Online",
+    "shortName": "Kim Tài",
+    "tagline": "Tick Vàng Online",
+    "defaultLocale": "vi"
+  },
+  "icons": {
+    "brandMark": {
+      "src": "/icons/kim-tai-brand-mark.png",
+      "width": 1254,
+      "height": 1254
+    },
+    "favicon": {
+      "src": "/icons/kim-tai-favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    "appleTouch": {
+      "src": "/icons/kim-tai-apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    "manifest": [
+      {
+        "src": "/icons/kim-tai-pwa-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/icons/kim-tai-pwa-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  },
+  "release": {
+    "ready": false,
+    "effectiveDate": "2026-07-21",
+    "lastUpdated": "2026-07-21"
+  },
+  "operator": {
+    "configured": false,
+    "legalName": "Đơn vị vận hành Kim Tài",
+    "registrationNumber": "",
+    "registeredAddress": "",
+    "phone": "",
+    "supportEmail": "",
+    "privacyEmail": ""
+  },
+  "productFacts": {
+    "holdingsStoredOnDevice": true,
+    "websiteAnalyticsEnabled": false,
+    "websiteAdvertisingEnabled": false,
+    "websiteAccountEnabled": false,
+    "websiteOrderingOrPaymentEnabled": false
+  },
+  "downloads": {
+    "ios": {
+      "platform": "iPhone",
+      "directUrl": "",
+      "published": false
+    },
+    "android": {
+      "platform": "Android",
+      "directUrl": "",
+      "published": false
+    }
+  },
+  "screenshots": {
+    "overview": {
+      "src": "/images/app-overview.png",
+      "width": 1320,
+      "height": 2868
+    },
+    "settings": {
+      "src": "/images/app-settings.png",
+      "width": 1320,
+      "height": 2868
+    },
+    "market": {
+      "src": "/images/app-market.png",
+      "width": 1320,
+      "height": 2868
+    }
+  },
+  "locales": {
+    "vi": {
+      "localeName": "Tiếng Việt",
+      "languageCode": "vi-VN",
+      "metadata": {
+        "title": "Kim Tài - Tick Vàng Online | Sổ vàng trong túi bạn",
+        "description": "Ghi sổ vàng, theo dõi giá tham khảo và xem biến động danh mục ngay trên thiết bị với Kim Tài."
+      },
+      "navigation": {
+        "features": "Tính năng",
+        "privacy": "Riêng tư",
+        "download": "Tải ứng dụng",
+        "themeLight": "Chuyển sang giao diện sáng",
+        "themeDark": "Chuyển sang giao diện tối",
+        "language": "Đổi sang English",
+        "skip": "Bỏ qua đến nội dung chính"
+      },
+      "hero": {
+        "eyebrow": "Sổ vàng trong túi bạn",
+        "titleStart": "Biết mình đang giữ gì,",
+        "titleAccent": "đáng giá bao nhiêu.",
+        "description": "Ghi sổ, theo dõi giá tham khảo và nhìn rõ biến động danh mục vàng — ngay trên thiết bị của bạn.",
+        "primaryCta": "Tìm bản phát hành",
+        "secondaryCta": "Khám phá tính năng",
+        "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
+        "visualLabel": "Màn hình tổng quan tài sản vàng trong ứng dụng Kim Tài",
+        "floatingLabel": "9999 · 24K",
+        "floatingValue": "Một sổ. Nhiều loại vàng."
+      },
+      "featureIntro": {
+        "eyebrow": "Một nhịp nhìn toàn bộ",
+        "title": "Từ sổ sở hữu đến nhịp thị trường.",
+        "description": "Kim Tài gom những việc bạn thường phải ghi nhớ rời rạc vào một không gian gọn, dễ đọc và luôn trong tầm tay."
+      },
+      "ledgerVisual": {
+        "primaryPurity": "9999",
+        "quantity": "100 Chỉ",
+        "secondaryPurity": "24K",
+        "status": "Đã ghi sổ"
+      },
+      "features": [
+        {
+          "id": "portfolio",
+          "icon": "ledger",
+          "eyebrow": "Sổ sở hữu",
+          "title": "Biết tổng vốn và giá trị tạm tính trong một lần nhìn.",
+          "description": "Ghi lại số lượng theo Chỉ hoặc Lượng, tách 9999 và 24K, rồi xem giá trị danh mục theo mức giá bán tham khảo hiện có.",
+          "stat": "Sổ vàng cá nhân",
+          "image": "overview",
+          "tone": "forest"
+        },
+        {
+          "id": "market",
+          "icon": "trend",
+          "eyebrow": "Giá tham khảo",
+          "title": "Lọc thị trường theo nơi bán và loại vàng bạn quan tâm.",
+          "description": "Theo dõi bảng giá theo nhà cung cấp, khu vực và sản phẩm; nhìn rõ giá mua vào, bán ra cùng thời điểm cập nhật.",
+          "stat": "DOJI · PNJ",
+          "image": "market",
+          "tone": "gold"
+        },
+        {
+          "id": "local-first",
+          "icon": "device",
+          "eyebrow": "Riêng tư từ thiết kế",
+          "title": "Danh mục vàng ở lại trên thiết bị.",
+          "description": "Số lượng và giá vốn bạn ghi trong ứng dụng được lưu cục bộ trên thiết bị theo mô tả hiện tại của sản phẩm.",
+          "stat": "Local-first",
+          "image": "",
+          "tone": "mint"
+        },
+        {
+          "id": "personalize",
+          "icon": "sliders",
+          "eyebrow": "Theo cách của bạn",
+          "title": "Nhắc ghi sổ, đổi ngôn ngữ và chọn đơn vị mặc định.",
+          "description": "Cá nhân hoá lịch nhắc, Tiếng Việt hoặc English, Chỉ hoặc Lượng và nguồn giá ưu tiên ngay trong phần cài đặt.",
+          "stat": "VI · EN",
+          "image": "settings",
+          "tone": "coral"
+        }
+      ],
+      "principles": {
+        "eyebrow": "Rõ ràng trước con số",
+        "title": "Công cụ theo dõi, không phải lời mời đầu tư.",
+        "description": "Kim Tài giúp bạn tổ chức thông tin cá nhân và đọc giá tham khảo. Ứng dụng không bán vàng, không thay bạn định giá giao dịch và không đưa ra khuyến nghị đầu tư.",
+        "points": [
+          "Luôn hiển thị nguồn và thời điểm cập nhật khi có dữ liệu giá.",
+          "Tách rõ giá mua vào, bán ra và giá trị tạm tính.",
+          "Cho phép bạn tự chọn đơn vị, khu vực và nguồn giá phù hợp."
+        ]
+      },
+      "download": {
+        "eyebrow": "Mang sổ vàng theo bạn",
+        "title": "Bắt đầu từ món vàng đầu tiên.",
+        "description": "Nút tải sẽ hoạt động sau khi bản phát hành Kim Tài được duyệt và liên kết trực tiếp đã được xác minh trong tệp JSON.",
+        "iosLabel": "Tìm trên App Store",
+        "androidLabel": "Tìm trên Google Play",
+        "comingSoon": "Đang chờ link phát hành",
+        "externalNote": "Để tránh ứng dụng giả mạo, website không mở kết quả tìm kiếm thay cho liên kết phát hành trực tiếp đã xác minh."
+      },
+      "footer": {
+        "summary": "Sổ vàng cá nhân để ghi, xem và hiểu danh mục của bạn.",
+        "legalHeading": "Pháp lý",
+        "productHeading": "Sản phẩm",
+        "termsOfService": "Điều khoản dịch vụ",
+        "termsAndConditions": "Điều khoản và điều kiện",
+        "privacyPolicy": "Chính sách quyền riêng tư",
+        "copyright": "Kim Tài. Mọi quyền được bảo lưu.",
+        "disclaimer": "Giá hiển thị chỉ để tham khảo, không phải báo giá giao dịch hoặc tư vấn đầu tư."
+      },
+      "legalUi": {
+        "back": "Về trang giới thiệu",
+        "lastUpdated": "Cập nhật lần cuối",
+        "effectiveDate": "Có hiệu lực từ",
+        "contents": "Trong tài liệu này",
+        "sourceHeading": "Nguồn pháp lý chính thức",
+        "previewTitle": "Cần hoàn tất thông tin đơn vị vận hành",
+        "previewBody": "Đây là bản nội dung sẵn sàng để cấu hình. Trước khi phát hành, hãy bổ sung tên pháp lý, địa chỉ đăng ký, số đăng ký và kênh liên hệ thật trong site.json.",
+        "notLegalAdvice": "Nội dung này là mẫu thông tin sản phẩm, không thay thế ý kiến tư vấn pháp lý cho mô hình vận hành thực tế.",
+        "operatorDetails": {
+          "heading": "Thông tin đơn vị vận hành",
+          "legalName": "Tên pháp lý",
+          "registrationNumber": "Mã số đăng ký",
+          "registeredAddress": "Địa chỉ đăng ký",
+          "phone": "Điện thoại",
+          "supportEmail": "Hỗ trợ",
+          "privacyEmail": "Bảo vệ dữ liệu"
+        }
+      }
+    },
+    "en": {
+      "localeName": "English",
+      "languageCode": "en",
+      "metadata": {
+        "title": "Kim Tài - Tick Vàng Online | Your gold book, in your pocket",
+        "description": "Record gold holdings, follow reference prices, and understand portfolio movement on your device with Kim Tài."
+      },
+      "navigation": {
+        "features": "Features",
+        "privacy": "Privacy",
+        "download": "Get the app",
+        "themeLight": "Switch to light mode",
+        "themeDark": "Switch to dark mode",
+        "language": "Đổi sang Tiếng Việt",
+        "skip": "Skip to main content"
+      },
+      "hero": {
+        "eyebrow": "Your gold book, in your pocket",
+        "titleStart": "Know what you hold—",
+        "titleAccent": "and what it is worth.",
+        "description": "Record holdings, follow reference prices, and see how your gold portfolio moves, right on your device.",
+        "primaryCta": "Find the release",
+        "secondaryCta": "Explore features",
+        "trustNote": "Holdings stay on your device · Prices are for reference only",
+        "visualLabel": "Kim Tài app screen showing a gold portfolio overview",
+        "floatingLabel": "9999 · 24K",
+        "floatingValue": "One book. Many kinds of gold."
+      },
+      "featureIntro": {
+        "eyebrow": "The whole picture at a glance",
+        "title": "From your holdings book to the market pulse.",
+        "description": "Kim Tài brings the details you usually track in separate places into one calm, readable space."
+      },
+      "ledgerVisual": {
+        "primaryPurity": "9999",
+        "quantity": "100 Chỉ",
+        "secondaryPurity": "24K",
+        "status": "Recorded"
+      },
+      "features": [
+        {
+          "id": "portfolio",
+          "icon": "ledger",
+          "eyebrow": "Holdings book",
+          "title": "See your cost and estimated value in one glance.",
+          "description": "Record quantities in Chỉ or Lượng, separate 9999 from 24K, and estimate portfolio value using the available reference selling price.",
+          "stat": "Your gold book",
+          "image": "overview",
+          "tone": "forest"
+        },
+        {
+          "id": "market",
+          "icon": "trend",
+          "eyebrow": "Reference prices",
+          "title": "Filter the market by seller and gold type.",
+          "description": "Browse listed prices by provider, region, and product, with buy, sell, and update-time context kept visible.",
+          "stat": "DOJI · PNJ",
+          "image": "market",
+          "tone": "gold"
+        },
+        {
+          "id": "local-first",
+          "icon": "device",
+          "eyebrow": "Private by design",
+          "title": "Your gold portfolio stays on your device.",
+          "description": "The quantities and cost details you enter are stored locally on the device under the product's current design.",
+          "stat": "Local-first",
+          "image": "",
+          "tone": "mint"
+        },
+        {
+          "id": "personalize",
+          "icon": "sliders",
+          "eyebrow": "Make it yours",
+          "title": "Set reminders, language, and your preferred unit.",
+          "description": "Choose a logging reminder, Vietnamese or English, Chỉ or Lượng, and a preferred price source from settings.",
+          "stat": "VI · EN",
+          "image": "settings",
+          "tone": "coral"
+        }
+      ],
+      "principles": {
+        "eyebrow": "Clarity before numbers",
+        "title": "A tracking tool—not an invitation to invest.",
+        "description": "Kim Tài helps organize personal information and read reference prices. It does not sell gold, set transaction prices, or provide investment advice.",
+        "points": [
+          "Show the source and update time whenever price data is available.",
+          "Keep buy, sell, and estimated portfolio values clearly distinct.",
+          "Let you choose the unit, region, and price source that fits your needs."
+        ]
+      },
+      "download": {
+        "eyebrow": "Take your gold book with you",
+        "title": "Start with your first gold item.",
+        "description": "Download buttons become active after the Kim Tài release is approved and its direct store links are verified in JSON.",
+        "iosLabel": "Find on the App Store",
+        "androidLabel": "Find on Google Play",
+        "comingSoon": "Direct release link pending",
+        "externalNote": "To reduce lookalike-app risk, the website does not substitute store search results for verified direct release links."
+      },
+      "footer": {
+        "summary": "A personal gold book to record, review, and understand your holdings.",
+        "legalHeading": "Legal",
+        "productHeading": "Product",
+        "termsOfService": "Terms of Service",
+        "termsAndConditions": "Terms and Conditions",
+        "privacyPolicy": "Privacy Policy",
+        "copyright": "Kim Tài. All rights reserved.",
+        "disclaimer": "Displayed prices are for reference only, not transaction quotes or investment advice."
+      },
+      "legalUi": {
+        "back": "Back to product page",
+        "lastUpdated": "Last updated",
+        "effectiveDate": "Effective from",
+        "contents": "In this document",
+        "sourceHeading": "Official legal sources",
+        "previewTitle": "Operator details must be completed",
+        "previewBody": "This is a configurable launch draft. Before publication, add the real legal name, registered address, registration number, and contact channels in site.json.",
+        "notLegalAdvice": "This product-information template does not replace legal advice for the actual operating model.",
+        "operatorDetails": {
+          "heading": "Operator details",
+          "legalName": "Legal name",
+          "registrationNumber": "Registration number",
+          "registeredAddress": "Registered address",
+          "phone": "Telephone",
+          "supportEmail": "Support",
+          "privacyEmail": "Data protection"
+        }
+      }
+    }
+  }
+}
