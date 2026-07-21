@@ -133,6 +133,8 @@ export function interpolateLegalText(locale: Locale, text: string) {
   const configured = siteConfig.operator.configured;
   const configuredValue = (value: string, fallback: string) =>
     configured && value.trim() ? value : fallback;
+  const publicSupportContact =
+    siteConfig.operator.facebookUrl.trim() || pending.support;
 
   const replacements: Record<string, string> = {
     "{{appName}}": siteConfig.brand.productName,
@@ -151,7 +153,7 @@ export function interpolateLegalText(locale: Locale, text: string) {
     "{{operatorPhone}}": configuredValue(siteConfig.operator.phone, pending.phone),
     "{{supportContact}}": configuredValue(
       siteConfig.operator.supportEmail,
-      pending.support,
+      publicSupportContact,
     ),
     "{{privacyContact}}":
       configuredValue(siteConfig.operator.privacyEmail, privacyFallback),

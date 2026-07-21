@@ -18,20 +18,44 @@ interface LegalDocumentPageProps {
   slug: LegalSlug;
 }
 
+interface OperatorDetail {
+  href?: string;
+  label: string;
+  value: string;
+}
+
 export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
   const copy = getSiteCopy(locale);
   const { document, sources } = getLegalDocument(locale, slug);
   const date = formatLegalDate(locale, siteConfig.release.lastUpdated);
   const effectiveDate = formatLegalDate(locale, siteConfig.release.effectiveDate);
   const operatorLabels = copy.legalUi.operatorDetails;
-  const operatorDetails = [
-    [operatorLabels.legalName, siteConfig.operator.legalName],
-    [operatorLabels.registrationNumber, siteConfig.operator.registrationNumber],
-    [operatorLabels.registeredAddress, siteConfig.operator.registeredAddress],
-    [operatorLabels.phone, siteConfig.operator.phone],
-    [operatorLabels.supportEmail, siteConfig.operator.supportEmail],
-    [operatorLabels.privacyEmail, siteConfig.operator.privacyEmail],
-  ] as const;
+  const legalOperatorDetails: OperatorDetail[] = [
+    { label: operatorLabels.legalName, value: siteConfig.operator.legalName },
+    {
+      label: operatorLabels.registrationNumber,
+      value: siteConfig.operator.registrationNumber,
+    },
+    {
+      label: operatorLabels.registeredAddress,
+      value: siteConfig.operator.registeredAddress,
+    },
+    { label: operatorLabels.phone, value: siteConfig.operator.phone },
+    { label: operatorLabels.supportEmail, value: siteConfig.operator.supportEmail },
+    { label: operatorLabels.privacyEmail, value: siteConfig.operator.privacyEmail },
+  ];
+  const operatorDetails: OperatorDetail[] = [
+    {
+      label: operatorLabels.publicName,
+      value: siteConfig.operator.publicName,
+    },
+    ...(siteConfig.operator.configured ? legalOperatorDetails : []),
+    {
+      href: siteConfig.operator.facebookUrl,
+      label: operatorLabels.facebook,
+      value: operatorLabels.facebookCta,
+    },
+  ].filter((detail) => detail.value.trim());
 
   return (
     <>
@@ -68,14 +92,27 @@ export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
           </aside>
         )}
 
-        {siteConfig.operator.configured && (
+        {operatorDetails.length > 0 && (
           <section className="operator-details" aria-labelledby="operator-details-title">
-            <h2 id="operator-details-title">{operatorLabels.heading}</h2>
+            <h2 id="operator-details-title">
+              {siteConfig.operator.configured
+                ? operatorLabels.heading
+                : operatorLabels.publicHeading}
+            </h2>
             <dl>
-              {operatorDetails.map(([label, value]) => (
-                <div key={label}>
-                  <dt>{label}</dt>
-                  <dd>{value}</dd>
+              {operatorDetails.map((detail) => (
+                <div key={detail.label}>
+                  <dt>{detail.label}</dt>
+                  <dd>
+                    {detail.href ? (
+                      <a href={detail.href} rel="noreferrer" target="_blank">
+                        {detail.value}
+                        <AppIcon name="arrow-up-right" size={16} />
+                      </a>
+                    ) : (
+                      detail.value
+                    )}
+                  </dd>
                 </div>
               ))}
             </dl>
