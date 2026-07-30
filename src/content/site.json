@@ -79,9 +79,9 @@
     },
     "android": {
       "platform": "Android",
-      "packageName": "",
-      "directUrl": "",
-      "published": false,
+      "packageName": "com.creative.kimtai.tichvang",
+      "directUrl": "https://play.google.com/store/apps/details?id=com.creative.kimtai.tichvang",
+      "published": true,
       "badges": {
         "vi": {
           "src": "/badges/google-play-vi.png",
