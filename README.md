@@ -23,9 +23,17 @@ npm run build
 npm run start
 ```
 
-## GitHub Pages
+## Triển khai
 
-Website được triển khai miễn phí tại:
+Bản production với custom domain chạy trên Vercel:
+
+<https://kimtai.dantech.academy>
+
+Mỗi lần push vào `main`, Vercel tự build và deploy (project `dan-tech-projects/kim-tai-landing-page`). Canonical origin đặt qua biến môi trường `SITE_ORIGIN` trên Vercel. Chi tiết trong [hướng dẫn triển khai](docs/deployment.md).
+
+### GitHub Pages
+
+Bản mirror tĩnh được triển khai miễn phí tại:
 
 <https://dantech0xff.github.io/kim-tai-landing-page/>
 

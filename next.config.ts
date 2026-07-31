@@ -7,7 +7,7 @@ const isUserSite = repositoryName.endsWith(".github.io");
 const basePath = isGitHubPages && !isUserSite ? `/${repositoryName}` : "";
 const siteOrigin = isGitHubPages
   ? `https://${repositoryOwner.toLowerCase()}.github.io`
-  : "http://localhost:3000";
+  : process.env.SITE_ORIGIN ?? "http://localhost:3000";
 
 const sharedConfig: NextConfig = {
   env: {
