@@ -19,6 +19,11 @@ const sharedConfig: NextConfig = {
 const nextConfig: NextConfig = isGitHubPages
   ? {
       ...sharedConfig,
+      env: {
+        ...sharedConfig.env,
+        NEXT_PUBLIC_CANONICAL_ORIGIN:
+          process.env.CANONICAL_ORIGIN ?? "https://kimtai.dantech.academy",
+      },
       basePath,
       images: {
         unoptimized: true,
@@ -31,11 +36,12 @@ const nextConfig: NextConfig = isGitHubPages
       images: {
         formats: ["image/avif", "image/webp"],
       },
+      trailingSlash: true,
       async redirects() {
         return [
           {
             source: "/",
-            destination: "/vi",
+            destination: "/vi/",
             permanent: false,
           },
         ];

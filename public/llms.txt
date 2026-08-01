@@ -1,0 +1,16 @@
+# Kim Tài - Tick Vàng Online
+
+> Kim Tài là ứng dụng sổ vàng cá nhân cho Android: ghi lại vàng đang giữ, theo dõi giá vàng tham khảo theo nhà cung cấp và xem biến động danh mục ngay trên thiết bị. Kim Tài is a personal gold book app for Android: record gold holdings, follow reference gold prices by provider, and see portfolio movement on-device.
+
+Nội dung website chỉ mang tính tham khảo: Kim Tài không bán vàng, không đưa ra báo giá giao dịch cam kết và không tư vấn đầu tư. All content is reference-only: Kim Tài does not sell gold, does not commit transaction quotes, and does not provide investment advice.
+
+## Trang chính / Main pages
+
+- [Trang giới thiệu (Tiếng Việt)](https://kimtai.dantech.academy/vi/): Tổng quan tính năng, quyền riêng tư, câu hỏi thường gặp và tải ứng dụng
+- [Product page (English)](https://kimtai.dantech.academy/en/): Feature overview, privacy, FAQ, and download
+
+## Pháp lý / Legal
+
+- [Điều khoản dịch vụ](https://kimtai.dantech.academy/vi/terms-of-service/): Điều khoản dịch vụ (bản tiếng Việt có giá trị áp dụng)
+- [Điều khoản và điều kiện](https://kimtai.dantech.academy/vi/terms-and-conditions/): Điều khoản và điều kiện sử dụng ứng dụng
+- [Chính sách quyền riêng tư](https://kimtai.dantech.academy/vi/privacy-policy/): Chính sách quyền riêng tư và luồng dữ liệu của ứng dụng

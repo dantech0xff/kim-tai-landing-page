@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Mở `http://localhost:3000`; trang gốc chuyển đến `/vi`.
+Mở `http://localhost:3000`; trang gốc chuyển đến `/vi/`.
 
 Các lệnh kiểm tra trước khi phát hành:
 
@@ -84,8 +84,20 @@ Badge App Store lấy từ [Apple Marketing Tools](https://toolbox.marketingtool
 3. Đối chiếu các khẳng định trong `productFacts` và tài liệu quyền riêng tư với luồng dữ liệu thật của ứng dụng, SDK bên thứ ba, thời hạn lưu giữ, vị trí máy chủ và hoạt động chuyển dữ liệu ra nước ngoài.
 4. Nhờ cố vấn pháp lý Việt Nam duyệt bản cuối theo đúng pháp nhân và mô hình vận hành thực tế.
 5. Chạy lại toàn bộ lệnh kiểm tra ở trên. `validate:content` cố ý cảnh báo cho đến khi thông tin phát hành được hoàn tất; khi `release.ready` bật, thiếu pháp nhân hoặc link tải thật sẽ trở thành lỗi build.
+6. Sau khi deploy bản phát hành, thực hiện [runbook SEO sau phát hành](docs/deployment.md#runbook-seo-sau-khi-phát-hành): xác minh hết `noindex`, đăng ký Google Search Console + Bing Webmaster Tools, submit `sitemap.xml`, chạy lại Rich Results Test và Lighthouse SEO.
 
-GitHub Pages hiện có thể dùng làm bản xem trước công khai. Website vẫn phát `noindex` và vô hiệu hoá nút tải cho đến khi các điều kiện phát hành ở trên được hoàn tất.
+GitHub Pages hiện có thể dùng làm bản xem trước công khai. Bản mirror này luôn phát `noindex` (bất kể trạng thái phát hành) và canonical/hreflang trỏ về `https://kimtai.dantech.academy` để tránh duplicate content. Bản Vercel chỉ bật lập chỉ mục — và nút tải chỉ hoạt động — khi các điều kiện phát hành ở trên được hoàn tất.
+
+## SEO & AI search
+
+- Canonical origin duy nhất: `https://kimtai.dantech.academy` — mọi canonical/hreflang (kèm `x-default`), sitemap và JSON-LD đều trỏ về origin này, kể cả trên bản mirror GitHub Pages (mirror luôn `noindex`).
+- URL dùng trailing slash thống nhất (`/vi/`, `/en/`, …) trên cả hai deployment.
+- `robots.txt` cho phép mọi crawler (kể cả AI bot, đã chốt chủ đích) và trỏ tới `sitemap.xml` gồm 8 URL với hreflang alternates.
+- JSON-LD: Organization + WebSite trên mọi trang, MobileApplication + FAQPage trên landing, BreadcrumbList trên trang pháp lý. Không có `aggregateRating` hay số liệu bịa; `offers.price: "0"` phản ánh mô hình tải miễn phí + Premium mua trong ứng dụng.
+- Mục FAQ song ngữ hiển thị tĩnh trên landing và dùng chung dữ liệu với FAQPage schema (`locales.*.faq` trong `site.json`) nên UI và schema không thể lệch nhau.
+- Ảnh OG/Twitter 1200×630 nằm tại `public/images/og/`, tái tạo bằng `scripts/generate-og-images.sh`.
+- `public/llms.txt` tóm tắt site cho AI crawler theo llmstxt.org.
+- `validate:content` và `validate:pages` bắt regression cho toàn bộ các bề mặt SEO trên.
 
 ## Ghi chú pháp lý
 

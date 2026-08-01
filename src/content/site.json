@@ -119,11 +119,18 @@
       "languageCode": "vi-VN",
       "metadata": {
         "title": "Kim Tài - Tick Vàng Online | Sổ vàng trong túi bạn",
-        "description": "Ghi sổ vàng, theo dõi giá tham khảo và xem biến động danh mục ngay trên thiết bị với Kim Tài."
+        "description": "Kim Tài là ứng dụng sổ vàng cá nhân: ghi lại vàng đang giữ, theo dõi giá vàng tham khảo và xem biến động danh mục ngay trên thiết bị của bạn.",
+        "ogImage": {
+          "src": "/images/og/kim-tai-og-vi.png",
+          "width": 1200,
+          "height": 630,
+          "alt": "Kim Tài - Tick Vàng Online — Sổ vàng trong túi bạn"
+        }
       },
       "navigation": {
         "features": "Tính năng",
         "privacy": "Riêng tư",
+        "faq": "Hỏi đáp",
         "download": "Tải ứng dụng",
         "themeLight": "Chuyển sang giao diện sáng",
         "themeDark": "Chuyển sang giao diện tối",
@@ -134,7 +141,7 @@
         "eyebrow": "Sổ vàng trong túi bạn",
         "titleStart": "Biết mình đang giữ gì,",
         "titleAccent": "đáng giá bao nhiêu.",
-        "description": "Ghi sổ, theo dõi giá tham khảo và nhìn rõ biến động danh mục vàng — ngay trên thiết bị của bạn.",
+        "description": "Kim Tài giúp bạn ghi sổ, theo dõi giá vàng tham khảo và nhìn rõ biến động danh mục — ngay trên thiết bị của bạn.",
         "secondaryCta": "Khám phá tính năng",
         "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
         "galleryLabel": "Ba màn hình chính của ứng dụng Kim Tài",
@@ -190,7 +197,7 @@
           "icon": "ledger",
           "eyebrow": "Sổ sở hữu",
           "title": "Biết tổng vốn và giá trị tạm tính trong một lần nhìn.",
-          "description": "Ghi lại số lượng theo Chỉ hoặc Lượng, tách 9999 và 24K, rồi xem giá trị danh mục theo mức giá bán tham khảo hiện có.",
+          "description": "Kim Tài ghi lại số lượng theo Chỉ hoặc Lượng, tách 9999 và 24K, rồi hiển thị giá trị danh mục theo mức giá bán tham khảo hiện có.",
           "stat": "Sổ vàng cá nhân",
           "tone": "forest"
         },
@@ -208,7 +215,7 @@
           "icon": "device",
           "eyebrow": "Riêng tư từ thiết kế",
           "title": "Danh mục vàng ở lại trên thiết bị.",
-          "description": "Số lượng và giá vốn bạn ghi trong ứng dụng được lưu cục bộ trên thiết bị theo mô tả hiện tại của sản phẩm.",
+          "description": "Số lượng và giá vốn bạn ghi trong Kim Tài được lưu cục bộ trên thiết bị theo mô tả hiện tại của sản phẩm.",
           "stat": "Local-first",
           "tone": "mint"
         },
@@ -230,6 +237,42 @@
           "Luôn hiển thị nguồn và thời điểm cập nhật khi có dữ liệu giá.",
           "Tách rõ giá mua vào, bán ra và giá trị tạm tính.",
           "Cho phép bạn tự chọn đơn vị, khu vực và nguồn giá phù hợp."
+        ]
+      },
+      "faq": {
+        "eyebrow": "Hỏi nhanh về Kim Tài",
+        "title": "Câu hỏi thường gặp.",
+        "items": [
+          {
+            "id": "what-is-kim-tai",
+            "question": "Kim Tài là gì?",
+            "answer": "Kim Tài là ứng dụng sổ vàng cá nhân: ghi lại vàng bạn đang giữ, theo dõi giá tham khảo từ các nhà cung cấp và xem biến động giá trị danh mục ngay trên thiết bị."
+          },
+          {
+            "id": "sell-or-advise",
+            "question": "Kim Tài có bán vàng hay tư vấn đầu tư không?",
+            "answer": "Không. Kim Tài là công cụ theo dõi: ứng dụng không bán vàng, không định giá giao dịch thay bạn và không đưa ra khuyến nghị đầu tư."
+          },
+          {
+            "id": "data-storage",
+            "question": "Dữ liệu vàng của tôi lưu ở đâu?",
+            "answer": "Số lượng và giá vốn bạn ghi trong Kim Tài được lưu cục bộ trên thiết bị của bạn theo mô tả hiện tại của sản phẩm."
+          },
+          {
+            "id": "price-source",
+            "question": "Giá vàng trong Kim Tài lấy từ đâu?",
+            "answer": "Giá trong Kim Tài là giá tham khảo theo từng nhà cung cấp, kèm nguồn khi có dữ liệu; đây không phải báo giá giao dịch cam kết."
+          },
+          {
+            "id": "platforms",
+            "question": "Kim Tài chạy trên nền tảng nào?",
+            "answer": "Kim Tài hiện có trên Android qua Google Play; phiên bản iOS sẽ được công bố khi phát hành."
+          },
+          {
+            "id": "pricing",
+            "question": "Kim Tài có miễn phí không?",
+            "answer": "Kim Tài tải miễn phí trên Google Play; một số tính năng nâng cao thuộc gói Premium mua trong ứng dụng."
+          }
         ]
       },
       "download": {
@@ -277,11 +320,18 @@
       "languageCode": "en",
       "metadata": {
         "title": "Kim Tài - Tick Vàng Online | Your gold book, in your pocket",
-        "description": "Record gold holdings, follow reference prices, and understand portfolio movement on your device with Kim Tài."
+        "description": "Kim Tài is a personal gold book app: record your gold holdings, follow reference gold prices, and see portfolio movement right on your device.",
+        "ogImage": {
+          "src": "/images/og/kim-tai-og-en.png",
+          "width": 1200,
+          "height": 630,
+          "alt": "Kim Tài - Tick Vàng Online — Your gold book, in your pocket"
+        }
       },
       "navigation": {
         "features": "Features",
         "privacy": "Privacy",
+        "faq": "FAQ",
         "download": "Get the app",
         "themeLight": "Switch to light mode",
         "themeDark": "Switch to dark mode",
@@ -292,7 +342,7 @@
         "eyebrow": "Your gold book, in your pocket",
         "titleStart": "Know what you hold—",
         "titleAccent": "and what it is worth.",
-        "description": "Record holdings, follow reference prices, and see how your gold portfolio moves, right on your device.",
+        "description": "Kim Tài helps you record holdings, follow reference gold prices, and see how your portfolio moves, right on your device.",
         "secondaryCta": "Explore features",
         "trustNote": "Holdings stay on your device · Prices are for reference only",
         "galleryLabel": "Three primary screens from the Kim Tài app",
@@ -348,7 +398,7 @@
           "icon": "ledger",
           "eyebrow": "Holdings book",
           "title": "See your cost and estimated value in one glance.",
-          "description": "Record quantities in Chỉ or Lượng, separate 9999 from 24K, and estimate portfolio value using the available reference selling price.",
+          "description": "Kim Tài records quantities in Chỉ or Lượng, separates 9999 from 24K, and estimates portfolio value using the available reference selling price.",
           "stat": "Your gold book",
           "tone": "forest"
         },
@@ -366,7 +416,7 @@
           "icon": "device",
           "eyebrow": "Private by design",
           "title": "Your gold portfolio stays on your device.",
-          "description": "The quantities and cost details you enter are stored locally on the device under the product's current design.",
+          "description": "The quantities and cost details you enter in Kim Tài are stored locally on your device under the product's current design.",
           "stat": "Local-first",
           "tone": "mint"
         },
@@ -388,6 +438,42 @@
           "Show the source and update time whenever price data is available.",
           "Keep buy, sell, and estimated portfolio values clearly distinct.",
           "Let you choose the unit, region, and price source that fits your needs."
+        ]
+      },
+      "faq": {
+        "eyebrow": "Quick answers about Kim Tài",
+        "title": "Frequently asked questions.",
+        "items": [
+          {
+            "id": "what-is-kim-tai",
+            "question": "What is Kim Tài?",
+            "answer": "Kim Tài is a personal gold book app: record the gold you hold, follow reference prices from providers, and see how your portfolio value moves right on your device."
+          },
+          {
+            "id": "sell-or-advise",
+            "question": "Does Kim Tài sell gold or give investment advice?",
+            "answer": "No. Kim Tài is a tracking tool: it does not sell gold, does not set transaction prices for you, and does not give investment advice."
+          },
+          {
+            "id": "data-storage",
+            "question": "Where is my gold data stored?",
+            "answer": "The quantities and cost details you record in Kim Tài are stored locally on your device under the product's current design."
+          },
+          {
+            "id": "price-source",
+            "question": "Where do gold prices in Kim Tài come from?",
+            "answer": "Prices in Kim Tài are reference prices listed per provider, with the source shown when data is available; they are not committed transaction quotes."
+          },
+          {
+            "id": "platforms",
+            "question": "Which platforms does Kim Tài run on?",
+            "answer": "Kim Tài is currently available for Android on Google Play; an iOS version will be announced when it is released."
+          },
+          {
+            "id": "pricing",
+            "question": "Is Kim Tài free?",
+            "answer": "Kim Tài is free to download on Google Play; some advanced features belong to the Premium in-app purchase."
+          }
         ]
       },
       "download": {

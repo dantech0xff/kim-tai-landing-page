@@ -53,8 +53,9 @@ let chrome;
 let profileDirectory;
 let session;
 
-const localePath = (locale) => `${smokeBasePath}/${locale}${smokeBasePath ? "/" : ""}`;
-const metadataLocalePath = (locale) => `${smokeBasePath}/${locale}/`;
+const localePath = (locale) => `${smokeBasePath}/${locale}/`;
+// Canonical không mang basePath: mirror trỏ chéo về origin chính thức.
+const canonicalLocalePath = (locale) => `/${locale}/`;
 
 function formatDetail(detail) {
   if (typeof detail === "string") return detail;
@@ -1032,7 +1033,7 @@ async function assertPreviewMetadata(snapshot, label) {
       new URL(manifestHref).pathname === `${smokeBasePath}/manifest.webmanifest` &&
       manifest.body?.name === "Kim Tài - Tick Vàng Online" &&
       manifest.body?.short_name === "Kim Tài" &&
-      manifest.body?.start_url === metadataLocalePath("vi") &&
+      manifest.body?.start_url === localePath("vi") &&
       manifest.body?.scope === `${smokeBasePath}/` &&
       manifest.body?.display === "standalone" && manifest.body?.icons?.length === 2 &&
       manifest.body.icons.some((icon) =>
@@ -1055,11 +1056,14 @@ async function assertPreviewMetadata(snapshot, label) {
   check(
     `${label}: canonical and language alternates`,
     snapshot.releaseSurfaces.canonicalHref ===
-      `${canonicalOrigin}${metadataLocalePath("vi")}` &&
+      `${canonicalOrigin}${canonicalLocalePath("vi")}` &&
       snapshot.releaseSurfaces.alternateLinks.some((link) =>
-        link.hrefLang === "vi" && link.href === `${canonicalOrigin}${metadataLocalePath("vi")}`) &&
+        link.hrefLang === "vi" && link.href === `${canonicalOrigin}${canonicalLocalePath("vi")}`) &&
       snapshot.releaseSurfaces.alternateLinks.some((link) =>
-        link.hrefLang === "en" && link.href === `${canonicalOrigin}${metadataLocalePath("en")}`),
+        link.hrefLang === "en" && link.href === `${canonicalOrigin}${canonicalLocalePath("en")}`) &&
+      snapshot.releaseSurfaces.alternateLinks.some((link) =>
+        link.hrefLang === "x-default" &&
+          link.href === `${canonicalOrigin}${canonicalLocalePath("vi")}`),
     {
       alternates: snapshot.releaseSurfaces.alternateLinks,
       canonical: snapshot.releaseSurfaces.canonicalHref,

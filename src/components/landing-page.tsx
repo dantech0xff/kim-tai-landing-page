@@ -7,6 +7,7 @@ import { OrbitMotif } from "@/components/orbit-motif";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { StoreButtons } from "@/components/store-buttons";
+import { StructuredData } from "@/components/structured-data";
 import {
   getLegalPath,
   getSiteCopy,
@@ -15,6 +16,7 @@ import {
   type LocalizedFeature,
   type Locale,
 } from "@/lib/content";
+import { buildFaqPage } from "@/lib/structured-data";
 
 interface LandingPageProps {
   locale: Locale;
@@ -187,6 +189,25 @@ export function LandingPage({ locale }: LandingPageProps) {
                 </li>
               ))}
             </ol>
+          </div>
+        </section>
+
+        <section className="section-shell page-container" id="faq" aria-labelledby="faq-title">
+          <StructuredData data={buildFaqPage(locale)} />
+          <div className="section-heading">
+            <p className="eyebrow">{copy.faq.eyebrow}</p>
+            <h2 className="section-title" id="faq-title">
+              {copy.faq.title}
+            </h2>
+          </div>
+
+          <div className="faq-grid">
+            {copy.faq.items.map((item) => (
+              <article className="faq-card" key={item.id}>
+                <h3 className="faq-question">{item.question}</h3>
+                <p className="faq-answer">{item.answer}</p>
+              </article>
+            ))}
           </div>
         </section>
 

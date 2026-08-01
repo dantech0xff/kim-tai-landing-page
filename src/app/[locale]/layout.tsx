@@ -9,8 +9,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { siteOrigin, withBasePath } from "@/lib/base-path";
+import {
+  isMirrorDeployment,
+  siteOrigin,
+  toCanonicalUrl,
+  withBasePath,
+} from "@/lib/base-path";
+import { StructuredData } from "@/components/structured-data";
 import { getSiteCopy, isLocale, locales, siteConfig } from "@/lib/content";
+import { buildOpenGraph, buildTwitter } from "@/lib/seo-metadata";
+import { buildOrganization, buildWebSite } from "@/lib/structured-data";
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -39,6 +47,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
 
   const copy = getSiteCopy(locale);
   const isReleaseReady = siteConfig.release.ready && siteConfig.operator.configured;
+  const isIndexable = isReleaseReady && !isMirrorDeployment;
 
   return {
     title: {
@@ -49,10 +58,11 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     applicationName: siteConfig.brand.productName,
     metadataBase: new URL(siteOrigin),
     alternates: {
-      canonical: withBasePath(`/${locale}/`),
+      canonical: toCanonicalUrl(`/${locale}/`),
       languages: {
-        vi: withBasePath("/vi/"),
-        en: withBasePath("/en/"),
+        vi: toCanonicalUrl("/vi/"),
+        en: toCanonicalUrl("/en/"),
+        "x-default": toCanonicalUrl("/vi/"),
       },
     },
     icons: {
@@ -78,16 +88,18 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
         },
       ],
     },
-    openGraph: {
+    openGraph: buildOpenGraph(locale, {
+      url: toCanonicalUrl(`/${locale}/`),
       title: copy.metadata.title,
       description: copy.metadata.description,
-      locale: locale === "vi" ? "vi_VN" : "en_US",
-      siteName: siteConfig.brand.name,
-      type: "website",
-    },
+    }),
+    twitter: buildTwitter(locale, {
+      title: copy.metadata.title,
+      description: copy.metadata.description,
+    }),
     robots: {
-      index: isReleaseReady,
-      follow: isReleaseReady,
+      index: isIndexable,
+      follow: isIndexable,
     },
   };
 }
@@ -102,6 +114,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <html lang={copy.languageCode} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <StructuredData data={buildOrganization()} />
+        <StructuredData data={buildWebSite()} />
       </head>
       <body>{children}</body>
     </html>

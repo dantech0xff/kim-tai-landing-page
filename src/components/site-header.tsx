@@ -40,6 +40,9 @@ export function SiteHeader({ locale, routeSuffix = "" }: SiteHeaderProps) {
           <Link className="nav-link" href={`${homeHref}#privacy`}>
             {copy.navigation.privacy}
           </Link>
+          <Link className="nav-link" href={`${homeHref}#faq`}>
+            {copy.navigation.faq}
+          </Link>
           <Link className="nav-link" href={`${homeHref}#download`}>
             {copy.navigation.download}
           </Link>

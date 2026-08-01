@@ -26,6 +26,12 @@ export interface LocalizedFeature {
   tone: "forest" | "gold" | "mint" | "coral";
 }
 
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
 interface LegalSection {
   id: string;
   title: string;

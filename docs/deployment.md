@@ -17,7 +17,9 @@ Website được triển khai song song trên hai nền tảng:
 
 | Biến | Môi trường | Giá trị | Mục đích |
 | --- | --- | --- | --- |
-| `SITE_ORIGIN` | Production | `https://kimtai.dantech.academy` | Đặt canonical origin cho metadata; thiếu biến này canonical sẽ rơi về `http://localhost:3000`. |
+| `SITE_ORIGIN` | Production | `https://kimtai.dantech.academy` | Đặt serving + canonical origin cho metadata; thiếu biến này canonical sẽ rơi về `http://localhost:3000`. |
+
+**Quan trọng:** KHÔNG đặt `CANONICAL_ORIGIN` hoặc `NEXT_PUBLIC_CANONICAL_ORIGIN` trên Vercel. Hai biến này chỉ dành cho bản mirror; nếu đặt trên Vercel với giá trị lệch origin so với `SITE_ORIGIN`, bản production sẽ bị nhận nhầm là mirror và âm thầm phát `noindex` sau phát hành.
 
 ### Custom domain
 
@@ -85,6 +87,7 @@ Static export được tạo tại `out/` và được upload trực tiếp từ
 | --- | --- | --- |
 | `GITHUB_PAGES=true` | Workflow hoặc lệnh build local | Bật static export, trailing slash và ảnh không qua Image Optimization server. |
 | `GITHUB_REPOSITORY` | GitHub tự cung cấp; đặt thủ công khi test local | Tạo đúng owner, repository và base path. |
+| `CANONICAL_ORIGIN` | Tuỳ chọn khi build GitHub Pages | Ghi đè canonical origin của mirror; mặc định `https://kimtai.dantech.academy`. Không đặt trên Vercel. |
 
 Không lưu token hoặc thông tin bí mật trong repository. Quyền deploy được giới hạn trong workflow bằng `pages: write` và `id-token: write`.
 
@@ -98,4 +101,17 @@ Không lưu token hoặc thông tin bí mật trong repository. Quyền deploy �
 
 Trang đang ở trạng thái preview công khai: metadata vẫn đặt `noindex`, và nút tải vẫn bị vô hiệu hoá. Trước khi quảng bá hoặc bật lập chỉ mục, phải hoàn tất pháp nhân, email hỗ trợ, liên kết App Store/Google Play và kiểm chứng luồng dữ liệu theo checklist trong `README.md`; sau đó đặt `operator.configured` và `release.ready` thành `true` trong `src/content/site.json`.
 
-Custom domain `kimtai.dantech.academy` phục vụ qua Vercel; canonical origin của bản Vercel được điều khiển bằng biến `SITE_ORIGIN`. Bản GitHub Pages vẫn dùng origin `github.io` với base path riêng và không cần file `CNAME`.
+Custom domain `kimtai.dantech.academy` phục vụ qua Vercel; canonical origin của bản Vercel được điều khiển bằng biến `SITE_ORIGIN`. Bản GitHub Pages phục vụ dưới origin `github.io` với base path riêng và không cần file `CNAME`, nhưng luôn phát `noindex` (bất kể release gate) và canonical/hreflang trỏ về `https://kimtai.dantech.academy` để tránh duplicate content với bản chính.
+
+## Runbook SEO sau khi phát hành
+
+Thực hiện sau khi `release.ready` và `operator.configured` đều bật và bản Vercel đã deploy:
+
+1. Xác minh site đã bỏ noindex: `curl -s https://kimtai.dantech.academy/vi/ | grep 'name="robots"'` không còn chứa `noindex`; đối chiếu thêm `curl -s https://kimtai.dantech.academy/vi/ | grep -E 'canonical|hreflang|og:|ld\+json'`.
+2. Xác nhận `NEXT_PUBLIC_CANONICAL_ORIGIN`/`CANONICAL_ORIGIN` KHÔNG được đặt trên Vercel (xem cảnh báo ở mục biến môi trường Vercel).
+3. Tạo property Google Search Console (Domain property cho `dantech.academy` hoặc URL-prefix `https://kimtai.dantech.academy`) và submit `sitemap.xml`; làm tương tự trên Bing Webmaster Tools — Bing là nguồn dữ liệu của ChatGPT Search và Copilot.
+4. Chạy Rich Results Test trên URL live và kiểm tra JSON-LD bằng validator.schema.org. Chấp nhận cảnh báo thiếu `aggregateRating` — đây là chủ đích theo nguyên tắc không fake dữ liệu; chỉ thêm khi có đánh giá thật từ store.
+5. Chạy Lighthouse tab SEO cho `/vi/` và `/en/`, mục tiêu ≥ 95; audit `is-crawlable` phải pass sau khi hết noindex.
+6. Theo dõi coverage và query trong Search Console. Site chưa bật analytics (`productFacts.websiteAnalyticsEnabled=false`) nên chưa đo được lượt truy cập từ AI (referrer `chatgpt.com`, `perplexity.ai`, `copilot.microsoft.com`); bật analytics là quyết định sản phẩm/pháp lý riêng, không thuộc phạm vi SEO.
+
+Lưu ý: Vercel Preview Deployment tự phát header `X-Robots-Tag: noindex` — kiểm tra bằng `curl -sI <preview-url>` khi cần.

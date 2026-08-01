@@ -22,6 +22,7 @@ const expectedLegalSlugs = [
 const errors = [];
 const warnings = [];
 const expectedFeatureIds = ["portfolio", "market", "local-first", "personalize"];
+const faqIdsByLocale = {};
 const isPercentageSeries = (values, minimumLength = 3) =>
   Array.isArray(values) &&
   values.length >= minimumLength &&
@@ -88,6 +89,50 @@ for (const locale of expectedLocales) {
     errors.push(`Locale ${locale} has incomplete Hero screenshot labels.`);
   }
 
+  const ogImage = copy?.metadata?.ogImage;
+  if (
+    !ogImage?.src?.startsWith("/images/og/") ||
+    !ogImage.src.endsWith(".png") ||
+    ogImage.width !== 1200 ||
+    ogImage.height !== 630 ||
+    !ogImage.alt?.trim()
+  ) {
+    errors.push(
+      `Locale ${locale} must declare a 1200×630 PNG Open Graph image under /images/og/ with alt text.`,
+    );
+  } else {
+    try {
+      await access(path.join(root, "public", ogImage.src.slice(1)));
+    } catch {
+      errors.push(`Locale ${locale} Open Graph image does not exist: ${ogImage.src}`);
+    }
+  }
+
+  const faq = copy?.faq;
+  if (!faq?.eyebrow?.trim() || !faq?.title?.trim()) {
+    errors.push(`Locale ${locale} FAQ requires an eyebrow and a title.`);
+  }
+  if (!Array.isArray(faq?.items) || faq.items.length < 3) {
+    errors.push(`Locale ${locale} FAQ must define at least three items.`);
+  } else {
+    for (const item of faq.items) {
+      if (!item?.id?.trim() || !item?.question?.trim() || !item?.answer?.trim()) {
+        errors.push(`Locale ${locale} FAQ items require id, question, and answer.`);
+        break;
+      }
+    }
+    for (const item of faq.items) {
+      if (item?.question?.trim() && !item.question.trim().endsWith("?")) {
+        errors.push(`Locale ${locale} FAQ question must end with "?": ${item.id}`);
+      }
+    }
+    const ids = faq.items.map((item) => item?.id);
+    if (new Set(ids).size !== ids.length) {
+      errors.push(`Locale ${locale} FAQ item IDs must be unique.`);
+    }
+    faqIdsByLocale[locale] = ids;
+  }
+
   const publicOperatorLabels = copy?.legalUi?.operatorDetails;
   for (const field of ["publicHeading", "publicName", "facebook", "facebookCta"]) {
     if (!publicOperatorLabels?.[field]?.trim()) {
@@ -144,6 +189,15 @@ for (const locale of expectedLocales) {
   ) {
     errors.push(`Locale ${locale} has incomplete personalization simulation data.`);
   }
+}
+
+if (
+  faqIdsByLocale.vi &&
+  faqIdsByLocale.en &&
+  (faqIdsByLocale.vi.length !== faqIdsByLocale.en.length ||
+    faqIdsByLocale.vi.some((id, index) => faqIdsByLocale.en[index] !== id))
+) {
+  errors.push("FAQ items must use the same IDs in the same order across vi/en.");
 }
 
 for (const [locale, legal] of [

@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { LegalDocumentPage } from "@/components/legal-document-page";
-import { withBasePath } from "@/lib/base-path";
+import { StructuredData } from "@/components/structured-data";
+import { toCanonicalUrl } from "@/lib/base-path";
 import {
   getLegalDocument,
   isLegalSlug,
   isLocale,
   legalSlugs,
 } from "@/lib/content";
+import { buildOpenGraph, buildTwitter } from "@/lib/seo-metadata";
+import { buildBreadcrumbList } from "@/lib/structured-data";
 
 interface LegalPageProps {
   params: Promise<{ locale: string; legal: string }>;
@@ -25,16 +28,27 @@ export async function generateMetadata({ params }: LegalPageProps): Promise<Meta
   if (!isLocale(locale) || !isLegalSlug(legal)) return {};
 
   const { document } = getLegalDocument(locale, legal);
+  const canonicalUrl = toCanonicalUrl(`/${locale}/${legal}/`);
   return {
     title: document.shortTitle,
     description: document.description,
     alternates: {
-      canonical: withBasePath(`/${locale}/${legal}/`),
+      canonical: canonicalUrl,
       languages: {
-        vi: withBasePath(`/vi/${legal}/`),
-        en: withBasePath(`/en/${legal}/`),
+        vi: toCanonicalUrl(`/vi/${legal}/`),
+        en: toCanonicalUrl(`/en/${legal}/`),
+        "x-default": toCanonicalUrl(`/vi/${legal}/`),
       },
     },
+    openGraph: buildOpenGraph(locale, {
+      url: canonicalUrl,
+      title: document.shortTitle,
+      description: document.description,
+    }),
+    twitter: buildTwitter(locale, {
+      title: document.shortTitle,
+      description: document.description,
+    }),
   };
 }
 
@@ -42,5 +56,10 @@ export default async function LegalPage({ params }: LegalPageProps) {
   const { locale, legal } = await params;
   if (!isLocale(locale) || !isLegalSlug(legal)) notFound();
 
-  return <LegalDocumentPage locale={locale} slug={legal} />;
+  return (
+    <>
+      <StructuredData data={buildBreadcrumbList(locale, legal)} />
+      <LegalDocumentPage locale={locale} slug={legal} />
+    </>
+  );
 }
