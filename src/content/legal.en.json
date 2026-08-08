@@ -1,6 +1,12 @@
 {
   "sources": [
     {
+      "id": "apple-standard-eula",
+      "title": "Apple Standard End User License Agreement (EULA)",
+      "url": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+      "note": "Applies to the iOS version of Kim Tài."
+    },
+    {
       "id": "personal-data-law",
       "title": "Law on Personal Data Protection No. 91/2025/QH15",
       "url": "https://vanban.chinhphu.vn/?classid=1&docid=214590&orggroupid=1&pageid=27160",
@@ -37,8 +43,12 @@
       "shortTitle": "Terms of Service",
       "title": "Kim Tài Terms of Service",
       "description": "The rules governing your use of Kim Tài - Tick Vàng Online.",
-      "version": "1.0",
-      "sourceIds": ["consumer-law", "electronic-transactions-law"],
+      "version": "1.1",
+      "sourceIds": [
+        "apple-standard-eula",
+        "consumer-law",
+        "electronic-transactions-law"
+      ],
       "sections": [
         {
           "id": "scope",
@@ -131,6 +141,14 @@
           "paragraphs": [
             "These Terms are governed by Vietnamese law. Complaints may be sent through {{supportContact}}; the parties should first seek a good-faith resolution without limiting either party's right to approach a competent authority or court.",
             "The Vietnamese version is used to interpret and apply this document. However, if the Vietnamese and English versions differ and applicable law requires the version more favorable to the consumer to prevail, the more favorable wording applies."
+          ],
+          "items": []
+        },
+        {
+          "id": "apple-app-store-eula",
+          "title": "11. Apple App Store EULA",
+          "paragraphs": [
+            "For the iOS version of Kim Tài, Apple's Standard End User License Agreement (EULA) applies:"
           ],
           "items": []
         }

@@ -1,6 +1,12 @@
 {
   "sources": [
     {
+      "id": "apple-standard-eula",
+      "title": "Thỏa thuận cấp phép người dùng cuối tiêu chuẩn của Apple (EULA)",
+      "url": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+      "note": "Áp dụng cho phiên bản Kim Tài trên iOS."
+    },
+    {
       "id": "personal-data-law",
       "title": "Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15",
       "url": "https://vanban.chinhphu.vn/?classid=1&docid=214590&orggroupid=1&pageid=27160",
@@ -37,8 +43,12 @@
       "shortTitle": "Điều khoản dịch vụ",
       "title": "Điều khoản dịch vụ Kim Tài",
       "description": "Quy định cách bạn được sử dụng ứng dụng Kim Tài - Tick Vàng Online.",
-      "version": "1.0",
-      "sourceIds": ["consumer-law", "electronic-transactions-law"],
+      "version": "1.1",
+      "sourceIds": [
+        "apple-standard-eula",
+        "consumer-law",
+        "electronic-transactions-law"
+      ],
       "sections": [
         {
           "id": "scope",
@@ -131,6 +141,14 @@
           "paragraphs": [
             "Điều khoản này chịu sự điều chỉnh của pháp luật Việt Nam. Bạn có thể gửi khiếu nại qua {{supportContact}}; hai bên ưu tiên giải quyết thiện chí trước khi yêu cầu cơ quan có thẩm quyền hoặc Toà án giải quyết.",
             "Bản tiếng Việt được dùng để giải thích và áp dụng tài liệu này. Tuy nhiên, nếu bản tiếng Việt và bản tiếng Anh khác nhau và pháp luật yêu cầu ưu tiên nội dung có lợi hơn cho người tiêu dùng, nội dung có lợi hơn được áp dụng."
+          ],
+          "items": []
+        },
+        {
+          "id": "apple-app-store-eula",
+          "title": "11. EULA của Apple App Store",
+          "paragraphs": [
+            "Đối với phiên bản Kim Tài trên iOS, Thỏa thuận cấp phép người dùng cuối tiêu chuẩn của Apple (EULA) được áp dụng:"
           ],
           "items": []
         }
