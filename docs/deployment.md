@@ -99,7 +99,7 @@ Không lưu token hoặc thông tin bí mật trong repository. Quyền deploy �
 
 ## Trước khi phát hành chính thức
 
-Trang đang ở trạng thái preview công khai: metadata vẫn đặt `noindex`, và nút tải vẫn bị vô hiệu hoá. Trước khi quảng bá hoặc bật lập chỉ mục, phải hoàn tất pháp nhân, email hỗ trợ, liên kết App Store/Google Play và kiểm chứng luồng dữ liệu theo checklist trong `README.md`; sau đó đặt `operator.configured` và `release.ready` thành `true` trong `src/content/site.json`.
+Trang đang ở trạng thái preview công khai nên metadata vẫn đặt `noindex`. Các liên kết App Store và Google Play đã được xác minh, công bố và có thể dùng ngay; trạng thái nút tải không phụ thuộc vào cổng phát hành đầy đủ. Trước khi quảng bá hoặc bật lập chỉ mục, phải hoàn tất pháp nhân, email hỗ trợ và kiểm chứng luồng dữ liệu theo checklist trong `README.md`; sau đó đặt `operator.configured` và `release.ready` thành `true` trong `src/content/site.json`.
 
 Custom domain `kimtai.dantech.academy` phục vụ qua Vercel; canonical origin của bản Vercel được điều khiển bằng biến `SITE_ORIGIN`. Bản GitHub Pages phục vụ dưới origin `github.io` với base path riêng và không cần file `CNAME`, nhưng luôn phát `noindex` (bất kể release gate) và canonical/hreflang trỏ về `https://kimtai.dantech.academy` để tránh duplicate content với bản chính.
 

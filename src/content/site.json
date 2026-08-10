@@ -61,9 +61,9 @@
   "downloads": {
     "ios": {
       "platform": "iPhone",
-      "appStoreId": "",
-      "directUrl": "",
-      "published": false,
+      "appStoreId": "6798353852",
+      "directUrl": "https://apps.apple.com/vn/app/kim-t%C3%A0i-gi%C3%A1-v%C3%A0ng-online/id6798353852",
+      "published": true,
       "badges": {
         "vi": {
           "src": "/badges/app-store-vi.svg",
@@ -266,19 +266,19 @@
           {
             "id": "platforms",
             "question": "Kim Tài chạy trên nền tảng nào?",
-            "answer": "Kim Tài hiện có trên Android qua Google Play; phiên bản iOS sẽ được công bố khi phát hành."
+            "answer": "Kim Tài hiện có trên Android qua Google Play và iOS qua App Store."
           },
           {
             "id": "pricing",
             "question": "Kim Tài có miễn phí không?",
-            "answer": "Kim Tài tải miễn phí trên Google Play; một số tính năng nâng cao thuộc gói Premium mua trong ứng dụng."
+            "answer": "Kim Tài tải miễn phí trên Google Play và App Store; một số tính năng nâng cao thuộc gói Premium mua trong ứng dụng."
           }
         ]
       },
       "download": {
         "eyebrow": "Mang sổ vàng theo bạn",
         "title": "Bắt đầu từ món vàng đầu tiên.",
-        "description": "Nút tải sẽ hoạt động sau khi bản phát hành Kim Tài được duyệt và liên kết trực tiếp đã được xác minh trong tệp JSON.",
+        "description": "Tải Kim Tài qua các liên kết App Store và Google Play đã được xác minh.",
         "iosLabel": "Tìm trên App Store",
         "androidLabel": "Tìm trên Google Play",
         "comingSoon": "Đang chờ link phát hành",
@@ -467,19 +467,19 @@
           {
             "id": "platforms",
             "question": "Which platforms does Kim Tài run on?",
-            "answer": "Kim Tài is currently available for Android on Google Play; an iOS version will be announced when it is released."
+            "answer": "Kim Tài is currently available for Android on Google Play and iOS on the App Store."
           },
           {
             "id": "pricing",
             "question": "Is Kim Tài free?",
-            "answer": "Kim Tài is free to download on Google Play; some advanced features belong to the Premium in-app purchase."
+            "answer": "Kim Tài is free to download on Google Play and the App Store; some advanced features belong to the Premium in-app purchase."
           }
         ]
       },
       "download": {
         "eyebrow": "Take your gold book with you",
         "title": "Start with your first gold item.",
-        "description": "Download buttons become active after the Kim Tài release is approved and its direct store links are verified in JSON.",
+        "description": "Download Kim Tài using the verified App Store and Google Play links.",
         "iosLabel": "Find on the App Store",
         "androidLabel": "Find on Google Play",
         "comingSoon": "Direct release link pending",

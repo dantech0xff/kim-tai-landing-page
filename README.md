@@ -80,13 +80,13 @@ Badge App Store lấy từ [Apple Marketing Tools](https://toolbox.marketingtool
 ### Việc bắt buộc trước khi phát hành
 
 1. Điền tên pháp lý, mã đăng ký, địa chỉ và email thật trong `operator`, sau đó đặt `operator.configured` thành `true`.
-2. Điền `downloads.ios.appStoreId` và `downloads.android.packageName`, sau đó thay `downloads.*.directUrl` bằng URL trang ứng dụng khớp chính xác với các định danh này. Chỉ đặt `published` và `release.ready` thành `true` sau khi ứng dụng được duyệt. Khi chưa có URL trực tiếp đã xác minh, nút tải được vô hiệu hoá để tránh dẫn tới ứng dụng giả mạo.
+2. Liên kết trực tiếp cho App Store và Google Play hiện đã được xác minh và công bố. Nếu thông tin listing thay đổi, cập nhật đồng bộ định danh và URL tương ứng; nút tải chỉ hoạt động khi nền tảng đó có URL trực tiếp hợp lệ và `published` là `true`. `release.ready` là cổng phát hành riêng và chỉ được bật sau khi toàn bộ checklist hoàn tất.
 3. Đối chiếu các khẳng định trong `productFacts` và tài liệu quyền riêng tư với luồng dữ liệu thật của ứng dụng, SDK bên thứ ba, thời hạn lưu giữ, vị trí máy chủ và hoạt động chuyển dữ liệu ra nước ngoài.
 4. Nhờ cố vấn pháp lý Việt Nam duyệt bản cuối theo đúng pháp nhân và mô hình vận hành thực tế.
 5. Chạy lại toàn bộ lệnh kiểm tra ở trên. `validate:content` cố ý cảnh báo cho đến khi thông tin phát hành được hoàn tất; khi `release.ready` bật, thiếu pháp nhân hoặc link tải thật sẽ trở thành lỗi build.
 6. Sau khi deploy bản phát hành, thực hiện [runbook SEO sau phát hành](docs/deployment.md#runbook-seo-sau-khi-phát-hành): xác minh hết `noindex`, đăng ký Google Search Console + Bing Webmaster Tools, submit `sitemap.xml`, chạy lại Rich Results Test và Lighthouse SEO.
 
-GitHub Pages hiện có thể dùng làm bản xem trước công khai. Bản mirror này luôn phát `noindex` (bất kể trạng thái phát hành) và canonical/hreflang trỏ về `https://kimtai.dantech.academy` để tránh duplicate content. Bản Vercel chỉ bật lập chỉ mục — và nút tải chỉ hoạt động — khi các điều kiện phát hành ở trên được hoàn tất.
+GitHub Pages hiện có thể dùng làm bản xem trước công khai. Bản mirror này luôn phát `noindex` (bất kể trạng thái phát hành) và canonical/hreflang trỏ về `https://kimtai.dantech.academy` để tránh duplicate content. Các nút tải đã xác minh hoạt động độc lập với trạng thái phát hành đầy đủ; bản Vercel chỉ bật lập chỉ mục khi cả `release.ready` và `operator.configured` đều là `true`.
 
 ## SEO & AI search
 
