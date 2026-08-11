@@ -10,6 +10,9 @@ const siteOrigin = isGitHubPages
   : process.env.SITE_ORIGIN ?? "http://localhost:3000";
 
 const sharedConfig: NextConfig = {
+  experimental: {
+    globalNotFound: true,
+  },
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
     NEXT_PUBLIC_SITE_ORIGIN: siteOrigin,

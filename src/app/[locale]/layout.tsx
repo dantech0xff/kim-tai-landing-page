@@ -25,6 +25,8 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
+export const dynamicParams = false;
+
 const themeScript = `
   (function () {
     try {
@@ -100,6 +102,13 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     robots: {
       index: isIndexable,
       follow: isIndexable,
+      googleBot: {
+        index: isIndexable,
+        follow: isIndexable,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
   };
 }

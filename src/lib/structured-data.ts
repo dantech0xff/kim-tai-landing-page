@@ -4,6 +4,7 @@ import {
   getPublishedDownloadUrl,
   getSiteCopy,
   siteConfig,
+  type DownloadPlatform,
   type LegalSlug,
   type Locale,
 } from "@/lib/content";
@@ -41,8 +42,11 @@ interface MobileApplicationSchema {
   operatingSystem: string;
   image?: string;
   inLanguage: string;
+  installUrl: string[];
+  isAccessibleForFree: true;
   offers: OfferSchema;
-  installUrl?: string;
+  sameAs: string[];
+  url: string;
 }
 
 interface FaqPageSchema {
@@ -103,7 +107,10 @@ export function buildWebSite(): WebSiteSchema {
 // offers.price "0" phản ánh mô hình đã xác nhận: tải miễn phí, Premium là IAP.
 export function buildMobileApplication(locale: Locale): MobileApplicationSchema {
   const icon = findIcon512();
-  const installUrl = getPublishedDownloadUrl("android");
+  const downloadPlatforms: DownloadPlatform[] = ["ios", "android"];
+  const installUrls = downloadPlatforms
+    .map((platform) => getPublishedDownloadUrl(platform))
+    .filter((url): url is string => Boolean(url));
 
   return {
     "@context": "https://schema.org",
@@ -114,8 +121,11 @@ export function buildMobileApplication(locale: Locale): MobileApplicationSchema 
     operatingSystem: siteConfig.downloads.ios.published ? "Android, iOS" : "Android",
     ...(icon ? { image: toCanonicalUrl(icon.src) } : {}),
     inLanguage: locale,
+    installUrl: installUrls,
+    isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: "VND" },
-    ...(installUrl ? { installUrl } : {}),
+    sameAs: installUrls,
+    url: toCanonicalUrl(`/${locale}/`),
   };
 }
 

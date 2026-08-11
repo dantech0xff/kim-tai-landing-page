@@ -6,10 +6,11 @@ const root = process.cwd();
 const readJson = async (file) =>
   JSON.parse(await readFile(path.join(root, file), "utf8"));
 
-const [site, legalVi, legalEn] = await Promise.all([
+const [site, legalVi, legalEn, llmsText] = await Promise.all([
   readJson("src/content/site.json"),
   readJson("src/content/legal.vi.json"),
   readJson("src/content/legal.en.json"),
+  readFile(path.join(root, "public/llms.txt"), "utf8"),
 ]);
 
 const expectedLocales = ["vi", "en"];
@@ -67,6 +68,20 @@ for (const [label, icon] of iconRecords) {
 for (const locale of expectedLocales) {
   const copy = site.locales?.[locale];
   if (!copy) errors.push(`Missing locale: ${locale}`);
+  const metadataTitle = copy?.metadata?.title?.trim() ?? "";
+  const metadataDescription = copy?.metadata?.description?.trim() ?? "";
+  const heroTitle = `${copy?.hero?.titleStart ?? ""} ${copy?.hero?.titleAccent ?? ""}`.trim();
+  if (metadataTitle.length < 40 || metadataTitle.length > 60) {
+    errors.push(`Locale ${locale} metadata title must remain between 40 and 60 characters.`);
+  }
+  if (metadataDescription.length < 120 || metadataDescription.length > 160) {
+    errors.push(
+      `Locale ${locale} metadata description must remain between 120 and 160 characters.`,
+    );
+  }
+  if (!heroTitle || heroTitle.length > 70) {
+    errors.push(`Locale ${locale} Hero title must be present and no longer than 70 characters.`);
+  }
   if (copy?.features?.length !== 4) {
     errors.push(`Locale ${locale} must define exactly four feature records.`);
   }
@@ -331,6 +346,9 @@ for (const [platform, download] of Object.entries(site.downloads ?? {})) {
 
   if (download.published && !download.directUrl) {
     errors.push(`Published download ${platform} requires a direct store URL.`);
+  }
+  if (download.published && download.directUrl && !llmsText.includes(download.directUrl)) {
+    errors.push(`llms.txt must link to the published ${platform} store listing.`);
   }
   if (!download.published) {
     warnings.push(`${platform} download stays disabled until a direct release URL is verified.`);

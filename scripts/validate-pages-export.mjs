@@ -101,6 +101,23 @@ if (!redirectHtml.includes('url=./vi/') || !redirectHtml.includes('href="./vi/"'
   throw new Error("Root artifact must redirect and link to the relative ./vi/ route.");
 }
 
+const notFoundHtml = await readFile(path.join(outputDirectory, "404.html"), "utf8");
+if (
+  !notFoundHtml.includes("Không tìm thấy trang") ||
+  !notFoundHtml.includes('<meta name="robots" content="noindex"') ||
+  !notFoundHtml.includes(`href="${basePath}/vi/"`) ||
+  !notFoundHtml.includes(`href="${basePath}/en/"`)
+) {
+  throw new Error("The custom 404 must stay noindex and link to both localized home pages.");
+}
+
+const llmsText = await readFile(path.join(outputDirectory, "llms.txt"), "utf8");
+for (const [platform, download] of Object.entries(site.downloads ?? {})) {
+  if (download.published && !llmsText.includes(download.directUrl)) {
+    throw new Error(`llms.txt must expose the published ${platform} store listing.`);
+  }
+}
+
 const manifest = JSON.parse(
   await readFile(path.join(outputDirectory, "manifest.webmanifest"), "utf8"),
 );
@@ -166,6 +183,11 @@ for (const { file, locale, slug } of routeDefinitions) {
   if (!html.includes('<meta name="robots" content="noindex')) {
     throw new Error(`${file} must stay noindex on the GitHub Pages mirror.`);
   }
+  if (
+    !/<meta name="googlebot" content="[^"]*max-image-preview:large[^"]*"\/>/.test(html)
+  ) {
+    throw new Error(`${file} must allow large Google image previews.`);
+  }
 
   const ogImage = site.locales[locale].metadata.ogImage;
   const expectedOgImage = `${siteOrigin}${basePath}${ogImage.src}`;
@@ -187,7 +209,7 @@ for (const { file, locale, slug } of routeDefinitions) {
     html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs),
     (match) => match[1],
   );
-  const structuredDataTypes = structuredDataBlocks.map((block) => {
+  const structuredData = structuredDataBlocks.map((block) => {
     let parsed;
     try {
       parsed = JSON.parse(block);
@@ -197,8 +219,9 @@ for (const { file, locale, slug } of routeDefinitions) {
     if (JSON.stringify(parsed).includes('"aggregateRating"')) {
       throw new Error(`${file} must not fabricate aggregateRating structured data.`);
     }
-    return parsed["@type"];
+    return parsed;
   });
+  const structuredDataTypes = structuredData.map((data) => data["@type"]);
   const expectedStructuredDataTypes = slug
     ? ["Organization", "WebSite", "BreadcrumbList"]
     : ["Organization", "WebSite", "MobileApplication", "FAQPage"];
@@ -212,6 +235,26 @@ for (const { file, locale, slug } of routeDefinitions) {
   }
 
   if (!slug) {
+    const mobileApplication = structuredData.find(
+      (data) => data["@type"] === "MobileApplication",
+    );
+    const expectedInstallUrls = Object.values(site.downloads)
+      .filter((download) => download.published)
+      .map((download) => new URL(download.directUrl).toString());
+    if (
+      mobileApplication?.url !== expectedCanonical ||
+      mobileApplication?.isAccessibleForFree !== true ||
+      !Array.isArray(mobileApplication?.installUrl) ||
+      mobileApplication.installUrl.length !== expectedInstallUrls.length ||
+      !expectedInstallUrls.every((url) => mobileApplication.installUrl.includes(url)) ||
+      !Array.isArray(mobileApplication?.sameAs) ||
+      !expectedInstallUrls.every((url) => mobileApplication.sameAs.includes(url))
+    ) {
+      throw new Error(
+        `${file} MobileApplication schema must expose every published store listing.`,
+      );
+    }
+
     const faqCopy = site.locales[locale].faq;
     const questionMatches = Array.from(
       html.matchAll(/<h3 class="faq-question">/g),
@@ -286,6 +329,25 @@ if (sitemapLocations.some((url) => !url.startsWith(`${canonicalOrigin}/`))) {
 }
 if (!sitemapXml.includes('hreflang="x-default"')) {
   throw new Error("sitemap.xml must declare x-default hreflang alternates.");
+}
+
+const sitemapImageLocations = Array.from(
+  sitemapXml.matchAll(/<image:loc>([^<]+)<\/image:loc>/g),
+  (match) => match[1],
+);
+const expectedScreenshotUrls = Object.values(site.screenshots).map(
+  (screenshot) => `${canonicalOrigin}${screenshot.src}`,
+);
+for (const screenshotUrl of expectedScreenshotUrls) {
+  const occurrenceCount = sitemapImageLocations.filter((url) => url === screenshotUrl).length;
+  if (occurrenceCount !== locales.length) {
+    throw new Error(
+      `sitemap.xml must expose ${screenshotUrl} once for each localized landing page.`,
+    );
+  }
+}
+if (sitemapImageLocations.length !== expectedScreenshotUrls.length * locales.length) {
+  throw new Error("sitemap.xml contains unexpected image entries.");
 }
 
 const robotsTxt = await readFile(path.join(outputDirectory, "robots.txt"), "utf8");

@@ -118,7 +118,7 @@
       "localeName": "Tiếng Việt",
       "languageCode": "vi-VN",
       "metadata": {
-        "title": "Kim Tài - Tick Vàng Online | Sổ vàng trong túi bạn",
+        "title": "Kim Tài - Tick Vàng Online | Ứng dụng sổ vàng cá nhân",
         "description": "Kim Tài là ứng dụng sổ vàng cá nhân: ghi lại vàng đang giữ, theo dõi giá vàng tham khảo và xem biến động danh mục ngay trên thiết bị của bạn.",
         "ogImage": {
           "src": "/images/og/kim-tai-og-vi.png",
@@ -139,8 +139,8 @@
       },
       "hero": {
         "eyebrow": "Sổ vàng trong túi bạn",
-        "titleStart": "Biết mình đang giữ gì,",
-        "titleAccent": "đáng giá bao nhiêu.",
+        "titleStart": "Sổ vàng cá nhân —",
+        "titleAccent": "biết mình giữ gì, đáng giá bao nhiêu.",
         "description": "Kim Tài giúp bạn ghi sổ, theo dõi giá vàng tham khảo và nhìn rõ biến động danh mục — ngay trên thiết bị của bạn.",
         "secondaryCta": "Khám phá tính năng",
         "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
@@ -319,7 +319,7 @@
       "localeName": "English",
       "languageCode": "en",
       "metadata": {
-        "title": "Kim Tài - Tick Vàng Online | Your gold book, in your pocket",
+        "title": "Kim Tài - Gold Price Tracker & Personal Gold Book App",
         "description": "Kim Tài is a personal gold book app: record your gold holdings, follow reference gold prices, and see portfolio movement right on your device.",
         "ogImage": {
           "src": "/images/og/kim-tai-og-en.png",
@@ -340,8 +340,8 @@
       },
       "hero": {
         "eyebrow": "Your gold book, in your pocket",
-        "titleStart": "Know what you hold—",
-        "titleAccent": "and what it is worth.",
+        "titleStart": "A personal gold tracker—",
+        "titleAccent": "know what you hold and what it is worth.",
         "description": "Kim Tài helps you record holdings, follow reference gold prices, and see how your portfolio moves, right on your device.",
         "secondaryCta": "Explore features",
         "trustNote": "Holdings stay on your device · Prices are for reference only",
