@@ -6,10 +6,11 @@ const root = process.cwd();
 const readJson = async (file) =>
   JSON.parse(await readFile(path.join(root, file), "utf8"));
 
-const [site, legalVi, legalEn, llmsText] = await Promise.all([
+const [site, legalVi, legalEn, blogVi, llmsText] = await Promise.all([
   readJson("src/content/site.json"),
   readJson("src/content/legal.vi.json"),
   readJson("src/content/legal.en.json"),
+  readJson("src/content/blog.vi.json"),
   readFile(path.join(root, "public/llms.txt"), "utf8"),
 ]);
 
@@ -213,6 +214,204 @@ if (
     faqIdsByLocale.vi.some((id, index) => faqIdsByLocale.en[index] !== id))
 ) {
   errors.push("FAQ items must use the same IDs in the same order across vi/en.");
+}
+
+const blogCanonicalUrl = `https://kimtai.dantech.academy/vi/blog/${blogVi.slug}/`;
+const blogStringValues = [];
+const collectStrings = (value) => {
+  if (typeof value === "string") {
+    blogStringValues.push(value);
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach(collectStrings);
+    return;
+  }
+  if (value && typeof value === "object") {
+    Object.values(value).forEach(collectStrings);
+  }
+};
+collectStrings(blogVi);
+
+if (
+  blogVi.slug !== "toi-lay-gia-vang-online-nhu-the-nao" ||
+  blogVi.locale !== "vi"
+) {
+  errors.push("The technical article must use the supported Vietnamese slug and locale.");
+}
+const blogSeoTitle =
+  typeof blogVi.seoTitle === "string" ? blogVi.seoTitle.trim() : "";
+if (blogSeoTitle.length < 35 || blogSeoTitle.length > 65) {
+  errors.push("Blog SEO title must remain between 35 and 65 characters.");
+}
+const blogDescription =
+  typeof blogVi.description === "string" ? blogVi.description.trim() : "";
+if (blogDescription.length < 120 || blogDescription.length > 170) {
+  errors.push("Blog metadata description must remain between 120 and 170 characters.");
+}
+for (const field of [
+  "title",
+  "eyebrow",
+  "intro",
+  "backLabel",
+  "publishedLabel",
+  "updatedLabel",
+  "readingTimeLabel",
+  "tocLabel",
+]) {
+  if (!blogVi[field]?.trim()) {
+    errors.push(`Blog field ${field} is required.`);
+  }
+}
+
+const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+for (const field of ["publishedAt", "updatedAt"]) {
+  const value = blogVi[field];
+  if (
+    typeof value !== "string" ||
+    !isoDatePattern.test(value) ||
+    Number.isNaN(Date.parse(`${value}T00:00:00Z`))
+  ) {
+    errors.push(`Blog field ${field} must be a valid ISO date.`);
+  }
+}
+if (blogVi.updatedAt < blogVi.publishedAt) {
+  errors.push("Blog updatedAt cannot be earlier than publishedAt.");
+}
+
+if (
+  !Array.isArray(blogVi.tags) ||
+  blogVi.tags.length < 3 ||
+  blogVi.tags.length > 6 ||
+  blogVi.tags.some((tag) => !tag?.trim()) ||
+  new Set(blogVi.tags).size !== blogVi.tags.length
+) {
+  errors.push("Blog tags must contain three to six unique non-empty labels.");
+}
+if (
+  !blogVi.pipeline?.label?.trim() ||
+  !blogVi.pipeline?.caption?.trim() ||
+  !Array.isArray(blogVi.pipeline?.steps) ||
+  blogVi.pipeline.steps.length !== 6 ||
+  blogVi.pipeline.steps.some((step) => !step?.trim())
+) {
+  errors.push("Blog pipeline must define a label, caption, and exactly six steps.");
+}
+if (!blogVi.disclaimer?.title?.trim() || !blogVi.disclaimer?.text?.trim()) {
+  errors.push("Blog publication disclaimer is required.");
+}
+if (
+  !blogVi.cta?.eyebrow?.trim() ||
+  !blogVi.cta?.title?.trim() ||
+  !blogVi.cta?.description?.trim()
+) {
+  errors.push("Blog closing CTA copy is incomplete.");
+}
+
+const blogSections = Array.isArray(blogVi.sections) ? blogVi.sections : [];
+const blogSectionIds = blogSections.map((section) => section?.id);
+const expectedBlogSectionIds = [
+  "kien-truc-ba-buoc",
+  "lay-du-lieu-tu-nguon",
+  "chuan-hoa-va-luu-database",
+  "mobile-goi-api",
+];
+if (
+  !Array.isArray(blogVi.sections) ||
+  blogSections.length !== expectedBlogSectionIds.length ||
+  new Set(blogSectionIds).size !== blogSectionIds.length ||
+  expectedBlogSectionIds.some((id, index) => blogSectionIds[index] !== id)
+) {
+  errors.push("Blog must define the four concise data-pipeline sections in order.");
+}
+
+const supportedBlockTypes = new Set(["paragraph", "callout", "code", "list", "table"]);
+const supportedCalloutTones = new Set(["forest", "gold", "mint", "rose"]);
+for (const section of blogSections) {
+  if (
+    !section?.id?.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) ||
+    !section?.title?.trim() ||
+    !Array.isArray(section?.blocks) ||
+    section.blocks.length === 0
+  ) {
+    errors.push(`Blog section is malformed: ${section?.id ?? "unknown"}.`);
+    continue;
+  }
+
+  for (const block of section.blocks) {
+    if (!supportedBlockTypes.has(block?.type)) {
+      errors.push(`Unsupported blog block type in ${section.id}: ${block?.type}.`);
+      continue;
+    }
+    if (block.type === "paragraph" && !block.text?.trim()) {
+      errors.push(`Blog paragraph in ${section.id} is empty.`);
+    }
+    if (
+      block.type === "callout" &&
+      (!supportedCalloutTones.has(block.tone) ||
+        !block.title?.trim() ||
+        !block.text?.trim())
+    ) {
+      errors.push(`Blog callout in ${section.id} is malformed.`);
+    }
+    if (
+      block.type === "code" &&
+      (!block.label?.trim() || !block.language?.trim() || !block.code?.trim())
+    ) {
+      errors.push(`Blog code block in ${section.id} is malformed.`);
+    }
+    if (
+      block.type === "list" &&
+      (typeof block.ordered !== "boolean" ||
+        !Array.isArray(block.items) ||
+        block.items.length < 2 ||
+        block.items.some((item) => !item?.trim()))
+    ) {
+      errors.push(`Blog list in ${section.id} is malformed.`);
+    }
+    if (
+      block.type === "table" &&
+      (!block.caption?.trim() ||
+        !Array.isArray(block.headers) ||
+        block.headers.length < 2 ||
+        block.headers.some((header) => !header?.trim()) ||
+        !Array.isArray(block.rows) ||
+        block.rows.length === 0 ||
+        block.rows.some(
+          (row) =>
+            !Array.isArray(row) ||
+            row.length !== block.headers.length ||
+            row.some((cell) => !cell?.trim()),
+        ))
+    ) {
+      errors.push(`Blog table in ${section.id} is malformed.`);
+    }
+  }
+}
+
+const blogWordCount = blogStringValues
+  .join(" ")
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean).length;
+const estimatedReadingTime = Math.ceil(blogWordCount / 200);
+if (
+  !Number.isInteger(blogVi.readingTimeMinutes) ||
+  blogVi.readingTimeMinutes > 7 ||
+  Math.abs(blogVi.readingTimeMinutes - estimatedReadingTime) > 1
+) {
+  errors.push(
+    `Blog reading time must be no more than seven minutes and stay within one minute of the ${estimatedReadingTime}-minute content estimate.`,
+  );
+}
+if (blogStringValues.some((value) => value.includes("—"))) {
+  errors.push("Blog visible copy must not contain em dashes.");
+}
+if (blogStringValues.some((value) => value.includes("../"))) {
+  errors.push("Blog copy must not publish unresolved cross-repository relative links.");
+}
+if (!llmsText.includes(blogCanonicalUrl)) {
+  errors.push("llms.txt must link to the canonical technical article URL.");
 }
 
 for (const [locale, legal] of [

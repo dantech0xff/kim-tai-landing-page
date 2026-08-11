@@ -4,6 +4,7 @@ import {
   getPublishedDownloadUrl,
   getSiteCopy,
   siteConfig,
+  type BlogArticle,
   type DownloadPlatform,
   type LegalSlug,
   type Locale,
@@ -68,6 +69,34 @@ interface BreadcrumbListSchema {
     name: string;
     item: string;
   }>;
+}
+
+interface ArticleOrganizationSchema {
+  "@type": "Organization";
+  name: string;
+  url: string;
+  logo?: {
+    "@type": "ImageObject";
+    url: string;
+  };
+}
+
+interface TechArticleSchema {
+  "@context": "https://schema.org";
+  "@type": "TechArticle";
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified: string;
+  inLanguage: "vi-VN";
+  isAccessibleForFree: true;
+  mainEntityOfPage: string;
+  url: string;
+  image: string;
+  keywords: string[];
+  articleSection: string[];
+  author: ArticleOrganizationSchema;
+  publisher: ArticleOrganizationSchema;
 }
 
 function findIcon512() {
@@ -166,5 +195,66 @@ export function buildBreadcrumbList(
         item: toCanonicalUrl(`/${locale}/${slug}/`),
       },
     ],
+  };
+}
+
+export function buildBlogBreadcrumbList(
+  article: BlogArticle,
+): BreadcrumbListSchema {
+  const articleUrl = toCanonicalUrl(`/vi/blog/${article.slug}/`);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: siteConfig.brand.productName,
+        item: toCanonicalUrl("/vi/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: article.title,
+        item: articleUrl,
+      },
+    ],
+  };
+}
+
+export function buildTechArticle(article: BlogArticle): TechArticleSchema {
+  const icon = findIcon512();
+  const articleUrl = toCanonicalUrl(`/vi/blog/${article.slug}/`);
+  const organization: ArticleOrganizationSchema = {
+    "@type": "Organization",
+    name: siteConfig.brand.name,
+    url: canonicalOrigin,
+    ...(icon
+      ? {
+          logo: {
+            "@type": "ImageObject" as const,
+            url: toCanonicalUrl(icon.src),
+          },
+        }
+      : {}),
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: article.title,
+    description: article.description,
+    datePublished: article.publishedAt,
+    dateModified: article.updatedAt,
+    inLanguage: "vi-VN",
+    isAccessibleForFree: true,
+    mainEntityOfPage: articleUrl,
+    url: articleUrl,
+    image: toCanonicalUrl(getSiteCopy("vi").metadata.ogImage.src),
+    keywords: article.tags,
+    articleSection: article.sections.map((section) => section.title),
+    author: organization,
+    publisher: organization,
   };
 }

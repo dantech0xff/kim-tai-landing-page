@@ -1,3 +1,4 @@
+import blogViJson from "@/content/blog.vi.json";
 import legalEnJson from "@/content/legal.en.json";
 import legalViJson from "@/content/legal.vi.json";
 import siteJson from "@/content/site.json";
@@ -9,9 +10,11 @@ export const legalSlugs = [
   "terms-and-conditions",
   "privacy-policy",
 ] as const;
+export const blogSlugs = ["toi-lay-gia-vang-online-nhu-the-nao"] as const;
 
 export type Locale = (typeof locales)[number];
 export type LegalSlug = (typeof legalSlugs)[number];
+export type BlogSlug = (typeof blogSlugs)[number];
 export type ScreenshotKey = "overview" | "settings" | "market";
 export type FeatureIcon = "ledger" | "trend" | "device" | "sliders";
 export type FeatureId = "portfolio" | "market" | "local-first" | "personalize";
@@ -30,6 +33,85 @@ export interface FaqItem {
   id: string;
   question: string;
   answer: string;
+}
+
+export type BlogCalloutTone = "forest" | "gold" | "mint" | "rose";
+
+export interface BlogParagraphBlock {
+  type: "paragraph";
+  text: string;
+}
+
+export interface BlogCalloutBlock {
+  type: "callout";
+  tone: BlogCalloutTone;
+  title: string;
+  text: string;
+}
+
+export interface BlogCodeBlock {
+  type: "code";
+  label: string;
+  language: string;
+  code: string;
+}
+
+export interface BlogListBlock {
+  type: "list";
+  ordered: boolean;
+  items: string[];
+}
+
+export interface BlogTableBlock {
+  type: "table";
+  caption: string;
+  headers: string[];
+  rows: string[][];
+}
+
+export type BlogBlock =
+  | BlogParagraphBlock
+  | BlogCalloutBlock
+  | BlogCodeBlock
+  | BlogListBlock
+  | BlogTableBlock;
+
+export interface BlogArticle {
+  slug: BlogSlug;
+  locale: "vi";
+  publishedAt: string;
+  updatedAt: string;
+  readingTimeMinutes: number;
+  seoTitle: string;
+  title: string;
+  description: string;
+  eyebrow: string;
+  intro: string;
+  backLabel: string;
+  publishedLabel: string;
+  updatedLabel: string;
+  readingTimeLabel: string;
+  tocLabel: string;
+  tags: string[];
+  pipeline: {
+    label: string;
+    caption: string;
+    steps: string[];
+  };
+  disclaimer: {
+    title: string;
+    text: string;
+  };
+  sections: Array<{
+    id: string;
+    title: string;
+    blocks: BlogBlock[];
+  }>;
+  cta: {
+    eyebrow: string;
+    title: string;
+    description: string;
+  };
 }
 
 interface LegalSection {
@@ -62,6 +144,7 @@ interface LegalCollection {
 }
 
 export const siteConfig = siteJson;
+export const blogArticle = blogViJson as BlogArticle;
 
 export type DownloadPlatform = keyof typeof siteConfig.downloads;
 
@@ -89,6 +172,22 @@ export function isLocale(value: string): value is Locale {
 
 export function isLegalSlug(value: string): value is LegalSlug {
   return legalSlugs.includes(value as LegalSlug);
+}
+
+export function isBlogSlug(value: string): value is BlogSlug {
+  return blogSlugs.includes(value as BlogSlug);
+}
+
+export function getBlogArticle(
+  locale: string,
+  slug: string,
+): BlogArticle | null {
+  if (locale !== "vi" || !isBlogSlug(slug)) return null;
+  return blogArticle;
+}
+
+export function getBlogPath(slug: BlogSlug = blogArticle.slug) {
+  return `/vi/blog/${slug}`;
 }
 
 export function getSiteCopy(locale: Locale) {
@@ -173,6 +272,15 @@ export function interpolateLegalText(locale: Locale, text: string) {
 
 export function formatLegalDate(locale: Locale, isoDate: string) {
   return new Intl.DateTimeFormat(locale === "vi" ? "vi-VN" : "en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Ho_Chi_Minh",
+  }).format(new Date(`${isoDate}T00:00:00+07:00`));
+}
+
+export function formatBlogDate(isoDate: string) {
+  return new Intl.DateTimeFormat("vi-VN", {
     day: "2-digit",
     month: "long",
     year: "numeric",

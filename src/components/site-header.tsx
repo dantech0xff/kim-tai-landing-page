@@ -4,20 +4,26 @@ import { BrandMark } from "@/components/brand-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
   getAlternateLocale,
+  getBlogPath,
   getSiteCopy,
   type Locale,
 } from "@/lib/content";
 
 interface SiteHeaderProps {
+  languageHref?: string;
   locale: Locale;
   routeSuffix?: string;
 }
 
-export function SiteHeader({ locale, routeSuffix = "" }: SiteHeaderProps) {
+export function SiteHeader({
+  languageHref,
+  locale,
+  routeSuffix = "",
+}: SiteHeaderProps) {
   const copy = getSiteCopy(locale);
   const alternateLocale = getAlternateLocale(locale);
   const homeHref = `/${locale}`;
-  const languageHref = `/${alternateLocale}${routeSuffix}`;
+  const resolvedLanguageHref = languageHref ?? `/${alternateLocale}${routeSuffix}`;
 
   return (
     <header className="site-header">
@@ -43,6 +49,11 @@ export function SiteHeader({ locale, routeSuffix = "" }: SiteHeaderProps) {
           <Link className="nav-link" href={`${homeHref}#faq`}>
             {copy.navigation.faq}
           </Link>
+          {locale === "vi" && (
+            <Link className="nav-link" href={getBlogPath()}>
+              {copy.navigation.blog}
+            </Link>
+          )}
           <Link className="nav-link" href={`${homeHref}#download`}>
             {copy.navigation.download}
           </Link>
@@ -52,7 +63,7 @@ export function SiteHeader({ locale, routeSuffix = "" }: SiteHeaderProps) {
           <Link
             aria-label={copy.navigation.language}
             className="language-button"
-            href={languageHref}
+            href={resolvedLanguageHref}
             hrefLang={alternateLocale}
           >
             {alternateLocale.toUpperCase()}
@@ -66,4 +77,3 @@ export function SiteHeader({ locale, routeSuffix = "" }: SiteHeaderProps) {
     </header>
   );
 }
-

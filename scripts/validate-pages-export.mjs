@@ -7,6 +7,9 @@ const outputDirectory = path.join(root, process.env.PAGES_OUTPUT_DIR ?? "out");
 const site = JSON.parse(
   await readFile(path.join(root, "src/content/site.json"), "utf8"),
 );
+const blog = JSON.parse(
+  await readFile(path.join(root, "src/content/blog.vi.json"), "utf8"),
+);
 const [repositoryOwner = "", repositoryName = ""] =
   (process.env.GITHUB_REPOSITORY ?? "").split("/");
 
@@ -21,12 +24,44 @@ const canonicalOrigin =
   process.env.CANONICAL_ORIGIN ?? "https://kimtai.dantech.academy";
 const locales = ["vi", "en"];
 const legalSlugs = ["terms-of-service", "terms-and-conditions", "privacy-policy"];
-const routeDefinitions = locales.flatMap((locale) => [
-  { file: `${locale}/index.html`, locale, slug: "" },
-  ...legalSlugs.map((slug) => ({ file: `${locale}/${slug}/index.html`, locale, slug })),
-]);
 const canonicalPath = (locale, slug = "") =>
   `/${locale}/${slug ? `${slug}/` : ""}`;
+const articlePath = `/vi/blog/${blog.slug}/`;
+const localizedRouteDefinitions = locales.flatMap((locale) => [
+  {
+    file: `${locale}/index.html`,
+    locale,
+    kind: "landing",
+    pathname: canonicalPath(locale),
+    alternates: {
+      vi: canonicalPath("vi"),
+      en: canonicalPath("en"),
+      "x-default": canonicalPath("vi"),
+    },
+  },
+  ...legalSlugs.map((slug) => ({
+    file: `${locale}/${slug}/index.html`,
+    locale,
+    kind: "legal",
+    pathname: canonicalPath(locale, slug),
+    alternates: {
+      vi: canonicalPath("vi", slug),
+      en: canonicalPath("en", slug),
+      "x-default": canonicalPath("vi", slug),
+    },
+  })),
+]);
+const articleRouteDefinition = {
+  file: `vi/blog/${blog.slug}/index.html`,
+  locale: "vi",
+  kind: "article",
+  pathname: articlePath,
+  alternates: { vi: articlePath, "x-default": articlePath },
+};
+const routeDefinitions = [
+  ...localizedRouteDefinitions,
+  articleRouteDefinition,
+];
 const escapeHtml = (value) =>
   value
     .replaceAll("&", "&amp;")
@@ -34,6 +69,7 @@ const escapeHtml = (value) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#x27;");
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const badgeFiles = Object.entries(site.downloads ?? {}).flatMap(
   ([platform, download]) =>
     Object.entries(download.badges ?? {}).map(([locale, badge]) => {
@@ -96,6 +132,20 @@ await Promise.all(
   }),
 );
 
+const unsupportedEnglishArticle = path.join(
+  outputDirectory,
+  `en/blog/${blog.slug}/index.html`,
+);
+let unsupportedEnglishArticleExists = true;
+try {
+  await access(unsupportedEnglishArticle);
+} catch {
+  unsupportedEnglishArticleExists = false;
+}
+if (unsupportedEnglishArticleExists) {
+  throw new Error("The Vietnamese-only article must not emit an English artifact.");
+}
+
 const redirectHtml = await readFile(path.join(outputDirectory, "index.html"), "utf8");
 if (!redirectHtml.includes('url=./vi/') || !redirectHtml.includes('href="./vi/"')) {
   throw new Error("Root artifact must redirect and link to the relative ./vi/ route.");
@@ -112,6 +162,9 @@ if (
 }
 
 const llmsText = await readFile(path.join(outputDirectory, "llms.txt"), "utf8");
+if (!llmsText.includes(`${canonicalOrigin}${articlePath}`)) {
+  throw new Error("llms.txt must expose the canonical technical article URL.");
+}
 for (const [platform, download] of Object.entries(site.downloads ?? {})) {
   if (download.published && !llmsText.includes(download.directUrl)) {
     throw new Error(`llms.txt must expose the published ${platform} store listing.`);
@@ -131,7 +184,7 @@ if (
   throw new Error("Manifest icons do not use the Pages base path.");
 }
 
-for (const { file, locale, slug } of routeDefinitions) {
+for (const { file, locale, kind, pathname, alternates } of routeDefinitions) {
   const html = await readFile(path.join(outputDirectory, file), "utf8");
   const absoluteAssetPaths = Array.from(
     html.matchAll(/\s(?:href|src)="(\/[^"]+)"/g),
@@ -151,13 +204,13 @@ for (const { file, locale, slug } of routeDefinitions) {
     throw new Error(`${file} still depends on the unavailable Next.js image optimizer.`);
   }
 
-  const expectedCanonical = `${canonicalOrigin}${canonicalPath(locale, slug)}`;
+  const expectedCanonical = `${canonicalOrigin}${pathname}`;
   if (!html.includes(`<link rel="canonical" href="${expectedCanonical}"/>`)) {
     throw new Error(`${file} does not declare the expected canonical URL ${expectedCanonical}.`);
   }
 
-  for (const alternateLocale of locales) {
-    const expectedAlternate = `${canonicalOrigin}${canonicalPath(alternateLocale, slug)}`;
+  for (const [alternateLocale, alternatePath] of Object.entries(alternates)) {
+    const expectedAlternate = `${canonicalOrigin}${alternatePath}`;
     if (
       !html.includes(
         `<link rel="alternate" hrefLang="${alternateLocale}" href="${expectedAlternate}"/>`,
@@ -168,16 +221,8 @@ for (const { file, locale, slug } of routeDefinitions) {
       );
     }
   }
-
-  const expectedDefaultAlternate = `${canonicalOrigin}${canonicalPath("vi", slug)}`;
-  if (
-    !html.includes(
-      `<link rel="alternate" hrefLang="x-default" href="${expectedDefaultAlternate}"/>`,
-    )
-  ) {
-    throw new Error(
-      `${file} does not declare the x-default alternate URL ${expectedDefaultAlternate}.`,
-    );
+  if (kind === "article" && /<link rel="alternate" hrefLang="en"/.test(html)) {
+    throw new Error(`${file} must not advertise a nonexistent English alternate.`);
   }
 
   if (!html.includes('<meta name="robots" content="noindex')) {
@@ -222,9 +267,11 @@ for (const { file, locale, slug } of routeDefinitions) {
     return parsed;
   });
   const structuredDataTypes = structuredData.map((data) => data["@type"]);
-  const expectedStructuredDataTypes = slug
-    ? ["Organization", "WebSite", "BreadcrumbList"]
-    : ["Organization", "WebSite", "MobileApplication", "FAQPage"];
+  const expectedStructuredDataTypes = {
+    landing: ["Organization", "WebSite", "MobileApplication", "FAQPage"],
+    legal: ["Organization", "WebSite", "BreadcrumbList"],
+    article: ["Organization", "WebSite", "BreadcrumbList", "TechArticle"],
+  }[kind];
   if (
     structuredDataTypes.length !== expectedStructuredDataTypes.length ||
     !expectedStructuredDataTypes.every((type) => structuredDataTypes.includes(type))
@@ -234,7 +281,7 @@ for (const { file, locale, slug } of routeDefinitions) {
     );
   }
 
-  if (!slug) {
+  if (kind === "landing") {
     const mobileApplication = structuredData.find(
       (data) => data["@type"] === "MobileApplication",
     );
@@ -277,7 +324,7 @@ for (const { file, locale, slug } of routeDefinitions) {
     }
   }
 
-  if (slug) {
+  if (kind === "legal") {
     const operatorCopy = site.locales?.[locale]?.legalUi?.operatorDetails;
     const operatorSection = html.match(
       /<section class="operator-details"[\s\S]*?<\/section>/,
@@ -306,6 +353,60 @@ for (const { file, locale, slug } of routeDefinitions) {
       throw new Error(`${file} does not render the configured public operator contact.`);
     }
   }
+
+  if (kind === "article") {
+    const techArticle = structuredData.find((data) => data["@type"] === "TechArticle");
+    const articleH1Count = Array.from(html.matchAll(/<h1(?:\s[^>]*)?>/g)).length;
+    const articleSectionCount = Array.from(
+      html.matchAll(/<section class="article-section" id="/g),
+    ).length;
+    if (
+      techArticle?.url !== expectedCanonical ||
+      techArticle?.mainEntityOfPage !== expectedCanonical ||
+      techArticle?.headline !== blog.title ||
+      techArticle?.description !== blog.description ||
+      techArticle?.datePublished !== blog.publishedAt ||
+      techArticle?.dateModified !== blog.updatedAt ||
+      techArticle?.inLanguage !== "vi-VN" ||
+      techArticle?.isAccessibleForFree !== true ||
+      !Array.isArray(techArticle?.keywords) ||
+      techArticle.keywords.length !== blog.tags.length ||
+      !blog.tags.every((tag) => techArticle.keywords.includes(tag)) ||
+      !Array.isArray(techArticle?.articleSection) ||
+      techArticle.articleSection.length !== blog.sections.length
+    ) {
+      throw new Error(`${file} TechArticle schema does not match the article source.`);
+    }
+    if (
+      !html.includes(`<meta property="og:type" content="article"/>`) ||
+      !html.includes(
+        `<meta property="article:published_time" content="${blog.publishedAt}"/>`,
+      ) ||
+      !html.includes(
+        `<meta property="article:modified_time" content="${blog.updatedAt}"/>`,
+      )
+    ) {
+      throw new Error(`${file} is missing article-specific Open Graph metadata.`);
+    }
+    if (
+      !html.includes(
+        `<h1 class="article-title" id="article-title">${escapeHtml(blog.title)}</h1>`,
+      ) ||
+      articleH1Count !== 1 ||
+      articleSectionCount !== blog.sections.length ||
+      !html.includes(`href="${basePath}/en/"`)
+    ) {
+      throw new Error(`${file} does not render the expected article shell.`);
+    }
+    for (const section of blog.sections) {
+      if (
+        !html.includes(`<section class="article-section" id="${section.id}">`) ||
+        !html.includes(`<h2>${escapeHtml(section.title)}</h2>`)
+      ) {
+        throw new Error(`${file} is missing article section ${section.id}.`);
+      }
+    }
+  }
 }
 
 const sitemapXml = await readFile(path.join(outputDirectory, "sitemap.xml"), "utf8");
@@ -314,7 +415,7 @@ const sitemapLocations = Array.from(
   (match) => match[1],
 );
 const expectedSitemapLocations = routeDefinitions.map(
-  ({ locale, slug }) => `${canonicalOrigin}${canonicalPath(locale, slug)}`,
+  ({ pathname }) => `${canonicalOrigin}${pathname}`,
 );
 if (
   sitemapLocations.length !== expectedSitemapLocations.length ||
@@ -329,6 +430,36 @@ if (sitemapLocations.some((url) => !url.startsWith(`${canonicalOrigin}/`))) {
 }
 if (!sitemapXml.includes('hreflang="x-default"')) {
   throw new Error("sitemap.xml must declare x-default hreflang alternates.");
+}
+const articleSitemapUrl = `${canonicalOrigin}${articlePath}`;
+const articleSitemapEntry = sitemapXml.match(
+  new RegExp(
+    `<url>\\s*<loc>${escapeRegExp(articleSitemapUrl)}</loc>[\\s\\S]*?</url>`,
+  ),
+)?.[0];
+const articleSitemapLanguages = Array.from(
+  articleSitemapEntry?.matchAll(/hreflang="([^"]+)"/g) ?? [],
+  (match) => match[1],
+);
+if (
+  !articleSitemapEntry ||
+  articleSitemapLanguages.length !== 2 ||
+  !articleSitemapLanguages.includes("vi") ||
+  !articleSitemapLanguages.includes("x-default") ||
+  !articleSitemapEntry.includes(
+    `hreflang="vi" href="${articleSitemapUrl}"`,
+  ) ||
+  !articleSitemapEntry.includes(
+    `hreflang="x-default" href="${articleSitemapUrl}"`,
+  ) ||
+  !articleSitemapEntry.includes(`<lastmod>${blog.updatedAt}</lastmod>`)
+) {
+  throw new Error(
+    "sitemap.xml must list the dated Vietnamese article with only vi and x-default alternates.",
+  );
+}
+if (sitemapXml.includes(`${canonicalOrigin}/en/blog/${blog.slug}/`)) {
+  throw new Error("sitemap.xml must not list a nonexistent English article URL.");
 }
 
 const sitemapImageLocations = Array.from(

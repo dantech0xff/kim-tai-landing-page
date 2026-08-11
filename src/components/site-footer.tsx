@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
 import {
+  getBlogPath,
   getLegalPath,
   getSiteCopy,
   legalSlugs,
@@ -41,6 +42,11 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             <Link className="footer-link" href={`/${locale}#privacy`}>
               {copy.navigation.privacy}
             </Link>
+            {locale === "vi" && (
+              <Link className="footer-link" href={getBlogPath()}>
+                {copy.navigation.blog}
+              </Link>
+            )}
             <Link className="footer-link" href={`/${locale}#download`}>
               {copy.navigation.download}
             </Link>

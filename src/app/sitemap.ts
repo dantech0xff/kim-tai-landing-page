@@ -1,7 +1,13 @@
 import type { MetadataRoute } from "next";
 
 import { toCanonicalUrl } from "@/lib/base-path";
-import { legalSlugs, locales, siteConfig } from "@/lib/content";
+import {
+  blogArticle,
+  getBlogPath,
+  legalSlugs,
+  locales,
+  siteConfig,
+} from "@/lib/content";
 
 export const dynamic = "force-static";
 
@@ -12,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     toCanonicalUrl(screenshot.src),
   );
 
-  return routeSuffixes.flatMap((suffix) =>
+  const localizedRoutes = routeSuffixes.flatMap((suffix) =>
     locales.map((locale) => ({
       url: toCanonicalUrl(`/${locale}/${suffix}`),
       lastModified,
@@ -26,4 +32,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     })),
   );
+
+  const articleUrl = toCanonicalUrl(`${getBlogPath(blogArticle.slug)}/`);
+
+  return [
+    ...localizedRoutes,
+    {
+      url: articleUrl,
+      lastModified: blogArticle.updatedAt,
+      alternates: {
+        languages: {
+          vi: articleUrl,
+          "x-default": articleUrl,
+        },
+      },
+    },
+  ];
 }

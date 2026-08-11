@@ -44,7 +44,7 @@ Website được triển khai song song trên hai nền tảng:
 - Workflow: `.github/workflows/deploy-pages.yml`.
 - Secrets: không yêu cầu.
 
-URL gốc chuyển tương đối đến `/vi/`. Tiếng Anh nằm tại `/en/`; sáu trang pháp lý được xuất tĩnh dưới hai ngôn ngữ.
+URL gốc chuyển tương đối đến `/vi/`. Tiếng Anh nằm tại `/en/`; các trang pháp lý được xuất tĩnh dưới hai ngôn ngữ. Bài viết kỹ thuật có route canonical `/vi/blog/toi-lay-gia-vang-online-nhu-the-nao/` và chỉ được xuất bằng tiếng Việt; không có artifact tương ứng dưới `/en/blog/`.
 
 ## Phát hành tự động
 
@@ -52,7 +52,7 @@ Push vào `main` sẽ chạy quy trình sau:
 
 1. Cài dependencies bằng `npm ci` trên Node.js 22.
 2. Build Next.js với `output: "export"` và base path lấy từ `GITHUB_REPOSITORY`.
-3. Chạy `npm run validate:pages` để kiểm tra route, metadata, manifest, ảnh và asset.
+3. Chạy `npm run validate:pages` để kiểm tra route, metadata, manifest, ảnh và asset, gồm artifact bài viết tiếng Việt và việc không phát sinh artifact bài viết tiếng Anh.
 4. Upload thư mục `out/` và triển khai qua GitHub Pages Actions.
 
 Có thể chạy lại thủ công bằng nút **Run workflow** trong tab **Actions** của repository. Không commit thư mục `out/`; artifact được tạo mới trong CI.
@@ -110,7 +110,7 @@ Thực hiện sau khi `release.ready` và `operator.configured` đều bật và
 1. Xác minh site đã bỏ noindex: `curl -s https://kimtai.dantech.academy/vi/ | grep 'name="robots"'` không còn chứa `noindex`; đối chiếu thêm `curl -s https://kimtai.dantech.academy/vi/ | grep -E 'canonical|hreflang|og:|ld\+json'`.
 2. Xác nhận `NEXT_PUBLIC_CANONICAL_ORIGIN`/`CANONICAL_ORIGIN` KHÔNG được đặt trên Vercel (xem cảnh báo ở mục biến môi trường Vercel).
 3. Tạo property Google Search Console (Domain property cho `dantech.academy` hoặc URL-prefix `https://kimtai.dantech.academy`) và submit `sitemap.xml`; làm tương tự trên Bing Webmaster Tools — Bing là nguồn dữ liệu của ChatGPT Search và Copilot.
-4. Chạy Rich Results Test trên URL live và kiểm tra JSON-LD bằng validator.schema.org. Chấp nhận cảnh báo thiếu `aggregateRating` — đây là chủ đích theo nguyên tắc không fake dữ liệu; chỉ thêm khi có đánh giá thật từ store.
+4. Chạy Rich Results Test trên URL live và kiểm tra JSON-LD bằng validator.schema.org; bài viết kỹ thuật phải giữ BreadcrumbList và TechArticle. Chấp nhận cảnh báo thiếu `aggregateRating` — đây là chủ đích theo nguyên tắc không fake dữ liệu; chỉ thêm khi có đánh giá thật từ store.
 5. Chạy Lighthouse tab SEO cho `/vi/` và `/en/`, mục tiêu ≥ 95; audit `is-crawlable` phải pass sau khi hết noindex.
 6. Theo dõi coverage và query trong Search Console. Site chưa bật analytics (`productFacts.websiteAnalyticsEnabled=false`) nên chưa đo được lượt truy cập từ AI (referrer `chatgpt.com`, `perplexity.ai`, `copilot.microsoft.com`); bật analytics là quyết định sản phẩm/pháp lý riêng, không thuộc phạm vi SEO.
 

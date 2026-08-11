@@ -55,17 +55,19 @@ Xem [hướng dẫn triển khai](docs/deployment.md) để biết quy trình ph
 ## Tuyến trang
 
 - `/vi` và `/en`: trang giới thiệu sản phẩm.
+- `/vi/blog/toi-lay-gia-vang-online-nhu-the-nao/`: route canonical của bài viết kỹ thuật tiếng Việt.
 - `/{locale}/terms-of-service`: Điều khoản dịch vụ / Terms of Service.
 - `/{locale}/terms-and-conditions`: Điều khoản và điều kiện / Terms and Conditions.
 - `/{locale}/privacy-policy`: Chính sách quyền riêng tư / Privacy Policy.
 
-Các trang ngôn ngữ và pháp lý đều được dựng tĩnh khi build.
+Các trang ngôn ngữ, pháp lý và bài viết kỹ thuật đều được dựng tĩnh khi build. Bài viết chỉ có tiếng Việt: static export không tạo artifact tiếng Anh tương ứng, còn `validate:pages` bảo vệ hợp đồng này.
 
 ## Cấu hình bằng JSON
 
 | Tệp | Nội dung |
 | --- | --- |
 | `src/content/site.json` | Thương hiệu, đơn vị vận hành, liên kết tải, ảnh, tính năng và toàn bộ nội dung VI/EN |
+| `src/content/blog.vi.json` | Nguồn nội dung có kiểu `BlogArticle` cho bài viết kỹ thuật tiếng Việt |
 | `src/content/legal.vi.json` | Ba tài liệu pháp lý tiếng Việt và nguồn luật chính thức |
 | `src/content/legal.en.json` | Bản tiếng Anh tham khảo của ba tài liệu pháp lý |
 
@@ -93,12 +95,12 @@ GitHub Pages hiện có thể dùng làm bản xem trước công khai. Bản mi
 - Canonical origin duy nhất: `https://kimtai.dantech.academy` — mọi canonical/hreflang (kèm `x-default`), sitemap và JSON-LD đều trỏ về origin này, kể cả trên bản mirror GitHub Pages (mirror luôn `noindex`).
 - URL dùng trailing slash thống nhất (`/vi/`, `/en/`, …) trên cả hai deployment.
 - `robots.txt` cho phép mọi crawler (kể cả AI bot, đã chốt chủ đích); metadata cho phép Google dùng ảnh preview lớn nhưng vẫn tuân thủ release gate. `src/app/sitemap.ts` là nguồn thực thi cho URL, hreflang và ảnh ứng dụng trong sitemap.
-- JSON-LD: Organization + WebSite trên mọi trang, MobileApplication + FAQPage trên landing, BreadcrumbList trên trang pháp lý. MobileApplication liên kết cả hai listing đã phát hành; không có `aggregateRating` hay số liệu bịa, còn `offers.price: "0"` phản ánh mô hình tải miễn phí + Premium mua trong ứng dụng.
+- JSON-LD: Organization + WebSite trên mọi trang, MobileApplication + FAQPage trên landing, BreadcrumbList trên trang pháp lý và bài viết, TechArticle trên bài viết kỹ thuật. MobileApplication liên kết cả hai listing đã phát hành; không có `aggregateRating` hay số liệu bịa, còn `offers.price: "0"` phản ánh mô hình tải miễn phí + Premium mua trong ứng dụng.
 - Mục FAQ song ngữ hiển thị tĩnh trên landing và dùng chung dữ liệu với FAQPage schema (`locales.*.faq` trong `site.json`) nên UI và schema không thể lệch nhau.
 - Ảnh OG/Twitter 1200×630 nằm tại `public/images/og/`, tái tạo bằng `scripts/generate-og-images.sh`.
 - `public/llms.txt` tóm tắt site và trỏ tới cả App Store/Google Play cho AI crawler theo llmstxt.org.
 - Route không tồn tại dùng trang 404 song ngữ có lối quay về `/vi/` và `/en/`; Next.js tự giữ trang này ngoài chỉ mục.
-- `validate:content` và `validate:pages` bắt regression cho toàn bộ các bề mặt SEO trên.
+- `validate:content` và `validate:pages` bắt regression cho toàn bộ các bề mặt SEO trên, đồng thời giữ hợp đồng bài viết chỉ có artifact tiếng Việt.
 
 ## Ghi chú pháp lý
 

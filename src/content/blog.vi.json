@@ -1,0 +1,230 @@
+{
+  "slug": "toi-lay-gia-vang-online-nhu-the-nao",
+  "locale": "vi",
+  "publishedAt": "2026-08-10",
+  "updatedAt": "2026-08-11",
+  "readingTimeMinutes": 7,
+  "seoTitle": "Kim Tài lấy giá vàng online như thế nào?",
+  "title": "Kim Tài lấy giá vàng online như thế nào?",
+  "description": "Quy trình Kim Tài lấy giá vàng từ website, chuẩn hoá về VND mỗi lượng, lưu PostgreSQL và cung cấp API an toàn để ứng dụng Flutter đọc.",
+  "eyebrow": "Bài viết kỹ thuật",
+  "intro": "Một pipeline ba bước: backend lấy dữ liệu từ nguồn, chuẩn hoá và lưu vào database, sau đó Flutter gọi API để nhận giá đã kiểm tra.",
+  "backLabel": "Về trang chủ",
+  "publishedLabel": "Đăng ngày",
+  "updatedLabel": "Cập nhật",
+  "readingTimeLabel": "phút đọc ước tính",
+  "tocLabel": "Trong bài viết",
+  "tags": [
+    "Backend",
+    "Supabase",
+    "PostgreSQL",
+    "Flutter"
+  ],
+  "pipeline": {
+    "label": "Luồng dữ liệu",
+    "caption": "Mobile không crawl website. Mobile chỉ đọc dữ liệu đã được backend chuẩn hoá và công khai qua một read model an toàn.",
+    "steps": [
+      "Nguồn dữ liệu",
+      "Edge Function",
+      "Adapter",
+      "Chuẩn hoá",
+      "Database và view",
+      "Flutter"
+    ]
+  },
+  "disclaimer": {
+    "title": "Phạm vi kỹ thuật",
+    "text": "Bài viết mô tả kiến trúc Kim Tài tại ngày 10/08/2026. Giá trong ứng dụng chỉ mang tính tham khảo. Quyền thu thập, lưu và hiển thị phải được kiểm tra riêng theo điều khoản của từng nguồn."
+  },
+  "sections": [
+    {
+      "id": "kien-truc-ba-buoc",
+      "title": "Toàn bộ luồng trong một phút",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Kim Tài không để ứng dụng Flutter gọi thẳng từng website vàng. Việc đọc HTML, giữ secret, xử lý fallback và sửa parser khi nguồn đổi đều nằm ở backend. Mobile chỉ nhận một contract ổn định, nên thay đổi ở website nguồn không buộc người dùng cập nhật ứng dụng."
+        },
+        {
+          "type": "code",
+          "label": "Pipeline rút gọn",
+          "language": "text",
+          "code": "Website hoặc API công khai\n  -> Edge Function + adapter theo nguồn\n  -> quote chuẩn theo VND/lượng\n  -> PostgreSQL + public view\n  -> Supabase REST\n  -> Flutter repository + cache"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "Backend lấy và parse dữ liệu theo contract của từng nguồn.",
+            "Database lưu lịch sử, còn public view chỉ phát hành record mới nhất đã vượt quality gate.",
+            "Flutter gọi API đọc, validate lại response rồi chọn remote, cache, giá thủ công hoặc trạng thái rỗng."
+          ]
+        },
+        {
+          "type": "callout",
+          "tone": "gold",
+          "title": "Ranh giới bảo mật",
+          "text": "Cron secret và service-role key chỉ tồn tại ở server. Mobile chỉ dùng Supabase URL cùng publishable key có quyền đọc public view, không có quyền crawl hoặc ghi tick."
+        }
+      ]
+    },
+    {
+      "id": "lay-du-lieu-tu-nguon",
+      "title": "Bước 1: Lấy dữ liệu từ nguồn",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Một lịch `pg_cron` gọi Supabase Edge Function theo từng nhóm provider. Mỗi provider có adapter riêng, khai báo URL chính, URL dự phòng, kiểu payload, đơn vị, market và các product code hoặc label được phép nhận. Nhờ vậy parser không phải đoán một trang HTML bất kỳ đang nói về sản phẩm nào."
+        },
+        {
+          "type": "code",
+          "label": "Contract đầu ra của adapter",
+          "language": "ts",
+          "code": "type ProviderQuote = {\n  providerId: string;\n  priceMarketCode: string;\n  productCode: string;\n  buy: number | null;\n  sell: number | null;\n  unit:\n    | \"vnd_per_chi\"\n    | \"vnd_per_luong\"\n    | \"thousand_vnd_per_chi\"\n    | \"thousand_vnd_per_luong\";\n  quotedAt: string;\n  sourceUrl: string;\n};"
+        },
+        {
+          "type": "paragraph",
+          "text": "Với JSON, adapter map một tập field đã biết như buy và sell. Với HTML, adapter match product code trước; nếu không có code thì match label có token boundary, sau đó chỉ tìm giá ở phần text nằm sau label. Cách này ngăn số trong tên sản phẩm bị hiểu nhầm thành giá."
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "Fetch nguồn chính với deadline và giới hạn response.",
+            "Từ chối HTTP lỗi, challenge page, payload sai shape hoặc unit mơ hồ.",
+            "Thử nguồn dự phòng đã khai báo nếu lỗi thuộc nhóm được phép fallback.",
+            "Parse từng provider và market độc lập để một nguồn hỏng không làm mất dữ liệu sạch của nguồn khác."
+          ]
+        },
+        {
+          "type": "callout",
+          "tone": "forest",
+          "title": "Fail closed",
+          "text": "Không tìm thấy đúng product, đúng cột mua bán hoặc đúng unit thì bỏ quote. Thiếu dữ liệu tốt hơn tự đoán một con số trông có vẻ hợp lý."
+        }
+      ]
+    },
+    {
+      "id": "chuan-hoa-va-luu-database",
+      "title": "Bước 2: Chuẩn hoá rồi lưu database",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Mọi nguồn phải hội tụ về cùng một đơn vị là số nguyên VND trên một lượng. Không dùng `double` và không format thành chuỗi ở bước này. Một lượng bằng mười chỉ, nên normalizer chỉ cần các hệ số nguyên dưới đây."
+        },
+        {
+          "type": "table",
+          "caption": "Quy tắc đổi về VND trên một lượng",
+          "headers": [
+            "Đơn vị nguồn",
+            "Phép đổi",
+            "Ví dụ"
+          ],
+          "rows": [
+            [
+              "VND/chỉ",
+              "giá × 10",
+              "14.500.000 → 145.000.000"
+            ],
+            [
+              "VND/lượng",
+              "giữ nguyên",
+              "145.000.000 → 145.000.000"
+            ],
+            [
+              "nghìn VND/chỉ",
+              "giá × 10.000",
+              "14.500 → 145.000.000"
+            ],
+            [
+              "nghìn VND/lượng",
+              "giá × 1.000",
+              "145.000 → 145.000.000"
+            ]
+          ]
+        },
+        {
+          "type": "code",
+          "label": "Quality gate rút gọn",
+          "language": "ts",
+          "code": "const accepted =\n  Number.isSafeInteger(buy) &&\n  Number.isSafeInteger(sell) &&\n  buy >= 10_000_000 &&\n  sell <= 300_000_000 &&\n  buy <= sell &&\n  (BigInt(sell) - BigInt(buy)) * 10n <= BigInt(buy);"
+        },
+        {
+          "type": "paragraph",
+          "text": "Gate yêu cầu đủ cả giá mua và bán, hai giá là safe integer, mua không lớn hơn bán và spread không vượt 10% giá mua. Khoảng 10 đến 300 triệu VND/lượng là guardrail kỹ thuật tại thời điểm bài viết, không phải dự báo thị trường. Khi giá thật đạt biên, backend và mobile phải cùng cập nhật contract."
+        },
+        {
+          "type": "code",
+          "label": "Record lưu trong PostgreSQL",
+          "language": "ts",
+          "code": "type PriceTick = {\n  provider_id: string;\n  market_code: string;\n  gold_type: string;\n  buy_price_per_luong_vnd: number;\n  sell_price_per_luong_vnd: number;\n  quoted_at: string;\n  source_url: string;\n};"
+        },
+        {
+          "type": "paragraph",
+          "text": "Identity của một tick là provider, market, product và `quoted_at`; giá được lưu bằng `bigint`. Bảng `gold_price_ticks` giữ lịch sử để audit. Ứng dụng không đọc bảng này trực tiếp mà đọc `market_prices_latest_by_market`, một public view chỉ lấy provider, market và product đang bật, đủ hai phía giá và vẫn đạt quality predicate. Raw payload cùng crawl log không được project vào view."
+        },
+        {
+          "type": "code",
+          "label": "Ý tưởng của latest view",
+          "language": "sql",
+          "code": "select distinct on (provider_id, market_code, gold_type)\n  provider_id, market_code, gold_type,\n  buy_price_per_luong_vnd, sell_price_per_luong_vnd,\n  quoted_at, source_url\nfrom gold_price_ticks\nwhere buy_price_per_luong_vnd <= sell_price_per_luong_vnd\n  and (sell_price_per_luong_vnd - buy_price_per_luong_vnd) * 10\n      <= buy_price_per_luong_vnd\norder by provider_id, market_code, gold_type, quoted_at desc;"
+        },
+        {
+          "type": "callout",
+          "tone": "mint",
+          "title": "Tách write model khỏi read model",
+          "text": "Database có thể giữ lịch sử phục vụ chẩn đoán, nhưng mobile chỉ được nhìn thấy projection tối thiểu đã qua policy. Rule mới có thể quarantine record cũ mà không cần xoá lịch sử."
+        }
+      ]
+    },
+    {
+      "id": "mobile-goi-api",
+      "title": "Bước 3: Mobile gọi API lấy về",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Supabase tự cung cấp REST API cho public view. Flutter dùng client-safe `SUPABASE_URL` và `SUPABASE_PUBLISHABLE_KEY`, chỉ select những cột màn hình cần. App không biết technical fetch URL, cron secret hay service-role key của pipeline ghi dữ liệu."
+        },
+        {
+          "type": "code",
+          "label": "Flutter đọc latest view",
+          "language": "dart",
+          "code": "final rows = await supabase\n    .from('market_prices_latest_by_market')\n    .select(\n      'provider_id, market_code, gold_type, '\n      'buy_price_per_luong_vnd, sell_price_per_luong_vnd, '\n      'quoted_at, source_url',\n    )\n    .order('quoted_at', ascending: false);\n\nfinal prices = rows\n    .map(GoldPrice.fromJson)\n    .where((price) => price.isValid)\n    .toList();"
+        },
+        {
+          "type": "paragraph",
+          "text": "Repository mobile validate lại identity, integer range, thứ tự mua bán, timestamp và source URL HTTPS canonical nếu có. Một row lỗi bị loại riêng thay vì làm crash toàn snapshot, nhưng response có row lỗi không được ghi đè remote cache sạch."
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "Đọc remote view và trả snapshot `remote` khi có row hợp lệ.",
+            "Nếu remote lỗi hoặc rỗng, đọc last-known snapshot từ `cache`.",
+            "Nếu cache không dùng được, lấy giá người dùng đã nhập ở storage `manual` riêng.",
+            "Nếu cả ba tầng đều không có dữ liệu, trả trạng thái `empty` thay vì tạo giá giả."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Cache merge theo `providerId::priceMarketCode::productCode`; record có timestamp mới hơn thắng. Vì cache theo identity, một response partial không xoá last-known quote của provider đang tạm vắng mặt. Đây là lý do market code phải xuất hiện ở cả database identity lẫn mobile cache key."
+        },
+        {
+          "type": "callout",
+          "tone": "rose",
+          "title": "Contract được bảo vệ ba lần",
+          "text": "Adapter chứng minh shape và unit, database view áp policy công khai, Flutter kiểm tra response trước khi hiển thị hoặc cache. Mỗi lớp chặn một nhóm lỗi khác nhau."
+        },
+        {
+          "type": "paragraph",
+          "text": "Tóm lại, lấy giá vàng online không phải là cho mobile gọi `fetch()` tới một website. Quy trình đúng là gom dữ liệu ở server, chuẩn hoá về một contract có thể kiểm tra, lưu lịch sử trong database, chỉ phát hành read model an toàn và để mobile tập trung vào đọc API cùng fallback."
+        }
+      ]
+    }
+  ],
+  "cta": {
+    "eyebrow": "Xem sản phẩm",
+    "title": "Dữ liệu kỹ thuật, trải nghiệm đơn giản",
+    "description": "Kim Tài dùng pipeline này để đưa giá tham khảo vào ứng dụng mà không biến mobile thành một web crawler."
+  }
+}

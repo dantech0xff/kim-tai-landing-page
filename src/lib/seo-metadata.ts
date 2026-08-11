@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 
 import { withBasePath } from "@/lib/base-path";
-import { getSiteCopy, siteConfig, type Locale } from "@/lib/content";
+import {
+  getSiteCopy,
+  siteConfig,
+  type BlogArticle,
+  type Locale,
+} from "@/lib/content";
 
 interface OpenGraphInput {
   url: string;
@@ -12,6 +17,11 @@ interface OpenGraphInput {
 interface TwitterInput {
   title: string;
   description: string;
+}
+
+interface ArticleOpenGraphInput {
+  article: BlogArticle;
+  url: string;
 }
 
 // Next merge metadata theo kiểu shallow: `openGraph` khai báo ở page thay thế
@@ -55,5 +65,32 @@ export function buildTwitter(
     title,
     description,
     images: [withBasePath(ogImage.src)],
+  };
+}
+
+export function buildArticleOpenGraph(
+  locale: Locale,
+  { article, url }: ArticleOpenGraphInput,
+): NonNullable<Metadata["openGraph"]> {
+  const { ogImage } = getSiteCopy(locale).metadata;
+
+  return {
+    title: article.seoTitle,
+    description: article.description,
+    url,
+    siteName: siteConfig.brand.name,
+    locale: "vi_VN",
+    type: "article",
+    publishedTime: article.publishedAt,
+    modifiedTime: article.updatedAt,
+    tags: article.tags,
+    images: [
+      {
+        url: withBasePath(ogImage.src),
+        width: ogImage.width,
+        height: ogImage.height,
+        alt: ogImage.alt,
+      },
+    ],
   };
 }
