@@ -35,6 +35,24 @@
       "title": "Luật An ninh mạng số 116/2025/QH15",
       "url": "https://vanban.chinhphu.vn/?classid=1&docid=216499&orggroupid=1&pageid=27160",
       "note": "Luật An ninh mạng 116/2025/QH15 có hiệu lực từ 01/07/2026; từ ngày này Luật An toàn thông tin mạng 86/2015/QH13 và Luật An ninh mạng 24/2018/QH14 hết hiệu lực."
+    },
+    {
+      "id": "google-partner-sites",
+      "title": "Cách Google sử dụng thông tin từ các trang web hoặc ứng dụng dùng dịch vụ của Google",
+      "url": "https://policies.google.com/technologies/partner-sites",
+      "note": "Mô tả dữ liệu Google xử lý khi một ứng dụng dùng dịch vụ quảng cáo của Google."
+    },
+    {
+      "id": "google-advertising-id",
+      "title": "ID quảng cáo (Trợ giúp Google Play)",
+      "url": "https://support.google.com/googleplay/answer/3405269",
+      "note": "Hướng dẫn đặt lại, xoá ID quảng cáo và tắt quảng cáo được cá nhân hoá trên Android."
+    },
+    {
+      "id": "apple-tracking-choice",
+      "title": "Nếu ứng dụng yêu cầu theo dõi hoạt động của bạn (Apple)",
+      "url": "https://support.apple.com/vi-vn/102420",
+      "note": "Hướng dẫn cho phép hoặc từ chối theo dõi và quyền truy cập IDFA trên iPhone, iPad."
     }
   ],
   "documents": {
@@ -43,11 +61,12 @@
       "shortTitle": "Điều khoản dịch vụ",
       "title": "Điều khoản dịch vụ Kim Tài",
       "description": "Quy định cách bạn được sử dụng ứng dụng Kim Tài - Tick Vàng Online.",
-      "version": "1.1",
+      "version": "1.2",
       "sourceIds": [
         "apple-standard-eula",
         "consumer-law",
-        "electronic-transactions-law"
+        "electronic-transactions-law",
+        "google-partner-sites"
       ],
       "sections": [
         {
@@ -74,13 +93,29 @@
           "title": "3. Dịch vụ được cung cấp",
           "paragraphs": [
             "Ứng dụng hỗ trợ ghi lại danh mục vàng cá nhân, hiển thị giá trị tạm tính, xem giá mua/bán tham khảo theo nguồn và cá nhân hoá ngôn ngữ, đơn vị hoặc lịch nhắc.",
-            "Ứng dụng không phải sàn giao dịch, không giữ hộ tài sản, không bán hoặc mua vàng, không xác lập giá giao dịch và không cung cấp tư vấn đầu tư, thuế hoặc pháp lý."
+            "Ứng dụng không phải sàn giao dịch, không giữ hộ tài sản, không bán hoặc mua vàng, không xác lập giá giao dịch và không cung cấp tư vấn đầu tư, thuế hoặc pháp lý.",
+            "Ứng dụng được cung cấp miễn phí và có hiển thị quảng cáo do bên thứ ba phân phát. Nội dung về quảng cáo và định danh quảng cáo được nêu tại mục 4 và trong Chính sách quyền riêng tư."
           ],
           "items": []
         },
         {
+          "id": "advertising",
+          "title": "4. Quảng cáo trong Ứng dụng",
+          "paragraphs": [
+            "Ứng dụng hiển thị quảng cáo thông qua Google AdMob. Nếu bạn cho phép chia sẻ định danh quảng cáo của thiết bị, quảng cáo có thể được cá nhân hoá. Nếu bạn không cho phép hoặc rút lại cho phép, Ứng dụng vẫn dùng được đầy đủ và quảng cáo chuyển sang dạng mặc định, không cá nhân hoá.",
+            "Việc từ chối chia sẻ định danh quảng cáo không làm giảm chức năng bạn đang dùng và không phải điều kiện để tiếp tục sử dụng Ứng dụng. Cách bật hoặc tắt chia sẻ định danh quảng cáo và hệ quả của từng lựa chọn được mô tả trong Chính sách quyền riêng tư.",
+            "Khi sử dụng Ứng dụng có quảng cáo, bạn lưu ý:"
+          ],
+          "items": [
+            "Nội dung quảng cáo thuộc trách nhiệm của bên quảng cáo và nền tảng quảng cáo; việc hiển thị một quảng cáo không thể hiện Kim Tài xác nhận, bảo trợ hoặc khuyến nghị sản phẩm, dịch vụ đó.",
+            "Quảng cáo trong Ứng dụng không phải khuyến nghị đầu tư, báo giá giao dịch hay lời mời mua bán vàng.",
+            "Giao dịch bạn thực hiện với bên quảng cáo là quan hệ trực tiếp giữa bạn và bên đó, theo điều khoản và chính sách riêng của họ.",
+            "Chúng tôi có thể thay đổi vị trí, định dạng hoặc tần suất quảng cáo; thay đổi ảnh hưởng đáng kể tới quyền của bạn được thông báo theo mục 8."
+          ]
+        },
+        {
           "id": "reference-prices",
-          "title": "4. Giá tham khảo và nguồn bên thứ ba",
+          "title": "5. Giá tham khảo và nguồn bên thứ ba",
           "paragraphs": [
             "Giá, thời điểm cập nhật, tên nhà cung cấp và kết quả ước tính chỉ nhằm mục đích tham khảo. Dữ liệu có thể chậm, thiếu, sai khác theo khu vực, sản phẩm hoặc điều kiện của bên cung cấp.",
             "Trước khi quyết định giao dịch, bạn phải kiểm tra trực tiếp với đơn vị kinh doanh vàng có liên quan. Việc hiển thị tên một nguồn giá không mặc nhiên thể hiện quan hệ đại diện, tài trợ hoặc xác nhận giữa nguồn đó với Kim Tài."
@@ -89,7 +124,7 @@
         },
         {
           "id": "local-data",
-          "title": "5. Dữ liệu lưu trên thiết bị và sao lưu",
+          "title": "6. Dữ liệu lưu trên thiết bị và sao lưu",
           "paragraphs": [
             "Theo thiết kế sản phẩm hiện tại, thông tin danh mục bạn nhập được lưu trên thiết bị. Bạn chịu trách nhiệm bảo vệ thiết bị, duy trì phương án sao lưu phù hợp và kiểm tra dữ liệu trước khi xoá ứng dụng, đổi máy hoặc khôi phục thiết bị.",
             "Một số chức năng như lấy giá tham khảo, mở cửa hàng ứng dụng hoặc gửi yêu cầu hỗ trợ có thể cần kết nối mạng và chịu chính sách của bên thứ ba. Chi tiết xử lý dữ liệu được nêu tại Chính sách quyền riêng tư."
@@ -98,19 +133,20 @@
         },
         {
           "id": "permitted-use",
-          "title": "6. Sử dụng được phép",
+          "title": "7. Sử dụng được phép",
           "paragraphs": [
             "Bạn được sử dụng Ứng dụng cho mục đích cá nhân, hợp pháp và phù hợp với tài liệu hướng dẫn."
           ],
           "items": [
             "Không can thiệp, phá hoại, dò quét trái phép hoặc tìm cách vượt qua biện pháp bảo vệ của Ứng dụng hay dịch vụ liên quan.",
             "Không sao chép, bán lại, cho thuê, khai thác thương mại hoặc tạo sản phẩm phái sinh từ Ứng dụng khi chưa có quyền hợp pháp.",
-            "Không sử dụng Ứng dụng để cung cấp thông tin gian dối, xâm phạm quyền của người khác hoặc thực hiện hành vi bị pháp luật cấm."
+            "Không sử dụng Ứng dụng để cung cấp thông tin gian dối, xâm phạm quyền của người khác hoặc thực hiện hành vi bị pháp luật cấm.",
+            "Không can thiệp, chặn, giả mạo hoặc tạo lượt hiển thị, lượt nhấp quảng cáo không có thật trong Ứng dụng."
           ]
         },
         {
           "id": "availability",
-          "title": "7. Cập nhật và tính sẵn sàng",
+          "title": "8. Cập nhật và tính sẵn sàng",
           "paragraphs": [
             "Chúng tôi có thể cập nhật, tạm ngừng hoặc thay đổi chức năng để sửa lỗi, bảo đảm an toàn hoặc đáp ứng yêu cầu pháp luật. Nếu thay đổi ảnh hưởng đáng kể đến quyền của bạn, chúng tôi sẽ thông báo hợp lý và, khi pháp luật yêu cầu, xin chấp nhận mới.",
             "Không có cam kết rằng mọi nguồn giá hoặc chức năng sẽ luôn hoạt động liên tục. Quyền bắt buộc của người tiêu dùng theo pháp luật vẫn được bảo lưu.",
@@ -120,7 +156,7 @@
         },
         {
           "id": "intellectual-property",
-          "title": "8. Quyền sở hữu trí tuệ",
+          "title": "9. Quyền sở hữu trí tuệ",
           "paragraphs": [
             "Ứng dụng, giao diện, mã nguồn, nội dung do Kim Tài tạo và nhãn hiệu liên quan được bảo vệ theo pháp luật áp dụng. Dữ liệu danh mục do bạn nhập vẫn thuộc quyền của bạn; quyền sử dụng dữ liệu đó chỉ phát sinh trong phạm vi cần thiết để thực hiện chức năng bạn yêu cầu và theo Chính sách quyền riêng tư."
           ],
@@ -128,7 +164,7 @@
         },
         {
           "id": "liability",
-          "title": "9. Trách nhiệm và quyền người tiêu dùng",
+          "title": "10. Trách nhiệm và quyền người tiêu dùng",
           "paragraphs": [
             "Trong phạm vi pháp luật cho phép, chúng tôi không chịu trách nhiệm cho quyết định mua, bán hoặc nắm giữ vàng dựa trên dữ liệu tham khảo, hay mất dữ liệu do thiết bị hỏng, bị mất hoặc bị xoá ngoài khả năng kiểm soát hợp lý của chúng tôi.",
             "Không nội dung nào trong Điều khoản này loại trừ trách nhiệm không được phép loại trừ, hạn chế quyền khiếu nại/khởi kiện, hoặc làm giảm quyền bắt buộc của người tiêu dùng theo pháp luật Việt Nam. Điều khoản không rõ ràng được giải thích theo hướng có lợi cho người tiêu dùng theo quy định áp dụng."
@@ -137,7 +173,7 @@
         },
         {
           "id": "law-disputes",
-          "title": "10. Luật áp dụng, khiếu nại và ngôn ngữ",
+          "title": "11. Luật áp dụng, khiếu nại và ngôn ngữ",
           "paragraphs": [
             "Điều khoản này chịu sự điều chỉnh của pháp luật Việt Nam. Bạn có thể gửi khiếu nại qua {{supportContact}}; hai bên ưu tiên giải quyết thiện chí trước khi yêu cầu cơ quan có thẩm quyền hoặc Toà án giải quyết.",
             "Bản tiếng Việt được dùng để giải thích và áp dụng tài liệu này. Tuy nhiên, nếu bản tiếng Việt và bản tiếng Anh khác nhau và pháp luật yêu cầu ưu tiên nội dung có lợi hơn cho người tiêu dùng, nội dung có lợi hơn được áp dụng."
@@ -146,7 +182,7 @@
         },
         {
           "id": "apple-app-store-eula",
-          "title": "11. EULA của Apple App Store",
+          "title": "12. EULA của Apple App Store",
           "paragraphs": [
             "Đối với phiên bản Kim Tài trên iOS, Thỏa thuận cấp phép người dùng cuối tiêu chuẩn của Apple (EULA) được áp dụng:"
           ],
@@ -159,7 +195,7 @@
       "shortTitle": "Điều khoản và điều kiện",
       "title": "Điều khoản và điều kiện của website",
       "description": "Các điều kiện áp dụng khi truy cập website giới thiệu và liên kết tải Kim Tài.",
-      "version": "1.0",
+      "version": "1.1",
       "sourceIds": ["consumer-law", "electronic-transactions-law"],
       "sections": [
         {
@@ -167,7 +203,7 @@
           "title": "1. Phạm vi website",
           "paragraphs": [
             "Tài liệu này áp dụng cho website giới thiệu {{appName}}. Việc sử dụng Ứng dụng được điều chỉnh riêng bởi Điều khoản dịch vụ; việc xử lý dữ liệu cá nhân được mô tả trong Chính sách quyền riêng tư.",
-            "Website hiện chỉ cung cấp thông tin và liên kết đến cửa hàng ứng dụng; không tạo tài khoản, nhận đơn hàng, thanh toán, môi giới hoặc thực hiện giao dịch vàng."
+            "Website hiện chỉ cung cấp thông tin và liên kết đến cửa hàng ứng dụng; không tạo tài khoản, nhận đơn hàng, thanh toán, môi giới hoặc thực hiện giao dịch vàng. Website không hiển thị quảng cáo; Ứng dụng có hiển thị quảng cáo và chịu sự điều chỉnh của Điều khoản dịch vụ cùng Chính sách quyền riêng tư."
           ],
           "items": []
         },
@@ -255,8 +291,16 @@
       "shortTitle": "Chính sách quyền riêng tư",
       "title": "Chính sách quyền riêng tư Kim Tài",
       "description": "Thông tin minh bạch về dữ liệu cá nhân trên website và trong ứng dụng Kim Tài.",
-      "version": "1.0",
-      "sourceIds": ["personal-data-law", "personal-data-decree", "consumer-law", "cybersecurity-law"],
+      "version": "1.1",
+      "sourceIds": [
+        "personal-data-law",
+        "personal-data-decree",
+        "consumer-law",
+        "cybersecurity-law",
+        "google-partner-sites",
+        "google-advertising-id",
+        "apple-tracking-choice"
+      ],
       "sections": [
         {
           "id": "controller",
@@ -271,11 +315,12 @@
           "id": "data-categories",
           "title": "2. Các nhóm dữ liệu có thể liên quan",
           "paragraphs": [
-            "Theo cấu hình hiện tại, website không tạo tài khoản, không nhận đơn hàng, không thanh toán, không bật quảng cáo và không cài công cụ phân tích người dùng."
+            "Theo cấu hình hiện tại, website không tạo tài khoản, không nhận đơn hàng, không thanh toán, không bật quảng cáo và không cài công cụ phân tích người dùng. Ứng dụng có hiển thị quảng cáo; các nhóm dữ liệu liên quan tới quảng cáo được mô tả tại mục 6."
           ],
           "items": [
             "Dữ liệu danh mục vàng bạn nhập trong Ứng dụng, gồm loại vàng, số lượng, đơn vị, giá vốn và ghi chú liên quan; theo thiết kế hiện tại, dữ liệu này được lưu cục bộ trên thiết bị.",
             "Dữ liệu kỹ thuật tối thiểu cần thiết khi thiết bị yêu cầu giá tham khảo hoặc mở dịch vụ bên thứ ba, có thể gồm địa chỉ IP, thời điểm yêu cầu, thông tin thiết bị/trình duyệt và nhật ký an toàn tuỳ cách triển khai thực tế.",
+            "Định danh quảng cáo của thiết bị (Advertising ID trên Android, Identifier for Advertisers trên iOS) cùng dữ liệu tối thiểu đi kèm khi phân phát quảng cáo, có thể gồm địa chỉ IP, loại thiết bị, hệ điều hành, ngôn ngữ, khu vực ước lượng, sự kiện hiển thị hoặc nhấp và tín hiệu chống gian lận.",
             "Thông tin bạn chủ động gửi khi liên hệ hỗ trợ, như tên, địa chỉ liên hệ, nội dung yêu cầu và tệp đính kèm.",
             "Tuỳ chọn cục bộ như ngôn ngữ, đơn vị, nguồn giá ưu tiên, lịch nhắc và giao diện."
           ]
@@ -289,6 +334,8 @@
           "items": [
             "Hiển thị và tính toán danh mục trên thiết bị.",
             "Lấy và trình bày dữ liệu giá tham khảo từ nguồn được cấu hình.",
+            "Hiển thị quảng cáo trong Ứng dụng, đo lường việc phân phát quảng cáo và ngăn chặn gian lận quảng cáo.",
+            "Cá nhân hoá quảng cáo khi bạn cho phép chia sẻ định danh quảng cáo; nếu bạn không cho phép, quảng cáo vẫn hiển thị nhưng ở dạng mặc định, không cá nhân hoá.",
             "Ghi nhớ tuỳ chọn, thực hiện lịch nhắc và duy trì an toàn, ổn định của dịch vụ.",
             "Tiếp nhận, xác minh và giải quyết yêu cầu hỗ trợ hoặc khiếu nại.",
             "Tuân thủ nghĩa vụ pháp luật và yêu cầu hợp pháp của cơ quan có thẩm quyền."
@@ -299,7 +346,8 @@
           "title": "4. Căn cứ xử lý và sự đồng ý",
           "paragraphs": [
             "Khi pháp luật yêu cầu sự đồng ý, chúng tôi sẽ cung cấp thông báo rõ ràng, cụ thể trước khi xử lý và cho phép bạn đồng ý hoặc không đồng ý. Sự đồng ý về dữ liệu cá nhân được tách khỏi việc chấp nhận Điều khoản dịch vụ và khỏi các lựa chọn marketing không cần thiết.",
-            "Ngoài trường hợp dựa trên sự đồng ý, chúng tôi chỉ xử lý dữ liệu không cần sự đồng ý khi một trường hợp cụ thể tại Điều 19 Luật 91/2025/QH15 hoặc quy định pháp luật liên quan thực sự áp dụng, chẳng hạn khi cần để thực hiện thỏa thuận với bạn hoặc thực hiện nghĩa vụ pháp luật. Đơn vị vận hành phải xác định và lưu hồ sơ căn cứ cụ thể; “quyền, lợi ích hợp pháp” không tạo ra căn cứ xử lý độc lập ngoài trường hợp luật định."
+            "Ngoài trường hợp dựa trên sự đồng ý, chúng tôi chỉ xử lý dữ liệu không cần sự đồng ý khi một trường hợp cụ thể tại Điều 19 Luật 91/2025/QH15 hoặc quy định pháp luật liên quan thực sự áp dụng, chẳng hạn khi cần để thực hiện thỏa thuận với bạn hoặc thực hiện nghĩa vụ pháp luật. Đơn vị vận hành phải xác định và lưu hồ sơ căn cứ cụ thể; “quyền, lợi ích hợp pháp” không tạo ra căn cứ xử lý độc lập ngoài trường hợp luật định.",
+            "Quảng cáo cá nhân hoá dựa trên sự đồng ý của bạn cho việc chia sẻ định danh quảng cáo của thiết bị. Bạn có thể từ chối ngay từ đầu hoặc rút lại bất cứ lúc nào trong cài đặt hệ điều hành; khi đó Ứng dụng vẫn hoạt động đầy đủ và quảng cáo chuyển sang dạng mặc định, không cá nhân hoá. Việc từ chối không được dùng làm điều kiện cho những chức năng không cần dữ liệu đó."
           ],
           "items": []
         },
@@ -313,35 +361,53 @@
           "items": []
         },
         {
-          "id": "recipients",
-          "title": "6. Bên nhận dữ liệu và dịch vụ bên thứ ba",
+          "id": "advertising",
+          "title": "6. Quảng cáo trong Ứng dụng và định danh quảng cáo",
           "paragraphs": [
-            "Website có thể liên kết tới App Store và Google Play. Ứng dụng có thể kết nối nguồn giá tham khảo hoặc nhà cung cấp hạ tầng. Các bên này xử lý dữ liệu theo vai trò và chính sách riêng của họ.",
-            "Danh sách thực tế về nhà cung cấp lưu trữ, xử lý hỗ trợ, nguồn giá, phân tích, thông báo và bên xử lý khác phải được công bố trước phát hành. Chúng tôi không bán dữ liệu cá nhân và không được dùng sự đồng ý xử lý dữ liệu như điều kiện bắt buộc cho chức năng không cần dữ liệu đó, trừ trường hợp pháp luật quy định."
+            "Ứng dụng được cung cấp miễn phí và có hiển thị quảng cáo thông qua Google AdMob. Quảng cáo giúp bù đắp chi phí vận hành; chúng tôi không bán dữ liệu cá nhân của bạn cho bất kỳ bên nào.",
+            "Dữ liệu danh mục vàng bạn nhập được lưu trên thiết bị và không được dùng để nhắm mục tiêu quảng cáo.",
+            "Khi bạn cho phép chia sẻ định danh quảng cáo của thiết bị, quảng cáo có thể được cá nhân hoá dựa trên định danh đó và các tín hiệu khác do nền tảng quảng cáo xử lý. Khi bạn không cho phép, Ứng dụng vẫn hiển thị quảng cáo nhưng ở dạng mặc định, không cá nhân hoá; dạng này vẫn cần dữ liệu kỹ thuật tối thiểu để phân phát, chống gian lận và đo lường.",
+            "Chúng tôi không kiểm soát nội dung quảng cáo do bên thứ ba phân phát và không xác nhận sản phẩm, dịch vụ hay khuyến nghị đầu tư xuất hiện trong quảng cáo. Nếu bạn thấy quảng cáo không phù hợp, hãy dùng chức năng báo cáo của quảng cáo đó hoặc liên hệ {{supportContact}}.",
+            "Bạn có thể thay đổi lựa chọn bất cứ lúc nào bằng cài đặt của thiết bị:"
+          ],
+          "items": [
+            "Android: mở Cài đặt của thiết bị, vào mục Google rồi tới Quảng cáo để đặt lại hoặc xoá ID quảng cáo và tắt quảng cáo được cá nhân hoá; đường dẫn cụ thể có thể khác theo nhà sản xuất và phiên bản Android.",
+            "iOS và iPadOS: mở Cài đặt, vào Quyền riêng tư & Bảo mật rồi tới Theo dõi để cho phép hoặc từ chối theo dõi cho từng ứng dụng; nếu bạn từ chối, Ứng dụng không truy cập IDFA.",
+            "Việc đặt lại hoặc xoá định danh quảng cáo không xoá dữ liệu mà nền tảng quảng cáo đã xử lý trước đó; xem thêm chính sách của Google tại phần nguồn cuối tài liệu."
+          ]
+        },
+        {
+          "id": "recipients",
+          "title": "7. Bên nhận dữ liệu và dịch vụ bên thứ ba",
+          "paragraphs": [
+            "Website có thể liên kết tới App Store và Google Play. Ứng dụng có thể kết nối nguồn giá tham khảo hoặc nhà cung cấp hạ tầng, và sử dụng Google AdMob để phân phát quảng cáo. Các bên này xử lý dữ liệu theo vai trò và chính sách riêng của họ.",
+            "Nền tảng quảng cáo đang sử dụng là Google AdMob; danh sách thực tế về nhà cung cấp lưu trữ, xử lý hỗ trợ, nguồn giá, phân tích, thông báo và bên xử lý khác phải được công bố trước phát hành. Chúng tôi không bán dữ liệu cá nhân và không được dùng sự đồng ý xử lý dữ liệu như điều kiện bắt buộc cho chức năng không cần dữ liệu đó, trừ trường hợp pháp luật quy định."
           ],
           "items": []
         },
         {
           "id": "cross-border",
-          "title": "7. Chuyển dữ liệu cá nhân xuyên biên giới",
+          "title": "8. Chuyển dữ liệu cá nhân xuyên biên giới",
           "paragraphs": [
-            "Cấu hình hiện tại chưa xác nhận có chuyển dữ liệu cá nhân ra ngoài Việt Nam. Trước khi áp dụng chuyển xuyên biên giới, đơn vị vận hành phải xác định quốc gia nhận, bên nhận, mục đích, biện pháp bảo vệ và thực hiện hồ sơ/đánh giá tác động theo Luật 91/2025/QH15 và Nghị định 356/2025/NĐ-CP khi thuộc trường hợp yêu cầu.",
+            "Việc phân phát quảng cáo qua Google AdMob có thể dẫn tới xử lý dữ liệu quảng cáo trên hạ tầng của Google ở ngoài lãnh thổ Việt Nam. Đối với hoạt động này, bên nhận là Google và các công ty liên kết, mục đích là phân phát, đo lường và chống gian lận quảng cáo; đơn vị vận hành phải thực hiện hồ sơ và đánh giá tác động chuyển dữ liệu xuyên biên giới theo Luật 91/2025/QH15 và Nghị định 356/2025/NĐ-CP khi thuộc trường hợp yêu cầu.",
+            "Ngoài hoạt động quảng cáo nêu trên, cấu hình hiện tại chưa xác nhận có chuyển dữ liệu cá nhân nào khác ra ngoài Việt Nam. Trước khi áp dụng thêm, đơn vị vận hành phải xác định quốc gia nhận, bên nhận, mục đích và biện pháp bảo vệ tương ứng.",
             "Việc bạn tự mở cửa hàng ứng dụng hoặc website của bên thứ ba tạo quan hệ trực tiếp với bên đó và chịu thông báo quyền riêng tư của họ."
           ],
           "items": []
         },
         {
           "id": "retention",
-          "title": "8. Thời hạn lưu giữ và xoá",
+          "title": "9. Thời hạn lưu giữ và xoá",
           "paragraphs": [
             "Dữ liệu danh mục cục bộ được giữ trên thiết bị cho đến khi bạn xoá, đặt lại hoặc gỡ Ứng dụng theo cơ chế của nền tảng. Dữ liệu hỗ trợ hoặc nhật ký do đơn vị vận hành thực sự nhận chỉ được giữ trong thời gian cần thiết cho mục đích đã nêu, giải quyết tranh chấp, an toàn hệ thống hoặc nghĩa vụ pháp luật.",
-            "Mốc thời gian cụ thể cho từng hệ thống, bản sao lưu và nhật ký phải được điền sau khi kiểm kê luồng dữ liệu thực tế; hết thời hạn, dữ liệu phải được xoá, huỷ hoặc ẩn danh theo quy định."
+            "Mốc thời gian cụ thể cho từng hệ thống, bản sao lưu và nhật ký phải được điền sau khi kiểm kê luồng dữ liệu thực tế; hết thời hạn, dữ liệu phải được xoá, huỷ hoặc ẩn danh theo quy định.",
+            "Định danh quảng cáo và dữ liệu phân phát quảng cáo do nền tảng quảng cáo lưu giữ theo chính sách của nền tảng đó. Bạn có thể đặt lại hoặc xoá định danh quảng cáo trên thiết bị bất cứ lúc nào; sau khi đặt lại, hồ sơ quảng cáo trước đó không còn được gắn với định danh mới của thiết bị."
           ],
           "items": []
         },
         {
           "id": "rights",
-          "title": "9. Quyền của chủ thể dữ liệu",
+          "title": "10. Quyền của chủ thể dữ liệu",
           "paragraphs": [
             "Theo Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15, trong phạm vi và thủ tục pháp luật quy định, bạn có quyền:"
           ],
@@ -354,16 +420,16 @@
         },
         {
           "id": "children",
-          "title": "10. Trẻ em và người cần đại diện",
+          "title": "11. Trẻ em và người cần đại diện",
           "paragraphs": [
-            "Ứng dụng hướng đến người trưởng thành tự quản lý tài sản cá nhân và không chủ động nhắm tới trẻ em. Khi dữ liệu của trẻ em, người mất hoặc hạn chế năng lực hành vi dân sự, hoặc người gặp khó khăn trong nhận thức phát sinh, quyền của chủ thể dữ liệu được thực hiện bởi người đại diện và theo các điều kiện riêng của pháp luật áp dụng.",
+            "Ứng dụng hướng đến người trưởng thành tự quản lý tài sản cá nhân và không chủ động nhắm tới trẻ em. Quảng cáo trong Ứng dụng không nhắm tới trẻ em và chúng tôi không cố ý dùng dữ liệu của trẻ em cho quảng cáo cá nhân hoá. Khi dữ liệu của trẻ em, người mất hoặc hạn chế năng lực hành vi dân sự, hoặc người gặp khó khăn trong nhận thức phát sinh, quyền của chủ thể dữ liệu được thực hiện bởi người đại diện và theo các điều kiện riêng của pháp luật áp dụng.",
             "Nếu phát hiện đã thu thập dữ liệu không phù hợp, đơn vị vận hành sẽ dừng xử lý và xoá hoặc xử lý theo yêu cầu hợp pháp."
           ],
           "items": []
         },
         {
           "id": "security-incidents",
-          "title": "11. An toàn và sự cố",
+          "title": "12. An toàn và sự cố",
           "paragraphs": [
             "Chúng tôi áp dụng biện pháp tổ chức, kỹ thuật và con người phù hợp với phạm vi xử lý, như giới hạn truy cập, cập nhật phần mềm, quản lý nhật ký và quy trình ứng phó sự cố. Không hệ thống nào có thể được bảo đảm an toàn tuyệt đối.",
             "Khi có vi phạm hoặc sự cố thuộc diện phải thông báo, đơn vị vận hành sẽ thực hiện đánh giá, khắc phục và thông báo cho cơ quan/chủ thể có liên quan theo thời hạn và hình thức pháp luật yêu cầu. Luật An ninh mạng 116/2025/QH15 được áp dụng từ 01/07/2026."
@@ -372,7 +438,7 @@
         },
         {
           "id": "contact-changes",
-          "title": "12. Yêu cầu, liên hệ và thay đổi Chính sách",
+          "title": "13. Yêu cầu, liên hệ và thay đổi Chính sách",
           "paragraphs": [
             "Bạn có thể gửi yêu cầu về dữ liệu cá nhân tới {{privacyContact}} và yêu cầu hỗ trợ khác tới {{supportContact}}. Trước khi xử lý yêu cầu về dữ liệu, chúng tôi có thể cần xác minh hợp lý danh tính để bảo vệ dữ liệu của bạn.",
             "Nếu Chính sách thay đổi đáng kể, chúng tôi sẽ công bố bản mới, ngày hiệu lực và thông báo phù hợp trước khi áp dụng. Thay đổi mục đích xử lý hoặc căn cứ đồng ý sẽ được xử lý riêng theo yêu cầu pháp luật; việc tiếp tục dùng dịch vụ không tự động thay thế sự đồng ý mới khi pháp luật yêu cầu.",

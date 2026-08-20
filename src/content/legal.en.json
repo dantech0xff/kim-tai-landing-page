@@ -35,6 +35,24 @@
       "title": "Cybersecurity Law No. 116/2025/QH15",
       "url": "https://vanban.chinhphu.vn/?classid=1&docid=216499&orggroupid=1&pageid=27160",
       "note": "Cybersecurity Law 116/2025/QH15 is effective from 1 July 2026; Law 86/2015/QH13 on network information security and Cybersecurity Law 24/2018/QH14 ceased to have effect on that date."
+    },
+    {
+      "id": "google-partner-sites",
+      "title": "How Google uses information from sites or apps that use our services",
+      "url": "https://policies.google.com/technologies/partner-sites",
+      "note": "Describes the data Google processes when an app uses Google advertising services."
+    },
+    {
+      "id": "google-advertising-id",
+      "title": "Advertising ID (Google Play Help)",
+      "url": "https://support.google.com/googleplay/answer/3405269",
+      "note": "How to reset or delete the advertising ID and turn off personalized ads on Android."
+    },
+    {
+      "id": "apple-tracking-choice",
+      "title": "If an app asks to track your activity (Apple)",
+      "url": "https://support.apple.com/en-us/102420",
+      "note": "How to allow or refuse tracking and IDFA access on iPhone and iPad."
     }
   ],
   "documents": {
@@ -43,11 +61,12 @@
       "shortTitle": "Terms of Service",
       "title": "Kim Tài Terms of Service",
       "description": "The rules governing your use of Kim Tài - Tick Vàng Online.",
-      "version": "1.1",
+      "version": "1.2",
       "sourceIds": [
         "apple-standard-eula",
         "consumer-law",
-        "electronic-transactions-law"
+        "electronic-transactions-law",
+        "google-partner-sites"
       ],
       "sections": [
         {
@@ -74,13 +93,29 @@
           "title": "3. The service",
           "paragraphs": [
             "The App helps record a personal gold portfolio, display estimated values, view reference buy/sell prices by source, and personalize language, unit, or reminder settings.",
-            "The App is not an exchange or custodian. It does not buy or sell gold, set transaction prices, or provide investment, tax, or legal advice."
+            "The App is not an exchange or custodian. It does not buy or sell gold, set transaction prices, or provide investment, tax, or legal advice.",
+            "The App is free to use and shows advertising delivered by third parties. Advertising and the advertising identifier are covered in section 4 and in the Privacy Policy."
           ],
           "items": []
         },
         {
+          "id": "advertising",
+          "title": "4. In-app advertising",
+          "paragraphs": [
+            "The App shows advertising through Google AdMob. If you allow the device advertising identifier to be shared, ads may be personalized. If you refuse or withdraw that permission, the App remains fully usable and ads switch to a default, non-personalized form.",
+            "Refusing to share the advertising identifier does not reduce the functions you use and is not a condition for continuing to use the App. How to enable or disable sharing of the advertising identifier, and what each choice means, is described in the Privacy Policy.",
+            "When using the App with advertising, please note:"
+          ],
+          "items": [
+            "Ad content is the responsibility of the advertiser and the advertising platform; showing an ad does not mean Kim Tài endorses, sponsors, or recommends that product or service.",
+            "In-app advertising is not investment advice, a tradable quote, or an offer to buy or sell gold.",
+            "Any transaction you make with an advertiser is directly between you and that party, under its own terms and policies.",
+            "We may change ad placement, format, or frequency; changes that materially affect your rights are notified under section 8."
+          ]
+        },
+        {
           "id": "reference-prices",
-          "title": "4. Reference prices and third-party sources",
+          "title": "5. Reference prices and third-party sources",
           "paragraphs": [
             "Prices, timestamps, provider names, and estimates are for reference only. Data may be delayed, incomplete, or different by region, product, or source conditions.",
             "Confirm directly with the relevant gold business before making a transaction decision. Displaying a source name does not by itself indicate agency, sponsorship, or endorsement between that source and Kim Tài."
@@ -89,7 +124,7 @@
         },
         {
           "id": "local-data",
-          "title": "5. On-device data and backups",
+          "title": "6. On-device data and backups",
           "paragraphs": [
             "Under the current product design, portfolio information you enter is stored on the device. You are responsible for protecting the device, maintaining suitable backups, and checking data before uninstalling the App, changing devices, or resetting the device.",
             "Functions such as fetching reference prices, opening an app store, or contacting support may require a network connection and may be subject to third-party policies. See the Privacy Policy for data-processing details."
@@ -98,19 +133,20 @@
         },
         {
           "id": "permitted-use",
-          "title": "6. Permitted use",
+          "title": "7. Permitted use",
           "paragraphs": [
             "You may use the App for personal, lawful purposes and in line with its documentation."
           ],
           "items": [
             "Do not disrupt, damage, probe without authorization, or bypass safeguards protecting the App or related services.",
             "Do not copy, resell, rent, commercially exploit, or create derivative products from the App without a lawful right.",
-            "Do not use the App to provide deceptive information, infringe another person's rights, or perform prohibited acts."
+            "Do not use the App to provide deceptive information, infringe another person's rights, or perform prohibited acts.",
+            "Do not interfere with, block, spoof, or generate artificial ad impressions or clicks in the App."
           ]
         },
         {
           "id": "availability",
-          "title": "7. Updates and availability",
+          "title": "8. Updates and availability",
           "paragraphs": [
             "We may update, suspend, or change functions to fix defects, protect security, or comply with law. If a change materially affects your rights, we will provide reasonable notice and seek renewed acceptance where required.",
             "No promise is made that every price source or function will always be available. Mandatory consumer rights remain unaffected.",
@@ -120,7 +156,7 @@
         },
         {
           "id": "intellectual-property",
-          "title": "8. Intellectual property",
+          "title": "9. Intellectual property",
           "paragraphs": [
             "The App, interface, source code, Kim Tài-created content, and related marks are protected by applicable law. Portfolio data you enter remains yours; rights to use that data arise only as needed to deliver functions you request and as described in the Privacy Policy."
           ],
@@ -128,7 +164,7 @@
         },
         {
           "id": "liability",
-          "title": "9. Responsibility and consumer rights",
+          "title": "10. Responsibility and consumer rights",
           "paragraphs": [
             "To the extent permitted by law, we are not responsible for decisions to buy, sell, or hold gold based on reference data, or for data loss caused by a lost, damaged, reset, or erased device outside our reasonable control.",
             "Nothing in these Terms excludes liability that cannot lawfully be excluded, restricts complaint or court rights, or reduces mandatory consumer protections under Vietnamese law. Ambiguities are interpreted in the consumer's favor where applicable."
@@ -137,7 +173,7 @@
         },
         {
           "id": "law-disputes",
-          "title": "10. Governing law, complaints, and language",
+          "title": "11. Governing law, complaints, and language",
           "paragraphs": [
             "These Terms are governed by Vietnamese law. Complaints may be sent through {{supportContact}}; the parties should first seek a good-faith resolution without limiting either party's right to approach a competent authority or court.",
             "The Vietnamese version is used to interpret and apply this document. However, if the Vietnamese and English versions differ and applicable law requires the version more favorable to the consumer to prevail, the more favorable wording applies."
@@ -146,7 +182,7 @@
         },
         {
           "id": "apple-app-store-eula",
-          "title": "11. Apple App Store EULA",
+          "title": "12. Apple App Store EULA",
           "paragraphs": [
             "For the iOS version of Kim Tài, Apple's Standard End User License Agreement (EULA) applies:"
           ],
@@ -159,7 +195,7 @@
       "shortTitle": "Terms and Conditions",
       "title": "Website Terms and Conditions",
       "description": "Conditions that apply when visiting the Kim Tài product site and using its download links.",
-      "version": "1.0",
+      "version": "1.1",
       "sourceIds": ["consumer-law", "electronic-transactions-law"],
       "sections": [
         {
@@ -167,7 +203,7 @@
           "title": "1. Website scope",
           "paragraphs": [
             "These conditions apply to the website introducing {{appName}}. App use is separately governed by the Terms of Service; personal-data processing is described in the Privacy Policy.",
-            "The website currently provides information and app-store links only. It does not create accounts, accept orders or payments, broker transactions, or trade gold."
+            "The website currently provides information and app-store links only. It does not create accounts, accept orders or payments, broker transactions, or trade gold. The website shows no advertising; the App does, governed by the Terms of Service and the Privacy Policy."
           ],
           "items": []
         },
@@ -255,8 +291,16 @@
       "shortTitle": "Privacy Policy",
       "title": "Kim Tài Privacy Policy",
       "description": "Transparent information about personal data on the Kim Tài website and in the App.",
-      "version": "1.0",
-      "sourceIds": ["personal-data-law", "personal-data-decree", "consumer-law", "cybersecurity-law"],
+      "version": "1.1",
+      "sourceIds": [
+        "personal-data-law",
+        "personal-data-decree",
+        "consumer-law",
+        "cybersecurity-law",
+        "google-partner-sites",
+        "google-advertising-id",
+        "apple-tracking-choice"
+      ],
       "sections": [
         {
           "id": "controller",
@@ -271,11 +315,12 @@
           "id": "data-categories",
           "title": "2. Data categories that may be involved",
           "paragraphs": [
-            "Under the current configuration, the website does not create accounts, take orders or payments, enable advertising, or install user-analytics tools."
+            "Under the current configuration, the website does not create accounts, take orders or payments, enable advertising, or install user-analytics tools. The App does show advertising; the related data categories are described in section 6."
           ],
           "items": [
             "Gold-portfolio data entered in the App, such as gold type, quantity, unit, cost, and related notes; under the current design this is stored locally on the device.",
             "Minimum technical data needed when a device requests reference prices or opens a third-party service, potentially including IP address, request time, device/browser details, and security logs depending on the actual implementation.",
+            "The device advertising identifier (Advertising ID on Android, Identifier for Advertisers on iOS) and the minimum data that accompanies ad delivery, potentially including IP address, device type, operating system, language, approximate region, impression or click events, and anti-fraud signals.",
             "Information you choose to send to support, such as your name, contact details, request content, and attachments.",
             "Local preferences such as language, unit, preferred price source, reminder schedule, and appearance."
           ]
@@ -289,6 +334,8 @@
           "items": [
             "Display and calculate your portfolio on the device.",
             "Retrieve and present reference-price data from configured sources.",
+            "Show advertising in the App, measure ad delivery, and prevent ad fraud.",
+            "Personalize advertising when you allow the advertising identifier to be shared; if you do not allow it, ads are still shown in a default, non-personalized form.",
             "Remember preferences, run reminders, and maintain service security and stability.",
             "Receive, verify, and resolve support requests or complaints.",
             "Meet legal obligations and lawful requests from competent authorities."
@@ -299,7 +346,8 @@
           "title": "4. Processing grounds and consent",
           "paragraphs": [
             "Where consent is required, we will provide a clear and specific notice before processing and allow you to agree or refuse. Personal-data consent is separate from accepting the Terms of Service and from optional marketing choices.",
-            "Where processing is not based on consent, we process data without consent only when a specific case under Article 19 of Law 91/2025/QH15 or another applicable rule actually applies, for example when necessary to perform an agreement with you or comply with a legal duty. The operator must identify and document the specific case; “lawful rights and interests” is not a standalone processing basis outside the statutory cases."
+            "Where processing is not based on consent, we process data without consent only when a specific case under Article 19 of Law 91/2025/QH15 or another applicable rule actually applies, for example when necessary to perform an agreement with you or comply with a legal duty. The operator must identify and document the specific case; “lawful rights and interests” is not a standalone processing basis outside the statutory cases.",
+            "Personalized advertising relies on your consent to share the device advertising identifier. You may refuse from the start or withdraw at any time in your operating-system settings; the App then keeps working in full and ads switch to a default, non-personalized form. That refusal is not used as a condition for functions that do not need the data."
           ],
           "items": []
         },
@@ -313,35 +361,53 @@
           "items": []
         },
         {
-          "id": "recipients",
-          "title": "6. Recipients and third-party services",
+          "id": "advertising",
+          "title": "6. In-app advertising and the advertising identifier",
           "paragraphs": [
-            "The website may link to the App Store and Google Play. The App may connect to reference-price sources or infrastructure providers. Those parties process data under their own role and policies.",
-            "The actual list of hosting, support, price, analytics, notification, and other processors must be disclosed before release. We do not sell personal data and will not make consent a condition for a function that does not need the relevant data, unless law requires otherwise."
+            "The App is free to use and shows advertising through Google AdMob. Advertising offsets operating costs; we do not sell your personal data to anyone.",
+            "The gold-portfolio data you enter is stored on your device and is not used to target advertising.",
+            "When you allow the device advertising identifier to be shared, ads may be personalized using that identifier and other signals processed by the advertising platform. When you do not allow it, the App still shows advertising, but in a default, non-personalized form; that form still needs minimum technical data for delivery, fraud prevention, and measurement.",
+            "We do not control ad content delivered by third parties and do not endorse the products, services, or investment claims that appear in ads. If you see an inappropriate ad, use that ad's reporting control or contact {{supportContact}}.",
+            "You can change your choice at any time in your device settings:"
+          ],
+          "items": [
+            "Android: open device Settings, go to Google, then Ads, to reset or delete the advertising ID and turn off personalized ads; the exact path varies by manufacturer and Android version.",
+            "iOS and iPadOS: open Settings, go to Privacy & Security, then Tracking, to allow or refuse tracking per app; if you refuse, the App does not access the IDFA.",
+            "Resetting or deleting the advertising identifier does not erase data the advertising platform already processed; see the Google policies listed in the sources at the end of this document."
+          ]
+        },
+        {
+          "id": "recipients",
+          "title": "7. Recipients and third-party services",
+          "paragraphs": [
+            "The website may link to the App Store and Google Play. The App may connect to reference-price sources or infrastructure providers, and uses Google AdMob to deliver advertising. Those parties process data under their own role and policies.",
+            "The advertising platform in use is Google AdMob; the actual list of hosting, support, price, analytics, notification, and other processors must be disclosed before release. We do not sell personal data and will not make consent a condition for a function that does not need the relevant data, unless law requires otherwise."
           ],
           "items": []
         },
         {
           "id": "cross-border",
-          "title": "7. Cross-border personal-data transfers",
+          "title": "8. Cross-border personal-data transfers",
           "paragraphs": [
-            "The current configuration does not confirm any transfer of personal data outside Vietnam. Before a cross-border transfer is introduced, the operator must identify the destination, recipient, purpose, safeguards, and complete the impact documentation required by Law 91/2025/QH15 and Decree 356/2025/ND-CP where applicable.",
+            "Delivering advertising through Google AdMob may involve processing advertising data on Google infrastructure outside Vietnam. For that activity the recipient is Google and its affiliates, the purpose is ad delivery, measurement, and fraud prevention, and the operator must complete the cross-border transfer documentation and impact assessment required by Law 91/2025/QH15 and Decree 356/2025/ND-CP where applicable.",
+            "Apart from the advertising activity above, the current configuration does not confirm any other transfer of personal data outside Vietnam. Before any is introduced, the operator must identify the destination, recipient, purpose, and corresponding safeguards.",
             "If you choose to open an app store or third-party website, you interact directly with that provider under its privacy notice."
           ],
           "items": []
         },
         {
           "id": "retention",
-          "title": "8. Retention and deletion",
+          "title": "9. Retention and deletion",
           "paragraphs": [
             "Local portfolio data remains on the device until you erase or reset it or uninstall the App under the platform's behavior. Support data or logs actually received by the operator are retained only as needed for the stated purpose, dispute handling, system security, or legal duties.",
-            "Specific periods for each system, backup, and log must be filled in after the real data flows are inventoried. When a period ends, data must be erased, destroyed, or anonymized as required."
+            "Specific periods for each system, backup, and log must be filled in after the real data flows are inventoried. When a period ends, data must be erased, destroyed, or anonymized as required.",
+            "The advertising identifier and ad-delivery data are retained by the advertising platform under that platform's own policy. You can reset or delete the advertising identifier on your device at any time; after a reset, the earlier advertising profile is no longer tied to the device's new identifier."
           ],
           "items": []
         },
         {
           "id": "rights",
-          "title": "9. Data-subject rights",
+          "title": "10. Data-subject rights",
           "paragraphs": [
             "Under the Personal Data Protection Law 91/2025/QH15, and subject to its procedures and limits, you have the right to:"
           ],
@@ -354,16 +420,16 @@
         },
         {
           "id": "children",
-          "title": "10. Children and represented persons",
+          "title": "11. Children and represented persons",
           "paragraphs": [
-            "The App is intended for adults managing personal assets and is not actively directed to children. Where data of a child, a person lacking or having limited civil capacity, or a person with cognitive difficulties is involved, the data subject's rights are exercised by the legal representative and under the special conditions of applicable law.",
+            "The App is intended for adults managing personal assets and is not actively directed to children. In-app advertising is not targeted at children, and we do not knowingly use children's data for personalized advertising. Where data of a child, a person lacking or having limited civil capacity, or a person with cognitive difficulties is involved, the data subject's rights are exercised by the legal representative and under the special conditions of applicable law.",
             "If inappropriate collection is identified, the operator will stop processing and erase or otherwise handle the data as lawfully required."
           ],
           "items": []
         },
         {
           "id": "security-incidents",
-          "title": "11. Security and incidents",
+          "title": "12. Security and incidents",
           "paragraphs": [
             "We apply organizational, technical, and human safeguards proportionate to the processing, such as access limits, software updates, log management, and incident procedures. No system can be guaranteed absolutely secure.",
             "For a reportable breach or incident, the operator will assess, remediate, and notify the relevant authority or data subject in the time and form required by law. Cybersecurity Law 116/2025/QH15 applies from 1 July 2026."
@@ -372,7 +438,7 @@
         },
         {
           "id": "contact-changes",
-          "title": "12. Requests, contact, and Policy changes",
+          "title": "13. Requests, contact, and Policy changes",
           "paragraphs": [
             "Send personal-data requests to {{privacyContact}} and other support requests to {{supportContact}}. We may reasonably verify identity before acting on a data request to protect your data.",
             "If this Policy changes materially, we will publish the new version, effective date, and appropriate advance notice. A changed purpose or consent basis will be handled separately as required by law; continued use does not automatically replace renewed consent where consent is required.",
