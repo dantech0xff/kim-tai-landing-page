@@ -37,7 +37,7 @@
   },
   "release": {
     "ready": false,
-    "effectiveDate": "2026-07-21",
+    "effectiveDate": "2026-08-20",
     "lastUpdated": "2026-08-20"
   },
   "operator": {
@@ -58,7 +58,8 @@
     "websiteAccountEnabled": false,
     "websiteOrderingOrPaymentEnabled": false,
     "appAdvertisingEnabled": true,
-    "appAdsPersonalizationRequiresConsent": true
+    "appAdsPersonalizationRequiresConsent": true,
+    "appPremiumRemovesAds": true
   },
   "downloads": {
     "ios": {
@@ -275,6 +276,11 @@
             "id": "pricing",
             "question": "Kim Tài có miễn phí không?",
             "answer": "Kim Tài tải miễn phí trên Google Play và App Store; một số tính năng nâng cao thuộc gói Premium mua trong ứng dụng."
+          },
+          {
+            "id": "advertising",
+            "question": "Kim Tài có hiển thị quảng cáo không?",
+            "answer": "Có. Ứng dụng hiển thị quảng cáo qua Google AdMob. Nếu bạn cho phép chia sẻ định danh quảng cáo, quảng cáo được cá nhân hoá; nếu bạn từ chối, quảng cáo vẫn hiển thị nhưng ở dạng mặc định, không cá nhân hoá. Gói Premium gỡ bỏ quảng cáo."
           }
         ]
       },
@@ -477,6 +483,11 @@
             "id": "pricing",
             "question": "Is Kim Tài free?",
             "answer": "Kim Tài is free to download on Google Play and the App Store; some advanced features belong to the Premium in-app purchase."
+          },
+          {
+            "id": "advertising",
+            "question": "Does Kim Tài show ads?",
+            "answer": "Yes. The App shows ads through Google AdMob. If you allow the advertising identifier to be shared, ads are personalized; if you refuse, ads are still shown in a default, non-personalized form. The Premium plan removes ads."
           }
         ]
       },

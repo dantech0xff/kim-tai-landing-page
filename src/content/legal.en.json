@@ -94,7 +94,7 @@
           "paragraphs": [
             "The App helps record a personal gold portfolio, display estimated values, view reference buy/sell prices by source, and personalize language, unit, or reminder settings.",
             "The App is not an exchange or custodian. It does not buy or sell gold, set transaction prices, or provide investment, tax, or legal advice.",
-            "The App is free to use and shows advertising delivered by third parties. Advertising and the advertising identifier are covered in section 4 and in the Privacy Policy."
+            "The App is free to download and shows advertising delivered by third parties. Advertising and the advertising identifier are covered in section 4 and in the Privacy Policy."
           ],
           "items": []
         },
@@ -102,7 +102,7 @@
           "id": "advertising",
           "title": "4. In-app advertising",
           "paragraphs": [
-            "The App shows advertising through Google AdMob. If you allow the device advertising identifier to be shared, ads may be personalized. If you refuse or withdraw that permission, the App remains fully usable and ads switch to a default, non-personalized form.",
+            "The App shows advertising through Google AdMob. If you allow the device advertising identifier to be shared, ads may be personalized. If you refuse or withdraw that permission, the App remains fully usable and ads switch to a default, non-personalized form. On iPhone and iPad, the operating system shows the App Tracking Transparency prompt for that choice before personalized ads are enabled. The in-app Premium plan removes advertising.",
             "Refusing to share the advertising identifier does not reduce the functions you use and is not a condition for continuing to use the App. How to enable or disable sharing of the advertising identifier, and what each choice means, is described in the Privacy Policy.",
             "When using the App with advertising, please note:"
           ],
@@ -364,9 +364,10 @@
           "id": "advertising",
           "title": "6. In-app advertising and the advertising identifier",
           "paragraphs": [
-            "The App is free to use and shows advertising through Google AdMob. Advertising offsets operating costs; we do not sell your personal data to anyone.",
+            "The App is free to download and shows advertising through Google AdMob. Advertising offsets operating costs; we do not sell your personal data to anyone. If you buy the in-app Premium plan, advertising is removed and the App no longer delivers ads or uses the advertising identifier for that purpose.",
             "The gold-portfolio data you enter is stored on your device and is not used to target advertising.",
             "When you allow the device advertising identifier to be shared, ads may be personalized using that identifier and other signals processed by the advertising platform. When you do not allow it, the App still shows advertising, but in a default, non-personalized form; that form still needs minimum technical data for delivery, fraud prevention, and measurement.",
+            "On iPhone and iPad, the operating system shows the App Tracking Transparency prompt the first time you open the App so you can allow or refuse tracking. Your choice applies immediately; if you refuse, the App does not access the IDFA and ads stay in the default, non-personalized form.",
             "We do not control ad content delivered by third parties and do not endorse the products, services, or investment claims that appear in ads. If you see an inappropriate ad, use that ad's reporting control or contact {{supportContact}}.",
             "You can change your choice at any time in your device settings:"
           ],

@@ -38,4 +38,26 @@ A second, smaller slip: writing the JSON back through `JSON.stringify` reflowed 
 
 Four open questions live in `plans/reports/cook-260820-1832-ads-legal-disclosure.md`: other ad networks, whether a UMP consent dialog exists alongside the OS-level setting, whether the landing FAQ should mention ads, and whether `release.effectiveDate` should move. Nothing committed.
 
+## Round 2
+
+Four answers came back: AdMob only, ATT prompt is shown, add the FAQ item, move the effective date to the new version. Applied all four.
+
+Adding the FAQ item is what caught the real mistake. Reading the neighbouring `pricing` answer showed Kim Tài sells a Premium in-app purchase, while round 1 had written that the App "được cung cấp miễn phí" / "is free to use". Two documents in the same repo contradicting each other. Narrowed both to "tải miễn phí" / "free to download", which is what the store listing actually offers.
+
+That surfaced a larger gap nobody asked about: no legal document covers purchases at all — no pricing, renewal, refund, or store-billing terms — even though a Premium tier is advertised on the landing page. Left it alone and wrote it down; it needs its own pass, not a drive-by paragraph. Also unknown whether Premium removes ads, so §6 and §4 stay silent on it rather than guessing.
+
+Round 1 was committed as `fb63f36` outside this session; round 2 sits uncommitted on top.
+
+Gates re-run green: content/typecheck/lint/build, Pages export + `validate:pages`, browser smoke 181/181. Verified in the built HTML that the ATT paragraph lands between the personalization and ad-content paragraphs, both legal dates read 20 tháng 8 2026, and the new FAQ item reaches both the visible section and the FAQPage JSON-LD in VI and EN.
+
+## Round 3
+
+Premium removes ads, confirmed. Added it to privacy §6, ToS §4, the ads FAQ in both locales, and the product-fact ledger.
+
+Kept the sentence narrow on purpose. "Premium removes ads" is an ads fact and belongs here; pricing, renewal, refunds, and who the merchant of record is are purchase facts, and writing those from a one-line answer would be guessing. The July research report already has the verified material for that pass — RevenueCat anonymous App User IDs, Apple receipts, Google purchase tokens — and it deserves to be used properly rather than paraphrased into a corner of the ads section.
+
+Still open and now sharper: the privacy policy lists no purchase-related recipient or data category at all, so if RevenueCat ships in the app, §2 and §7 are incomplete regardless of what the ads sections say.
+
+Gates green again: content/typecheck/lint/build, Pages export, browser smoke 181/181.
+
 > Historical work record — not durable authority. Prefer docs/specs/ADRs for current decisions.

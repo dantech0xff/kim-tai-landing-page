@@ -94,7 +94,7 @@
           "paragraphs": [
             "Ứng dụng hỗ trợ ghi lại danh mục vàng cá nhân, hiển thị giá trị tạm tính, xem giá mua/bán tham khảo theo nguồn và cá nhân hoá ngôn ngữ, đơn vị hoặc lịch nhắc.",
             "Ứng dụng không phải sàn giao dịch, không giữ hộ tài sản, không bán hoặc mua vàng, không xác lập giá giao dịch và không cung cấp tư vấn đầu tư, thuế hoặc pháp lý.",
-            "Ứng dụng được cung cấp miễn phí và có hiển thị quảng cáo do bên thứ ba phân phát. Nội dung về quảng cáo và định danh quảng cáo được nêu tại mục 4 và trong Chính sách quyền riêng tư."
+            "Ứng dụng tải miễn phí và có hiển thị quảng cáo do bên thứ ba phân phát. Nội dung về quảng cáo và định danh quảng cáo được nêu tại mục 4 và trong Chính sách quyền riêng tư."
           ],
           "items": []
         },
@@ -102,7 +102,7 @@
           "id": "advertising",
           "title": "4. Quảng cáo trong Ứng dụng",
           "paragraphs": [
-            "Ứng dụng hiển thị quảng cáo thông qua Google AdMob. Nếu bạn cho phép chia sẻ định danh quảng cáo của thiết bị, quảng cáo có thể được cá nhân hoá. Nếu bạn không cho phép hoặc rút lại cho phép, Ứng dụng vẫn dùng được đầy đủ và quảng cáo chuyển sang dạng mặc định, không cá nhân hoá.",
+            "Ứng dụng hiển thị quảng cáo thông qua Google AdMob. Nếu bạn cho phép chia sẻ định danh quảng cáo của thiết bị, quảng cáo có thể được cá nhân hoá. Nếu bạn không cho phép hoặc rút lại cho phép, Ứng dụng vẫn dùng được đầy đủ và quảng cáo chuyển sang dạng mặc định, không cá nhân hoá. Trên iPhone và iPad, hộp thoại App Tracking Transparency của hệ điều hành được hiển thị để bạn chọn trước khi quảng cáo cá nhân hoá được bật. Gói Premium mua trong ứng dụng gỡ bỏ quảng cáo.",
             "Việc từ chối chia sẻ định danh quảng cáo không làm giảm chức năng bạn đang dùng và không phải điều kiện để tiếp tục sử dụng Ứng dụng. Cách bật hoặc tắt chia sẻ định danh quảng cáo và hệ quả của từng lựa chọn được mô tả trong Chính sách quyền riêng tư.",
             "Khi sử dụng Ứng dụng có quảng cáo, bạn lưu ý:"
           ],
@@ -364,9 +364,10 @@
           "id": "advertising",
           "title": "6. Quảng cáo trong Ứng dụng và định danh quảng cáo",
           "paragraphs": [
-            "Ứng dụng được cung cấp miễn phí và có hiển thị quảng cáo thông qua Google AdMob. Quảng cáo giúp bù đắp chi phí vận hành; chúng tôi không bán dữ liệu cá nhân của bạn cho bất kỳ bên nào.",
+            "Ứng dụng tải miễn phí và có hiển thị quảng cáo thông qua Google AdMob. Quảng cáo giúp bù đắp chi phí vận hành; chúng tôi không bán dữ liệu cá nhân của bạn cho bất kỳ bên nào. Nếu bạn mua gói Premium trong ứng dụng, quảng cáo được gỡ bỏ và Ứng dụng không còn phân phát quảng cáo hay dùng định danh quảng cáo cho mục đích này.",
             "Dữ liệu danh mục vàng bạn nhập được lưu trên thiết bị và không được dùng để nhắm mục tiêu quảng cáo.",
             "Khi bạn cho phép chia sẻ định danh quảng cáo của thiết bị, quảng cáo có thể được cá nhân hoá dựa trên định danh đó và các tín hiệu khác do nền tảng quảng cáo xử lý. Khi bạn không cho phép, Ứng dụng vẫn hiển thị quảng cáo nhưng ở dạng mặc định, không cá nhân hoá; dạng này vẫn cần dữ liệu kỹ thuật tối thiểu để phân phát, chống gian lận và đo lường.",
+            "Trên iPhone và iPad, hệ điều hành hiển thị hộp thoại App Tracking Transparency khi bạn mở Ứng dụng lần đầu để bạn cho phép hoặc từ chối theo dõi. Lựa chọn của bạn được áp dụng ngay; nếu bạn từ chối, Ứng dụng không truy cập IDFA và quảng cáo giữ ở dạng mặc định, không cá nhân hoá.",
             "Chúng tôi không kiểm soát nội dung quảng cáo do bên thứ ba phân phát và không xác nhận sản phẩm, dịch vụ hay khuyến nghị đầu tư xuất hiện trong quảng cáo. Nếu bạn thấy quảng cáo không phù hợp, hãy dùng chức năng báo cáo của quảng cáo đó hoặc liên hệ {{supportContact}}.",
             "Bạn có thể thay đổi lựa chọn bất cứ lúc nào bằng cài đặt của thiết bị:"
           ],
