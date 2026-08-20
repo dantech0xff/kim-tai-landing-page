@@ -148,6 +148,7 @@ export const blogArticle = blogViJson as BlogArticle;
 
 export type DownloadPlatform = keyof typeof siteConfig.downloads;
 
+
 export function getPublishedDownloadUrl(
   platform: DownloadPlatform,
 ): string | null {

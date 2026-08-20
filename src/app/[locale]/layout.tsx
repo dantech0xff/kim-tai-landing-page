@@ -1,4 +1,3 @@
-import "@fontsource-variable/newsreader/wght.css";
 import "@fontsource/be-vietnam-pro/400.css";
 import "@fontsource/be-vietnam-pro/500.css";
 import "@fontsource/be-vietnam-pro/600.css";
@@ -16,6 +15,7 @@ import {
   withBasePath,
 } from "@/lib/base-path";
 import { StructuredData } from "@/components/structured-data";
+import { themeScript } from "@/lib/theme-script";
 import { getSiteCopy, isLocale, locales, siteConfig } from "@/lib/content";
 import { buildOpenGraph, buildTwitter } from "@/lib/seo-metadata";
 import { buildOrganization, buildWebSite } from "@/lib/structured-data";
@@ -26,18 +26,6 @@ interface LocaleLayoutProps {
 }
 
 export const dynamicParams = false;
-
-const themeScript = `
-  (function () {
-    try {
-      var saved = localStorage.getItem('kim-tai-theme');
-      if (saved !== 'dark' && saved !== 'light') saved = null;
-      var dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      document.documentElement.classList.toggle('dark', dark);
-      document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
-    } catch (_) {}
-  })();
-`;
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

@@ -1,6 +1,6 @@
 # Kim Tài — Tick Vàng Online
 
-Website giới thiệu song ngữ cho ứng dụng Kim Tài, được xây bằng Next.js App Router và Tailwind CSS. Giao diện dùng bento grid không viền, hỗ trợ sáng/tối và tối ưu responsive. Ba ảnh chụp ứng dụng được gom thành một cụm màn hình trong Hero; các bento tính năng phía dưới dùng biểu đồ mô phỏng cấu hình bằng JSON.
+Website giới thiệu song ngữ cho ứng dụng Kim Tài, được xây bằng Next.js App Router và Tailwind CSS. Giao diện theo hướng **Modern Gold Ledger**: bố cục đối xứng căn giữa, nét kẻ chỉ vàng thay cho hộp đổ bóng, bo góc lệch (`20px 6px 20px 6px`) và thẻ con dấu nền đỏ son. Chế độ tối là mặc định, chế độ sáng dùng đúng bộ token nhưng đảo bảng màu (nhấn chính chuyển từ vàng đồng thau sang đỏ son). Chữ dùng riêng Be Vietnam Pro. Ba ảnh chụp ứng dụng nằm trong thẻ con dấu ở Hero; các thẻ tính năng phía dưới dùng biểu đồ mô phỏng cấu hình bằng JSON.
 
 ## Chạy dự án
 
@@ -66,12 +66,12 @@ Các trang ngôn ngữ, pháp lý và bài viết kỹ thuật đều được d
 
 | Tệp | Nội dung |
 | --- | --- |
-| `src/content/site.json` | Thương hiệu, đơn vị vận hành, liên kết tải, ảnh, tính năng và toàn bộ nội dung VI/EN |
+| `src/content/site.json` | Thương hiệu, đơn vị vận hành, liên kết tải, thẻ sổ vàng Hero, skin Ngũ Hành, dải số liệu nguồn giá, tính năng và toàn bộ nội dung VI/EN |
 | `src/content/blog.vi.json` | Nguồn nội dung có kiểu `BlogArticle` cho bài viết kỹ thuật tiếng Việt |
 | `src/content/legal.vi.json` | Ba tài liệu pháp lý tiếng Việt và nguồn luật chính thức |
 | `src/content/legal.en.json` | Bản tiếng Anh tham khảo của ba tài liệu pháp lý |
 
-Ảnh ứng dụng nằm trong `public/images/` và chỉ được hiển thị trong Hero. Dữ liệu cho bốn biểu đồ mô phỏng nằm ở `locales.*.featureVisuals` trong `site.json`; các số liệu này chỉ minh hoạ cách trình bày, không phải giá vàng hoặc dữ liệu thị trường thực. Bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset đều được khai báo tại `site.json`.
+Trang giới thiệu **không dùng ảnh chụp ứng dụng**. Hero là thẻ con dấu sổ vàng dựng bằng số liệu mô phỏng khai báo tại `locales.*.hero.ledger`, kèm dòng chú thích bắt buộc ghi rõ đây là minh hoạ. Năm thẻ Ngũ Hành (Kim, Mộc, Thuỷ, Hoả, Thổ) cũng dựng bằng CSS: dùng lại đúng bộ số liệu của Hero, mỗi hành chỉ đổi chất liệu nền và sắc nhấn qua biến `--skin-*` trong `.skin-card--{id}`; nội dung song ngữ nằm ở `locales.*.premium.items`. Vì vậy sitemap không khai `<image:image>` nào và ảnh raster duy nhất còn lại trên trang là badge cửa hàng. Dữ liệu cho bốn biểu đồ mô phỏng nằm ở `locales.*.featureVisuals` trong `site.json`; các số liệu này chỉ minh hoạ cách trình bày, không phải giá vàng hoặc dữ liệu thị trường thực. Bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset đều được khai báo tại `site.json`.
 
 Trong chế độ preview, `operator.publicName` và `operator.facebookUrl` là hai thông tin công khai được hiển thị trên các trang pháp lý; Facebook cũng được dùng làm kênh hỗ trợ tạm thời. Chúng không thay thế tên pháp lý, mã đăng ký, địa chỉ hoặc kênh bảo vệ dữ liệu cần có trước khi đặt `operator.configured` thành `true`.
 
@@ -109,7 +109,7 @@ Nội dung hiện tại là bản nháp cấu hình theo khung pháp luật có 
 ## Kiến trúc ngắn
 
 - Server Components cho nội dung và metadata; chỉ nút đổi giao diện là Client Component.
-- Giao diện sáng/tối dùng class trên `<html>`, lưu lựa chọn trong `localStorage` và mặc định theo hệ điều hành.
+- Giao diện sáng/tối dùng class trên `<html>`, lưu lựa chọn trong `localStorage` và **mặc định là chế độ tối**; chỉ lựa chọn `light` đã lưu mới đảo bảng màu. Script chống nháy màu dùng chung tại `src/lib/theme-script.ts` cho cả layout ngôn ngữ và trang 404.
 - Font được đóng gói cục bộ qua Fontsource, không gọi CDN bên ngoài.
 - Chế độ xem trước tự đặt `noindex`; chỉ bật lập chỉ mục khi cả `release.ready` và `operator.configured` hợp lệ.
 - Không có dữ liệu mẫu giả về lượt tải, đánh giá, đối tác hoặc chứng nhận.

@@ -395,7 +395,7 @@ async function reload(name) {
 }
 
 async function scrollThroughScreenshots() {
-  const assetSelector = ".app-screenshot img, .store-button img";
+  const assetSelector = ".store-button img";
   const count = await evaluate(`document.querySelectorAll("${assetSelector}").length`);
   for (let index = 0; index < count; index += 1) {
     await evaluate(`(() => {
@@ -464,19 +464,6 @@ async function pageSnapshot() {
       return !name;
     }).map(descriptor);
 
-    const visibleBorders = Array.from(document.querySelectorAll("body *"))
-      .filter(isRendered)
-      .flatMap((element) => {
-        const style = getComputedStyle(element);
-        const edges = ["Top", "Right", "Bottom", "Left"].filter((edge) => {
-          const width = Number.parseFloat(style["border" + edge + "Width"]);
-          const borderStyle = style["border" + edge + "Style"];
-          const color = style["border" + edge + "Color"];
-          return width > 0 && borderStyle !== "none" && borderStyle !== "hidden" && rgbaIsVisible(color);
-        });
-        return edges.length ? [{ ...descriptor(element), edges }] : [];
-      });
-
     const overflowingElements = Array.from(document.querySelectorAll("body *"))
       .filter((element) => isRendered(element) && !element.closest('[aria-hidden="true"]'))
       .flatMap((element) => {
@@ -486,13 +473,12 @@ async function pageSnapshot() {
       })
       .slice(0, 12);
 
-    const images = Array.from(document.querySelectorAll(".app-screenshot img")).map((image) => {
+    const images = Array.from(document.querySelectorAll("main img:not(.store-button__badge)")).map((image) => {
       const rect = image.getBoundingClientRect();
       return {
         alt: image.alt,
         complete: image.complete,
         currentSrc: image.currentSrc,
-        inHero: Boolean(image.closest(".hero-visual")),
         naturalHeight: image.naturalHeight,
         naturalWidth: image.naturalWidth,
         renderedHeight: Number(rect.height.toFixed(2)),
@@ -571,7 +557,7 @@ async function pageSnapshot() {
       },
       images,
       featureArea: {
-        screenshotCount: document.querySelectorAll("#features .app-screenshot").length,
+        screenshotCount: document.querySelectorAll("#features img").length,
         simulations: Array.from(document.querySelectorAll("#features .feature-simulation")).map(
           (element) => ({
             ariaLabel: element.getAttribute("aria-label") ?? "",
@@ -582,19 +568,15 @@ async function pageSnapshot() {
           }),
         ),
       },
+      premiumCards: Array.from(document.querySelectorAll(".skin-card")).map((card) => ({
+        name: (card.querySelector(".skin-card__name")?.textContent || "").trim(),
+        value: (card.querySelector(".skin-card__value")?.textContent || "").trim(),
+        variant: Array.from(card.classList).find((name) => name.startsWith("skin-card--")) ?? "",
+      })),
       hero: {
         copy: rectSnapshot(".hero-copy"),
-        grid: rectSnapshot(".hero-grid"),
-        miniCards: Array.from(document.querySelectorAll(".hero-mini-card")).map((element) => {
-          const rect = element.getBoundingClientRect();
-          return {
-            bottom: Number(rect.bottom.toFixed(2)),
-            height: Number(rect.height.toFixed(2)),
-            top: Number(rect.top.toFixed(2)),
-          };
-        }),
+        seal: rectSnapshot(".hero-seal"),
         shell: rectSnapshot(".hero-shell"),
-        visual: rectSnapshot(".hero-visual"),
       },
       landmarks: {
         footer: document.querySelectorAll("footer").length,
@@ -660,7 +642,6 @@ async function pageSnapshot() {
         saved: localStorage.getItem("kim-tai-theme"),
         toggleAriaPressed: document.querySelector("button.control-button")?.getAttribute("aria-pressed") ?? "",
       },
-      visibleBorders,
     };
   })()`);
 }
@@ -817,15 +798,15 @@ function assertPage(snapshot, { device, expectedAlternate, expectedLang, expecte
     })),
   );
   check(
-    `${label}: all three app screenshots render only in Hero`,
-    snapshot.images.length === 3 &&
-      snapshot.images.every(
-        (image) =>
-          image.complete && image.naturalWidth > 0 && image.naturalHeight > 0 &&
-          image.renderedWidth > 0 && image.renderedHeight > 0 && image.inHero,
-      ) &&
-      snapshot.featureArea.screenshotCount === 0,
-    { featureScreenshotCount: snapshot.featureArea.screenshotCount, images: snapshot.images },
+    `${label}: landing renders no content images beyond store badges`,
+    snapshot.images.length === 0 && snapshot.featureArea.screenshotCount === 0,
+    { featureImageCount: snapshot.featureArea.screenshotCount, images: snapshot.images },
+  );
+  check(
+    `${label}: five Ngũ Hành cards are drawn in markup`,
+    snapshot.premiumCards.length === 5 &&
+      snapshot.premiumCards.every((card) => card.value.length > 0 && card.name.length > 0),
+    snapshot.premiumCards,
   );
   check(
     `${label}: four accessible simulated visuals replace feature screenshots`,
@@ -838,25 +819,16 @@ function assertPage(snapshot, { device, expectedAlternate, expectedLang, expecte
       ),
     snapshot.featureArea.simulations,
   );
+  const heroRects = [snapshot.hero.shell, snapshot.hero.copy, snapshot.hero.seal];
   check(
-    `${label}: no visible structural borders`,
-    snapshot.visibleBorders.length === 0,
-    snapshot.visibleBorders,
+    `${label}: hero copy and seal card stay inside the page`,
+    heroRects.every(
+      (rect) =>
+        rect && rect.width > 0 && rect.left >= -0.5 &&
+        rect.right <= snapshot.document.clientWidth + 0.5,
+    ),
+    { documentWidth: snapshot.document.clientWidth, hero: snapshot.hero },
   );
-  if (device.width >= 1200) {
-    const heroRects = [
-      snapshot.hero.shell,
-      snapshot.hero.grid,
-      snapshot.hero.copy,
-      snapshot.hero.visual,
-      ...snapshot.hero.miniCards,
-    ];
-    check(
-      `${label}: full hero fits first viewport`,
-      heroRects.every((rect) => rect && rect.top >= -0.5 && rect.bottom <= snapshot.device.innerHeight + 0.5),
-      { hero: snapshot.hero, viewportHeight: snapshot.device.innerHeight },
-    );
-  }
 }
 
 function assertTelemetry(telemetry, expectedPath, label) {
@@ -1094,16 +1066,17 @@ async function run() {
   const viPath = localePath("vi");
   const enPath = localePath("en");
 
-  const viMobileTelemetry = await navigate(viPath, "vi-mobile-light");
+  // Chế độ tối là mặc định của bộ nhận diện, kể cả khi hệ điều hành đang để sáng.
+  const viMobileTelemetry = await navigate(viPath, "vi-mobile-dark");
   const viMobileInitial = await pageSnapshot();
-  assertTheme(viMobileInitial, false, null, "VI mobile light");
-  await captureScreenshot("kim-tai-vi-mobile-light.png", "VI mobile light");
-  await assertKeyboardFocus("VI mobile light");
+  assertTheme(viMobileInitial, true, null, "VI mobile default dark");
+  assertCriticalDarkContent(viMobileInitial, "VI mobile default dark");
+  await captureScreenshot("kim-tai-vi-mobile-dark.png", "VI mobile default dark");
+  await assertKeyboardFocus("VI mobile default dark");
 
-  const viMobileDark = await toggleTheme(true, "dark", "VI mobile dark toggle");
-  assertTheme(viMobileDark, true, "dark", "VI mobile dark toggle");
-  assertCriticalDarkContent(viMobileDark, "VI mobile dark");
-  await captureScreenshot("kim-tai-vi-mobile-dark.png", "VI mobile dark");
+  const viMobileLight = await toggleTheme(false, "light", "VI mobile light toggle");
+  assertTheme(viMobileLight, false, "light", "VI mobile light toggle");
+  await captureScreenshot("kim-tai-vi-mobile-light.png", "VI mobile light");
 
   await scrollThroughScreenshots();
   const viMobilePage = await pageSnapshot();
@@ -1117,17 +1090,17 @@ async function run() {
   await assertPreviewMetadata(viMobilePage, "VI mobile light");
   assertTelemetry(viMobileTelemetry, viPath, "VI mobile light");
 
-  const persistedDarkTelemetry = await reload("vi-mobile-dark-persisted");
-  const persistedDark = await pageSnapshot();
-  assertTheme(persistedDark, true, "dark", "VI mobile persisted dark");
-  assertTelemetry(persistedDarkTelemetry, viPath, "VI mobile persisted dark");
-
-  await toggleTheme(false, "light", "VI mobile light toggle");
-  await setColorScheme("dark");
   const persistedLightTelemetry = await reload("vi-mobile-light-persisted");
   const persistedLight = await pageSnapshot();
   assertTheme(persistedLight, false, "light", "VI mobile persisted light");
   assertTelemetry(persistedLightTelemetry, viPath, "VI mobile persisted light");
+
+  await toggleTheme(true, "dark", "VI mobile dark toggle");
+  await setColorScheme("light");
+  const persistedDarkTelemetry = await reload("vi-mobile-dark-persisted");
+  const persistedDark = await pageSnapshot();
+  assertTheme(persistedDark, true, "dark", "VI mobile persisted dark");
+  assertTelemetry(persistedDarkTelemetry, viPath, "VI mobile persisted dark");
 
   await clearOriginStorage();
   await setColorScheme("dark");
@@ -1147,41 +1120,46 @@ async function run() {
   await setDeviceMetrics(narrowMobile);
   await setColorScheme("light");
   await clearOriginStorage();
-  const viNarrowTelemetry = await navigate(viPath, "vi-mobile-320-light");
+  const viNarrowTelemetry = await navigate(viPath, "vi-mobile-320-dark");
   await scrollThroughScreenshots();
-  const viNarrowLight = await pageSnapshot();
-  assertTheme(viNarrowLight, false, null, "VI mobile 320 light");
-  assertPage(viNarrowLight, {
+  const viNarrowDark = await pageSnapshot();
+  assertTheme(viNarrowDark, true, null, "VI mobile 320 dark");
+  assertPage(viNarrowDark, {
     device: narrowMobile,
     expectedAlternate: "en",
     expectedLang: "vi-VN",
     expectedPath: viPath,
-    label: "VI mobile 320 light",
+    label: "VI mobile 320 dark",
   });
-  assertTelemetry(viNarrowTelemetry, viPath, "VI mobile 320 light");
+  assertTelemetry(viNarrowTelemetry, viPath, "VI mobile 320 dark");
 
   await setDeviceMetrics(desktop);
   await setColorScheme("light");
   await clearOriginStorage();
 
-  const viDesktopTelemetry = await navigate(viPath, "vi-desktop-light");
+  const viDesktopTelemetry = await navigate(viPath, "vi-desktop-dark");
   await scrollThroughScreenshots();
-  const viDesktopLight = await pageSnapshot();
-  assertTheme(viDesktopLight, false, null, "VI desktop light");
-  assertPage(viDesktopLight, {
+  const viDesktopDefault = await pageSnapshot();
+  assertTheme(viDesktopDefault, true, null, "VI desktop default dark");
+  assertPage(viDesktopDefault, {
     device: desktop,
     expectedAlternate: "en",
     expectedLang: "vi-VN",
     expectedPath: viPath,
-    label: "VI desktop light",
+    label: "VI desktop default dark",
   });
-  await captureScreenshot("kim-tai-vi-desktop-light.png", "VI desktop light");
-  assertTelemetry(viDesktopTelemetry, viPath, "VI desktop light");
+  assertCriticalDarkContent(viDesktopDefault, "VI desktop default dark");
+  assertTelemetry(viDesktopTelemetry, viPath, "VI desktop default dark");
 
+  const viDesktopLight = await toggleTheme(false, "light", "VI desktop light toggle");
+  assertTheme(viDesktopLight, false, "light", "VI desktop light");
+  await captureScreenshot("kim-tai-vi-desktop-light.png", "VI desktop light");
+
+  // Giữ nguyên lựa chọn sáng khi đổi ngôn ngữ để chứng minh token dùng chung.
   const enDesktopTelemetry = await navigate(enPath, "en-desktop-light");
   await scrollThroughScreenshots();
   const enDesktopLight = await pageSnapshot();
-  assertTheme(enDesktopLight, false, null, "EN desktop light");
+  assertTheme(enDesktopLight, false, "light", "EN desktop light");
   assertPage(enDesktopLight, {
     device: desktop,
     expectedAlternate: "vi",
@@ -1194,7 +1172,7 @@ async function run() {
 
   await setColorScheme("dark");
   await clearOriginStorage();
-  const viDesktopDarkTelemetry = await navigate(viPath, "vi-desktop-dark");
+  const viDesktopDarkTelemetry = await navigate(viPath, "vi-desktop-dark-system");
   await scrollThroughScreenshots();
   const viDesktopDark = await pageSnapshot();
   assertTheme(viDesktopDark, true, null, "VI desktop dark");
@@ -1206,6 +1184,7 @@ async function run() {
     label: "VI desktop dark",
   });
   assertCriticalDarkContent(viDesktopDark, "VI desktop dark");
+  await captureScreenshot("kim-tai-vi-desktop-dark.png", "VI desktop dark");
   assertTelemetry(viDesktopDarkTelemetry, viPath, "VI desktop dark");
 }
 

@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AppIcon } from "@/components/app-icon";
-import { OrbitMotif } from "@/components/orbit-motif";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { StoreButtons } from "@/components/store-buttons";
@@ -149,52 +148,49 @@ export function TechBlogArticle({ article }: TechBlogArticleProps) {
 
       <main className="article-page" id="article-content">
         <section className="article-hero page-container" aria-labelledby="article-title">
-          <div className="article-hero__copy">
-            <Link className="back-link" href="/vi/">
-              <AppIcon className="rotate-[-135deg]" name="arrow-up-right" size={18} />
-              {article.backLabel}
-            </Link>
-            <p className="eyebrow">{article.eyebrow}</p>
-            <h1 className="article-title" id="article-title">
-              {article.title}
-            </h1>
-            <p className="article-intro">{renderInlineText(article.intro)}</p>
+          <Link className="back-link" href="/vi/">
+            <AppIcon className="rotate-[-135deg]" name="arrow-up-right" size={18} />
+            {article.backLabel}
+          </Link>
+          <p className="eyebrow">{article.eyebrow}</p>
+          <h1 className="article-title" id="article-title">
+            {article.title}
+          </h1>
+          <p className="article-intro">{renderInlineText(article.intro)}</p>
 
-            <div className="article-meta">
-              <dl>
-                <div>
-                  <dt>{article.publishedLabel}</dt>
-                  <dd>
-                    <time dateTime={article.publishedAt}>
-                      {formatBlogDate(article.publishedAt)}
-                    </time>
-                  </dd>
-                </div>
-                <div>
-                  <dt>{article.updatedLabel}</dt>
-                  <dd>
-                    <time dateTime={article.updatedAt}>
-                      {formatBlogDate(article.updatedAt)}
-                    </time>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Độ dài</dt>
-                  <dd>
-                    {article.readingTimeMinutes} {article.readingTimeLabel}
-                  </dd>
-                </div>
-              </dl>
-              <ul aria-label="Chủ đề bài viết">
-                {article.tags.map((tag) => (
-                  <li key={tag}>{tag}</li>
-                ))}
-              </ul>
-            </div>
+          <div className="article-meta">
+            <dl>
+              <div>
+                <dt>{article.publishedLabel}</dt>
+                <dd>
+                  <time dateTime={article.publishedAt}>
+                    {formatBlogDate(article.publishedAt)}
+                  </time>
+                </dd>
+              </div>
+              <div>
+                <dt>{article.updatedLabel}</dt>
+                <dd>
+                  <time dateTime={article.updatedAt}>
+                    {formatBlogDate(article.updatedAt)}
+                  </time>
+                </dd>
+              </div>
+              <div>
+                <dt>Độ dài</dt>
+                <dd>
+                  {article.readingTimeMinutes} {article.readingTimeLabel}
+                </dd>
+              </div>
+            </dl>
+            <ul aria-label="Chủ đề bài viết">
+              {article.tags.map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
           </div>
 
-          <figure className="article-pipeline">
-            <OrbitMotif className="article-pipeline__orbit" compact />
+          <figure className="seal-panel article-pipeline">
             <p>{article.pipeline.label}</p>
             <ol>
               {article.pipeline.steps.map((step, index) => (
@@ -234,7 +230,10 @@ export function TechBlogArticle({ article }: TechBlogArticleProps) {
             ))}
 
             <section className="article-cta" aria-labelledby="article-cta-title">
-              <p className="eyebrow eyebrow--on-gold">{article.cta.eyebrow}</p>
+              <span aria-hidden="true" className="seal-glyph">
+                金
+              </span>
+              <p className="eyebrow eyebrow--on-seal">{article.cta.eyebrow}</p>
               <h2 id="article-cta-title">{article.cta.title}</h2>
               <p>{article.cta.description}</p>
               <StoreButtons locale="vi" />

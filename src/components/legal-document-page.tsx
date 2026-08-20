@@ -24,6 +24,18 @@ interface OperatorDetail {
   value: string;
 }
 
+/**
+ * Tiêu đề trong tài liệu pháp lý đã mang sẵn số thứ tự ("1. Phạm vi ...").
+ * Tách số ra con dấu tròn để không lặp số hai lần cạnh nhau.
+ */
+const splitSectionTitle = (title: string, index: number) => {
+  const match = /^(\d+)\.\s*/.exec(title);
+
+  return match
+    ? { label: title.slice(match[0].length), number: match[1].padStart(2, "0") }
+    : { label: title, number: String(index + 1).padStart(2, "0") };
+};
+
 export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
   const copy = getSiteCopy(locale);
   const { document, sources } = getLegalDocument(locale, slug);
@@ -111,18 +123,33 @@ export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
           <aside className="legal-toc" aria-label={copy.legalUi.contents}>
             <p>{copy.legalUi.contents}</p>
             <nav aria-label={copy.legalUi.contents}>
-              {document.sections.map((section) => (
-                <a href={`#${section.id}`} key={section.id}>
-                  {section.title}
-                </a>
-              ))}
+              {document.sections.map((section, index) => {
+                const { label, number } = splitSectionTitle(section.title, index);
+
+                return (
+                  <a href={`#${section.id}`} key={section.id}>
+                    <span aria-hidden="true">{number}</span>
+                    {label}
+                  </a>
+                );
+              })}
+              <a href="#official-sources">
+                <span aria-hidden="true">§</span>
+                {copy.legalUi.sourceHeading}
+              </a>
             </nav>
           </aside>
 
           <article className="legal-article">
-            {document.sections.map((section) => (
+            {document.sections.map((section, sectionIndex) => {
+              const { label, number } = splitSectionTitle(section.title, sectionIndex);
+
+              return (
               <section id={section.id} key={section.id}>
-                <h2>{section.title}</h2>
+                <header className="doc-heading">
+                  <span aria-hidden="true">{number}</span>
+                  <h2>{label}</h2>
+                </header>
                 {section.paragraphs.map((paragraph, paragraphIndex) => (
                   <p key={`${section.id}-paragraph-${paragraphIndex}`}>
                     {interpolateLegalText(locale, paragraph)}
@@ -133,7 +160,7 @@ export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
                     {section.items.map((item, itemIndex) => (
                       <li key={`${section.id}-item-${itemIndex}`}>
                         <span aria-hidden="true">
-                          <AppIcon name="check" size={18} />
+                          <AppIcon name="check" size={14} />
                         </span>
                         <p>{interpolateLegalText(locale, item)}</p>
                       </li>
@@ -141,18 +168,19 @@ export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
                   </ul>
                 )}
               </section>
-            ))}
+              );
+            })}
 
             <section className="legal-sources" id="official-sources">
               <h2>{copy.legalUi.sourceHeading}</h2>
-              <div className="grid gap-3">
+              <div className="legal-sources__list">
                 {sources.map((source) => (
                   <a href={source.url} key={source.id} rel="noreferrer" target="_blank">
                     <span>
                       <strong>{source.title}</strong>
                       <small>{source.note}</small>
                     </span>
-                    <AppIcon name="external" size={19} />
+                    <AppIcon name="external" size={18} />
                   </a>
                 ))}
               </div>

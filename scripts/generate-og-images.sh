@@ -8,9 +8,10 @@ cd "$(dirname "$0")/.."
 
 ICON="public/icons/kim-tai-app-icon.png"
 OUT_DIR="public/images/og"
-BACKGROUND="#102a24"
-CREAM="#f6f1e8"
-GOLD="#d6b668"
+# Bảng màu Modern Gold Ledger (chế độ tối), khớp token trong globals.css.
+BACKGROUND="#0b0c0d"
+CREAM="#f8eee4"
+GOLD="#e9b84b"
 TITLE_FONT="/System/Library/Fonts/Supplemental/Arial Bold.ttf"
 BODY_FONT="/System/Library/Fonts/Supplemental/Arial Unicode.ttf"
 [ -f "$TITLE_FONT" ] || TITLE_FONT="/Library/Fonts/Arial Bold.ttf"

@@ -21,35 +21,32 @@ const getStoredTheme = (): "dark" | "light" | null => {
   }
 };
 
+const applyPreference = () => {
+  // Chế độ tối là mặc định của bộ nhận diện; chỉ lựa chọn "light" mới đảo bảng màu.
+  const isDark = getStoredTheme() !== "light";
+  document.documentElement.classList.toggle("dark", isDark);
+  document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+};
+
 const subscribe = (onStoreChange: () => void) => {
-  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  const applyPreference = () => {
-    const saved = getStoredTheme();
-    const isDark = saved === "dark" || (!saved && mediaQuery.matches);
-    document.documentElement.classList.toggle("dark", isDark);
-    document.documentElement.style.colorScheme = isDark ? "dark" : "light";
-    onStoreChange();
-  };
-  const applySystemTheme = () => {
-    if (!getStoredTheme()) applyPreference();
-  };
   const applyStoredTheme = (event: StorageEvent) => {
-    if (event.key === storageKey || event.key === null) applyPreference();
+    if (event.key === storageKey || event.key === null) {
+      applyPreference();
+      onStoreChange();
+    }
   };
 
   window.addEventListener(themeEvent, onStoreChange);
   window.addEventListener("storage", applyStoredTheme);
-  mediaQuery.addEventListener("change", applySystemTheme);
 
   return () => {
     window.removeEventListener(themeEvent, onStoreChange);
     window.removeEventListener("storage", applyStoredTheme);
-    mediaQuery.removeEventListener("change", applySystemTheme);
   };
 };
 
 const getThemeSnapshot = () => document.documentElement.classList.contains("dark");
-const getServerThemeSnapshot = () => false;
+const getServerThemeSnapshot = () => true;
 
 export function ThemeToggle({ darkLabel, lightLabel }: ThemeToggleProps) {
   const isDark = useSyncExternalStore(

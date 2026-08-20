@@ -117,9 +117,6 @@ const expectedFiles = [
   "icons/kim-tai-pwa-512.png",
   ...new Set(badgeFiles),
   ...new Set(ogImageFiles),
-  "images/app-overview.png",
-  "images/app-market.png",
-  "images/app-settings.png",
 ];
 
 await Promise.all(
@@ -466,19 +463,8 @@ const sitemapImageLocations = Array.from(
   sitemapXml.matchAll(/<image:loc>([^<]+)<\/image:loc>/g),
   (match) => match[1],
 );
-const expectedScreenshotUrls = Object.values(site.screenshots).map(
-  (screenshot) => `${canonicalOrigin}${screenshot.src}`,
-);
-for (const screenshotUrl of expectedScreenshotUrls) {
-  const occurrenceCount = sitemapImageLocations.filter((url) => url === screenshotUrl).length;
-  if (occurrenceCount !== locales.length) {
-    throw new Error(
-      `sitemap.xml must expose ${screenshotUrl} once for each localized landing page.`,
-    );
-  }
-}
-if (sitemapImageLocations.length !== expectedScreenshotUrls.length * locales.length) {
-  throw new Error("sitemap.xml contains unexpected image entries.");
+if (sitemapImageLocations.length !== 0) {
+  throw new Error("sitemap.xml must not list images: the landing page renders no content images.");
 }
 
 const robotsTxt = await readFile(path.join(outputDirectory, "robots.txt"), "utf8");

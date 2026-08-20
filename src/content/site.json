@@ -99,23 +99,6 @@
       }
     }
   },
-  "screenshots": {
-    "overview": {
-      "src": "/images/app-overview.png",
-      "width": 1320,
-      "height": 2868
-    },
-    "settings": {
-      "src": "/images/app-settings.png",
-      "width": 1320,
-      "height": 2868
-    },
-    "market": {
-      "src": "/images/app-market.png",
-      "width": 1320,
-      "height": 2868
-    }
-  },
   "locales": {
     "vi": {
       "localeName": "Tiếng Việt",
@@ -134,6 +117,7 @@
         "features": "Tính năng",
         "privacy": "Riêng tư",
         "faq": "Hỏi đáp",
+        "premium": "Ngũ Hành",
         "blog": "Góc kỹ thuật",
         "download": "Tải ứng dụng",
         "themeLight": "Chuyển sang giao diện sáng",
@@ -148,14 +132,26 @@
         "description": "Kim Tài giúp bạn ghi sổ, theo dõi giá vàng tham khảo và nhìn rõ biến động danh mục — ngay trên thiết bị của bạn.",
         "secondaryCta": "Khám phá tính năng",
         "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
-        "galleryLabel": "Ba màn hình chính của ứng dụng Kim Tài",
-        "screens": {
-          "overview": "Màn hình tổng quan tài sản vàng trong ứng dụng Kim Tài",
-          "market": "Màn hình giá vàng tham khảo theo nhà cung cấp trong ứng dụng Kim Tài",
-          "settings": "Màn hình cài đặt ngôn ngữ, đơn vị và nhắc ghi sổ trong ứng dụng Kim Tài"
-        },
-        "floatingLabel": "9999 · 24K",
-        "floatingValue": "Một sổ. Nhiều loại vàng."
+        "ledger": {
+          "label": "Sổ vàng Kim Tài",
+          "valueLabel": "Giá trị tạm tính",
+          "value": "1.485.000.000đ",
+          "note": "Minh hoạ mô phỏng · không phải giá thực",
+          "items": [
+            { "label": "Tổng vốn", "value": "355.000.000đ" },
+            { "label": "Khối lượng", "value": "25 Chỉ" },
+            { "label": "Lãi tạm tính", "value": "+1.130.000.000đ" }
+          ]
+        }
+      },
+      "stats": {
+        "label": "Phạm vi dữ liệu giá tham khảo",
+        "items": [
+          { "value": "30", "label": "Nhà cung cấp" },
+          { "value": "36", "label": "Phạm vi thị trường" },
+          { "value": "42", "label": "Liên kết nguồn" },
+          { "value": "36", "label": "Trích dẫn đã soát" }
+        ]
       },
       "featureIntro": {
         "eyebrow": "Một nhịp nhìn toàn bộ",
@@ -233,6 +229,38 @@
           "tone": "coral"
         }
       ],
+      "premium": {
+        "eyebrow": "Premium · Ngũ Hành",
+        "title": "Năm phong cách sổ vàng, một bộ số liệu.",
+        "description": "Kim, Mộc, Thuỷ, Hoả, Thổ — mỗi skin đổi chất liệu thẻ tổng quan và sắc nhấn, giữ nguyên cách đọc số. Gói Premium cũng gỡ bỏ quảng cáo.",
+        "items": [
+          {
+            "id": "kim",
+            "name": "Kim",
+            "description": "Ánh kim sáng rõ, tinh gọn, rành mạch từng dòng."
+          },
+          {
+            "id": "moc",
+            "name": "Mộc",
+            "description": "Sắc xanh bền bỉ, điềm tĩnh, hợp nhịp tích luỹ đường dài."
+          },
+          {
+            "id": "thuy",
+            "name": "Thuỷ",
+            "description": "Xanh thẳm, mềm mại, linh hoạt như dòng nước."
+          },
+          {
+            "id": "hoa",
+            "name": "Hoả",
+            "description": "Sắc ấm nổi bật, giữ năng lượng vừa đủ mỗi ngày."
+          },
+          {
+            "id": "tho",
+            "name": "Thổ",
+            "description": "Trầm ấm, vững vàng, đúng chất tích sản lâu bền."
+          }
+        ]
+      },
       "principles": {
         "eyebrow": "Rõ ràng trước con số",
         "title": "Công cụ theo dõi, không phải lời mời đầu tư.",
@@ -341,6 +369,7 @@
         "features": "Features",
         "privacy": "Privacy",
         "faq": "FAQ",
+        "premium": "Five Elements",
         "blog": "Tech blog",
         "download": "Get the app",
         "themeLight": "Switch to light mode",
@@ -355,14 +384,26 @@
         "description": "Kim Tài helps you record holdings, follow reference gold prices, and see how your portfolio moves, right on your device.",
         "secondaryCta": "Explore features",
         "trustNote": "Holdings stay on your device · Prices are for reference only",
-        "galleryLabel": "Three primary screens from the Kim Tài app",
-        "screens": {
-          "overview": "Kim Tài app screen showing a gold portfolio overview",
-          "market": "Kim Tài app screen showing reference gold prices by provider",
-          "settings": "Kim Tài app screen showing language, unit, and logging reminder settings"
-        },
-        "floatingLabel": "9999 · 24K",
-        "floatingValue": "One book. Many kinds of gold."
+        "ledger": {
+          "label": "Kim Tài gold book",
+          "valueLabel": "Estimated value",
+          "value": "1.485.000.000đ",
+          "note": "Simulated illustration · not live prices",
+          "items": [
+            { "label": "Total cost", "value": "355.000.000đ" },
+            { "label": "Holdings", "value": "25 Chỉ" },
+            { "label": "Estimated gain", "value": "+1.130.000.000đ" }
+          ]
+        }
+      },
+      "stats": {
+        "label": "Reference price data coverage",
+        "items": [
+          { "value": "30", "label": "Providers" },
+          { "value": "36", "label": "Market coverage" },
+          { "value": "44", "label": "Source links" },
+          { "value": "34", "label": "Reviewed citations" }
+        ]
       },
       "featureIntro": {
         "eyebrow": "The whole picture at a glance",
@@ -440,6 +481,38 @@
           "tone": "coral"
         }
       ],
+      "premium": {
+        "eyebrow": "Premium · Five Elements",
+        "title": "Five gold-book styles, one set of numbers.",
+        "description": "Kim, Mộc, Thuỷ, Hoả, Thổ — each skin changes the overview card material and accent colour while the numbers stay exactly the same. Premium also removes advertising.",
+        "items": [
+          {
+            "id": "kim",
+            "name": "Kim · Metal",
+            "description": "Bright metal, tidy and precise line by line."
+          },
+          {
+            "id": "moc",
+            "name": "Mộc · Wood",
+            "description": "Steady green, calm, suited to long-term accumulation."
+          },
+          {
+            "id": "thuy",
+            "name": "Thuỷ · Water",
+            "description": "Deep water blue, soft and fluid."
+          },
+          {
+            "id": "hoa",
+            "name": "Hoả · Fire",
+            "description": "Warm and vivid, energy in the right measure."
+          },
+          {
+            "id": "tho",
+            "name": "Thổ · Earth",
+            "description": "Grounded and warm, built for patient holding."
+          }
+        ]
+      },
       "principles": {
         "eyebrow": "Clarity before numbers",
         "title": "A tracking tool—not an invitation to invest.",

@@ -66,6 +66,8 @@ for (const [label, icon] of iconRecords) {
   }
 }
 
+const expectedSkinIds = ["kim", "moc", "thuy", "hoa", "tho"];
+
 for (const locale of expectedLocales) {
   const copy = site.locales?.[locale];
   if (!copy) errors.push(`Missing locale: ${locale}`);
@@ -93,16 +95,46 @@ for (const locale of expectedLocales) {
   ) {
     errors.push(`Locale ${locale} must define the expected four feature IDs.`);
   }
-  if (copy?.features?.some((feature) => "image" in feature)) {
-    errors.push(`Locale ${locale} feature records must not place screenshots below the Hero.`);
+  const statItems = copy?.stats?.items ?? [];
+  if (!copy?.stats?.label?.trim() || statItems.length !== 4) {
+    errors.push(`Locale ${locale} must define a labelled stats band with four entries.`);
+  }
+  if (statItems.some((item) => !/^\d+$/.test(item.value ?? "") || !item.label?.trim())) {
+    errors.push(`Locale ${locale} stats entries must pair a whole number with a label.`);
+  }
+  const premiumSkinIds = copy?.premium?.items?.map((item) => item.id) ?? [];
+  if (
+    !copy?.premium?.eyebrow?.trim() ||
+    !copy?.premium?.title?.trim() ||
+    !copy?.premium?.description?.trim() ||
+    premiumSkinIds.length !== expectedSkinIds.length ||
+    !expectedSkinIds.every((skinId) => premiumSkinIds.includes(skinId))
+  ) {
+    errors.push(`Locale ${locale} must describe all five Ngũ Hành skins.`);
   }
   if (
-    !copy?.hero?.galleryLabel ||
-    !copy?.hero?.screens?.overview ||
-    !copy?.hero?.screens?.market ||
-    !copy?.hero?.screens?.settings
+    copy?.premium?.items?.some(
+      (item) => !item.name?.trim() || !item.description?.trim(),
+    )
   ) {
-    errors.push(`Locale ${locale} has incomplete Hero screenshot labels.`);
+    errors.push(`Locale ${locale} skin entries must carry a name and a description.`);
+  }
+  if (!copy?.navigation?.premium?.trim()) {
+    errors.push(`Locale ${locale} must label the Ngũ Hành navigation entry.`);
+  }
+  const ledger = copy?.hero?.ledger;
+  if (
+    !ledger?.label?.trim() ||
+    !ledger?.valueLabel?.trim() ||
+    !ledger?.value?.trim() ||
+    !ledger?.note?.trim() ||
+    ledger?.items?.length !== 3 ||
+    ledger.items.some((item) => !item.label?.trim() || !item.value?.trim())
+  ) {
+    errors.push(`Locale ${locale} Hero ledger card needs a label, value, note, and three entries.`);
+  }
+  if (!/mô phỏng|[Ss]imulated/.test(ledger?.note ?? "")) {
+    errors.push(`Locale ${locale} Hero ledger note must mark the figures as simulated.`);
   }
 
   const ogImage = copy?.metadata?.ogImage;
