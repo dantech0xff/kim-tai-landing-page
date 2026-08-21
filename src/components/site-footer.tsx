@@ -11,9 +11,11 @@ import {
 
 interface SiteFooterProps {
   locale: Locale;
+  /* Tuyên bố giá tham khảo chỉ thuộc về các trang pháp lý, không lặp trên toàn site. */
+  showPriceDisclaimer?: boolean;
 }
 
-export function SiteFooter({ locale }: SiteFooterProps) {
+export function SiteFooter({ locale, showPriceDisclaimer = false }: SiteFooterProps) {
   const copy = getSiteCopy(locale);
   const legalLabels = {
     "terms-of-service": copy.footer.termsOfService,
@@ -68,7 +70,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
 
       <div className="site-footer__bottom">
         <p>© {copy.footer.copyright}</p>
-        <p>{copy.footer.disclaimer}</p>
+        {showPriceDisclaimer && <p>{copy.footer.disclaimer}</p>}
       </div>
     </footer>
   );

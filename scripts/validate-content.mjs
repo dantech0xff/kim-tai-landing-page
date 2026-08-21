@@ -119,6 +119,25 @@ for (const locale of expectedLocales) {
   ) {
     errors.push(`Locale ${locale} skin entries must carry a name and a description.`);
   }
+  // Mỗi hành trưng một sổ vàng riêng, nhưng vẫn đúng hai dòng chỉ số như thẻ Hero.
+  if (
+    copy?.premium?.items?.some(
+      (item) =>
+        !item.ledger?.value?.trim() ||
+        item.ledger?.items?.length !== 2 ||
+        item.ledger.items.some((row) => !row.label?.trim() || !row.value?.trim()),
+    )
+  ) {
+    errors.push(
+      `Locale ${locale} skin entries must each carry a ledger value and two labelled rows.`,
+    );
+  }
+  const skinLedgerValues = new Set(
+    copy?.premium?.items?.map((item) => item.ledger?.value) ?? [],
+  );
+  if (skinLedgerValues.size !== expectedSkinIds.length) {
+    errors.push(`Locale ${locale} skin ledgers must each show a distinct asset value.`);
+  }
   if (!copy?.navigation?.premium?.trim()) {
     errors.push(`Locale ${locale} must label the Ngũ Hành navigation entry.`);
   }

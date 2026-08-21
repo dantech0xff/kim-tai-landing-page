@@ -142,15 +142,15 @@ export function LandingPage({ locale }: LandingPageProps) {
             <ul className="skin-grid">
               {copy.premium.items.map((item) => (
                 <li className={`skin-card skin-card--${item.id}`} key={item.id}>
-                  {/* Cùng một bộ số liệu với thẻ Hero — chỉ chất liệu và sắc nhấn đổi. */}
+                  {/* Mỗi hành là một sổ vàng khác nhau — cách đọc số giữ nguyên. */}
                   <div className="skin-card__panel">
                     <span aria-hidden="true" className="skin-card__glyph">
                       金
                     </span>
                     <p className="skin-card__label">{copy.hero.ledger.valueLabel}</p>
-                    <p className="skin-card__value">{copy.hero.ledger.value}</p>
+                    <p className="skin-card__value">{item.ledger.value}</p>
                     <dl className="skin-card__rows">
-                      {copy.hero.ledger.items.slice(0, 2).map((row) => (
+                      {item.ledger.items.map((row) => (
                         <div key={row.label}>
                           <dt>{row.label}</dt>
                           <dd>{row.value}</dd>

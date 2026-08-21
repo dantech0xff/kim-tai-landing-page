@@ -704,6 +704,12 @@ button {
   border-radius: var(--r-lg);
   background: var(--skin-bg);
   box-shadow: var(--shadow-seal);
+  transition: box-shadow 180ms ease-out;
+}
+
+/* Khi trỏ vào, thẻ toả bóng đúng sắc nhấn của hành đó. */
+.skin-card:hover .skin-card__panel {
+  box-shadow: 0 12px 30px -8px var(--skin-shadow), var(--shadow-seal);
 }
 
 .skin-card__panel::before {
@@ -811,6 +817,7 @@ button {
   --skin-muted: #ddc9a0;
   --skin-accent: #f2d48a;
   --skin-glyph-ink: #3b2c08;
+  --skin-shadow: rgb(242 212 138 / 42%);
 }
 
 .skin-card--moc {
@@ -820,6 +827,7 @@ button {
   --skin-muted: #a9dcc6;
   --skin-accent: #6fd3a6;
   --skin-glyph-ink: #06281d;
+  --skin-shadow: rgb(111 211 166 / 42%);
 }
 
 .skin-card--thuy {
@@ -829,6 +837,7 @@ button {
   --skin-muted: #a5cfe4;
   --skin-accent: #6ec4e8;
   --skin-glyph-ink: #05202f;
+  --skin-shadow: rgb(110 196 232 / 42%);
 }
 
 .skin-card--hoa {
@@ -838,6 +847,7 @@ button {
   --skin-muted: #f0bfa4;
   --skin-accent: #ff8a50;
   --skin-glyph-ink: #451007;
+  --skin-shadow: rgb(255 138 80 / 42%);
 }
 
 .skin-card--tho {
@@ -847,6 +857,7 @@ button {
   --skin-muted: #d9bf9c;
   --skin-accent: #e0ac62;
   --skin-glyph-ink: #31220f;
+  --skin-shadow: rgb(224 172 98 / 42%);
 }
 
 /* ------------------------------------------------------------- Tính năng */

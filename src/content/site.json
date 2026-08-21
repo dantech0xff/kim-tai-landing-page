@@ -131,7 +131,7 @@
         "titleAccent": "biết mình giữ gì, đáng giá bao nhiêu.",
         "description": "Kim Tài giúp bạn ghi sổ, theo dõi giá vàng tham khảo và nhìn rõ biến động danh mục — ngay trên thiết bị của bạn.",
         "secondaryCta": "Khám phá tính năng",
-        "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
+        "trustNote": "Dữ liệu sở hữu lưu trên thiết bị",
         "ledger": {
           "label": "Kiểm đếm tài sản Vàng",
           "valueLabel": "Giá trị tài sản Vàng của bạn",
@@ -228,33 +228,68 @@
       ],
       "premium": {
         "eyebrow": "Premium · Ngũ Hành",
-        "title": "Năm phong cách sổ vàng, một bộ số liệu.",
-        "description": "Kim, Mộc, Thuỷ, Hoả, Thổ — mỗi skin đổi chất liệu thẻ tổng quan và sắc nhấn, giữ nguyên cách đọc số. Gói Premium cũng gỡ bỏ quảng cáo.",
+        "title": "Năm phong cách sổ vàng, một cách đọc số.",
+        "description": "Kim, Mộc, Thuỷ, Hoả, Thổ — mỗi skin đổi chất liệu thẻ tổng quan và sắc nhấn, giữ nguyên cách đọc số dù sổ của bạn lớn hay nhỏ. Gói Premium cũng gỡ bỏ quảng cáo.",
         "items": [
           {
             "id": "kim",
             "name": "Kim",
-            "description": "Ánh kim sáng rõ, tinh gọn, rành mạch từng dòng."
+            "description": "Ánh kim sáng rõ, tinh gọn, rành mạch từng dòng.",
+            "ledger": {
+              "value": "1.485.000.000đ",
+              "items": [
+                { "label": "Tổng vốn", "value": "355.000.000đ" },
+                { "label": "Khối lượng", "value": "25 Chỉ" }
+              ]
+            }
           },
           {
             "id": "moc",
             "name": "Mộc",
-            "description": "Sắc xanh bền bỉ, điềm tĩnh, hợp nhịp tích luỹ đường dài."
+            "description": "Sắc xanh bền bỉ, điềm tĩnh, hợp nhịp tích luỹ đường dài.",
+            "ledger": {
+              "value": "712.800.000đ",
+              "items": [
+                { "label": "Tổng vốn", "value": "268.000.000đ" },
+                { "label": "Khối lượng", "value": "12 Chỉ" }
+              ]
+            }
           },
           {
             "id": "thuy",
             "name": "Thuỷ",
-            "description": "Xanh thẳm, mềm mại, linh hoạt như dòng nước."
+            "description": "Xanh thẳm, mềm mại, linh hoạt như dòng nước.",
+            "ledger": {
+              "value": "2.079.000.000đ",
+              "items": [
+                { "label": "Tổng vốn", "value": "1.145.000.000đ" },
+                { "label": "Khối lượng", "value": "35 Chỉ" }
+              ]
+            }
           },
           {
             "id": "hoa",
             "name": "Hoả",
-            "description": "Sắc ấm nổi bật, giữ năng lượng vừa đủ mỗi ngày."
+            "description": "Sắc ấm nổi bật, giữ năng lượng vừa đủ mỗi ngày.",
+            "ledger": {
+              "value": "356.400.000đ",
+              "items": [
+                { "label": "Tổng vốn", "value": "214.000.000đ" },
+                { "label": "Khối lượng", "value": "6 Chỉ" }
+              ]
+            }
           },
           {
             "id": "tho",
             "name": "Thổ",
-            "description": "Trầm ấm, vững vàng, đúng chất tích sản lâu bền."
+            "description": "Trầm ấm, vững vàng, đúng chất tích sản lâu bền.",
+            "ledger": {
+              "value": "3.564.000.000đ",
+              "items": [
+                { "label": "Tổng vốn", "value": "986.000.000đ" },
+                { "label": "Khối lượng", "value": "60 Chỉ" }
+              ]
+            }
           }
         ]
       },
@@ -380,7 +415,7 @@
         "titleAccent": "know what you hold and what it is worth.",
         "description": "Kim Tài helps you record holdings, follow reference gold prices, and see how your portfolio moves, right on your device.",
         "secondaryCta": "Explore features",
-        "trustNote": "Holdings stay on your device · Prices are for reference only",
+        "trustNote": "Holdings stay on your device",
         "ledger": {
           "label": "Your gold assets, counted",
           "valueLabel": "Your gold asset value",
@@ -477,33 +512,68 @@
       ],
       "premium": {
         "eyebrow": "Premium · Five Elements",
-        "title": "Five gold-book styles, one set of numbers.",
-        "description": "Kim, Mộc, Thuỷ, Hoả, Thổ — each skin changes the overview card material and accent colour while the numbers stay exactly the same. Premium also removes advertising.",
+        "title": "Five gold-book styles, one way to read them.",
+        "description": "Kim, Mộc, Thuỷ, Hoả, Thổ — each skin changes the overview card material and accent colour while the way you read the numbers stays the same, whether your book is large or small. Premium also removes advertising.",
         "items": [
           {
             "id": "kim",
             "name": "Kim · Metal",
-            "description": "Bright metal, tidy and precise line by line."
+            "description": "Bright metal, tidy and precise line by line.",
+            "ledger": {
+              "value": "1.485.000.000đ",
+              "items": [
+                { "label": "Total cost", "value": "355.000.000đ" },
+                { "label": "Holdings", "value": "25 Chỉ" }
+              ]
+            }
           },
           {
             "id": "moc",
             "name": "Mộc · Wood",
-            "description": "Steady green, calm, suited to long-term accumulation."
+            "description": "Steady green, calm, suited to long-term accumulation.",
+            "ledger": {
+              "value": "712.800.000đ",
+              "items": [
+                { "label": "Total cost", "value": "268.000.000đ" },
+                { "label": "Holdings", "value": "12 Chỉ" }
+              ]
+            }
           },
           {
             "id": "thuy",
             "name": "Thuỷ · Water",
-            "description": "Deep water blue, soft and fluid."
+            "description": "Deep water blue, soft and fluid.",
+            "ledger": {
+              "value": "2.079.000.000đ",
+              "items": [
+                { "label": "Total cost", "value": "1.145.000.000đ" },
+                { "label": "Holdings", "value": "35 Chỉ" }
+              ]
+            }
           },
           {
             "id": "hoa",
             "name": "Hoả · Fire",
-            "description": "Warm and vivid, energy in the right measure."
+            "description": "Warm and vivid, energy in the right measure.",
+            "ledger": {
+              "value": "356.400.000đ",
+              "items": [
+                { "label": "Total cost", "value": "214.000.000đ" },
+                { "label": "Holdings", "value": "6 Chỉ" }
+              ]
+            }
           },
           {
             "id": "tho",
             "name": "Thổ · Earth",
-            "description": "Grounded and warm, built for patient holding."
+            "description": "Grounded and warm, built for patient holding.",
+            "ledger": {
+              "value": "3.564.000.000đ",
+              "items": [
+                { "label": "Total cost", "value": "986.000.000đ" },
+                { "label": "Holdings", "value": "60 Chỉ" }
+              ]
+            }
           }
         ]
       },

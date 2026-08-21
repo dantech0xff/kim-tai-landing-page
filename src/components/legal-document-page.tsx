@@ -189,7 +189,7 @@ export function LegalDocumentPage({ locale, slug }: LegalDocumentPageProps) {
         </div>
       </main>
 
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} showPriceDisclaimer />
     </>
   );
 }
