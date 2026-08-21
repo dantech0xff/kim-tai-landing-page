@@ -133,14 +133,13 @@
         "secondaryCta": "Khám phá tính năng",
         "trustNote": "Dữ liệu sở hữu lưu trên thiết bị · Giá chỉ mang tính tham khảo",
         "ledger": {
-          "label": "Sổ vàng Kim Tài",
-          "valueLabel": "Giá trị tạm tính",
+          "label": "Kiểm đếm tài sản Vàng",
+          "valueLabel": "Giá trị tài sản Vàng của bạn",
           "value": "1.485.000.000đ",
-          "note": "Minh hoạ mô phỏng · không phải giá thực",
           "items": [
             { "label": "Tổng vốn", "value": "355.000.000đ" },
             { "label": "Khối lượng", "value": "25 Chỉ" },
-            { "label": "Lãi tạm tính", "value": "+1.130.000.000đ" }
+            { "label": "Lợi nhuận", "value": "+1.130.000.000đ" }
           ]
         }
       },
@@ -159,7 +158,6 @@
         "description": "Kim Tài gom những việc bạn thường phải ghi nhớ rời rạc vào một không gian gọn, dễ đọc và luôn trong tầm tay."
       },
       "featureVisuals": {
-        "illustrationLabel": "Minh hoạ mô phỏng",
         "portfolio": {
           "title": "Cấu trúc sổ vàng",
           "primaryPurity": "9999",
@@ -172,8 +170,7 @@
           "title": "Nhịp giá tham khảo",
           "primary": "Giá mua",
           "secondary": "Giá bán",
-          "summary": "Hai đường cùng tăng theo nhịp mô phỏng; đường giá bán nằm cao hơn đường giá mua.",
-          "note": "Đường biểu diễn mô phỏng · không phải giá thực",
+          "summary": "Hai đường cùng tăng; đường giá bán nằm cao hơn đường giá mua.",
           "primarySeries": [42, 48, 45, 58, 54, 68, 64, 76],
           "secondarySeries": [58, 61, 57, 69, 66, 78, 73, 84]
         },
@@ -196,7 +193,7 @@
           "id": "portfolio",
           "icon": "ledger",
           "eyebrow": "Sổ sở hữu",
-          "title": "Biết tổng vốn và giá trị tạm tính trong một lần nhìn.",
+          "title": "Biết tổng vốn và giá trị tài sản Vàng của bạn trong một lần nhìn.",
           "description": "Kim Tài ghi lại số lượng theo Chỉ hoặc Lượng, tách 9999 và 24K, rồi hiển thị giá trị danh mục theo mức giá bán tham khảo hiện có.",
           "stat": "Sổ vàng cá nhân",
           "tone": "forest"
@@ -267,7 +264,7 @@
         "description": "Kim Tài giúp bạn tổ chức thông tin cá nhân và đọc giá tham khảo. Ứng dụng không bán vàng, không thay bạn định giá giao dịch và không đưa ra khuyến nghị đầu tư.",
         "points": [
           "Luôn hiển thị nguồn và thời điểm cập nhật khi có dữ liệu giá.",
-          "Tách rõ giá mua vào, bán ra và giá trị tạm tính.",
+          "Tách rõ giá mua vào, bán ra và giá trị tài sản Vàng của bạn.",
           "Cho phép bạn tự chọn đơn vị, khu vực và nguồn giá phù hợp."
         ]
       },
@@ -385,14 +382,13 @@
         "secondaryCta": "Explore features",
         "trustNote": "Holdings stay on your device · Prices are for reference only",
         "ledger": {
-          "label": "Kim Tài gold book",
-          "valueLabel": "Estimated value",
+          "label": "Your gold assets, counted",
+          "valueLabel": "Your gold asset value",
           "value": "1.485.000.000đ",
-          "note": "Simulated illustration · not live prices",
           "items": [
             { "label": "Total cost", "value": "355.000.000đ" },
             { "label": "Holdings", "value": "25 Chỉ" },
-            { "label": "Estimated gain", "value": "+1.130.000.000đ" }
+            { "label": "Profit", "value": "+1.130.000.000đ" }
           ]
         }
       },
@@ -411,7 +407,6 @@
         "description": "Kim Tài brings the details you usually track in separate places into one calm, readable space."
       },
       "featureVisuals": {
-        "illustrationLabel": "Simulated illustration",
         "portfolio": {
           "title": "Gold book composition",
           "primaryPurity": "9999",
@@ -424,8 +419,7 @@
           "title": "Reference price rhythm",
           "primary": "Buy reference",
           "secondary": "Sell reference",
-          "summary": "Both lines rise through the simulated rhythm, with the sell reference above the buy reference.",
-          "note": "Simulated lines · not actual prices",
+          "summary": "Both lines rise together, with the sell reference above the buy reference.",
           "primarySeries": [42, 48, 45, 58, 54, 68, 64, 76],
           "secondarySeries": [58, 61, 57, 69, 66, 78, 73, 84]
         },
@@ -448,7 +442,7 @@
           "id": "portfolio",
           "icon": "ledger",
           "eyebrow": "Holdings book",
-          "title": "See your cost and estimated value in one glance.",
+          "title": "See your cost and gold asset value in one glance.",
           "description": "Kim Tài records quantities in Chỉ or Lượng, separates 9999 from 24K, and estimates portfolio value using the available reference selling price.",
           "stat": "Your gold book",
           "tone": "forest"
@@ -519,7 +513,7 @@
         "description": "Kim Tài helps organize personal information and read reference prices. It does not sell gold, set transaction prices, or provide investment advice.",
         "points": [
           "Show the source and update time whenever price data is available.",
-          "Keep buy, sell, and estimated portfolio values clearly distinct.",
+          "Keep buy prices, sell prices, and your gold asset value clearly distinct.",
           "Let you choose the unit, region, and price source that fits your needs."
         ]
       },

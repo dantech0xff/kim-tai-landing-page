@@ -1,6 +1,6 @@
 # Kim Tài — Tick Vàng Online
 
-Website giới thiệu song ngữ cho ứng dụng Kim Tài, được xây bằng Next.js App Router và Tailwind CSS. Giao diện theo hướng **Modern Gold Ledger**: bố cục đối xứng căn giữa, nét kẻ chỉ vàng thay cho hộp đổ bóng, bo góc lệch (`20px 6px 20px 6px`) và thẻ con dấu nền đỏ son. Chế độ tối là mặc định, chế độ sáng dùng đúng bộ token nhưng đảo bảng màu (nhấn chính chuyển từ vàng đồng thau sang đỏ son). Chữ dùng riêng Be Vietnam Pro. Ba ảnh chụp ứng dụng nằm trong thẻ con dấu ở Hero; các thẻ tính năng phía dưới dùng biểu đồ mô phỏng cấu hình bằng JSON.
+Website giới thiệu song ngữ cho ứng dụng Kim Tài, được xây bằng Next.js App Router và Tailwind CSS. Giao diện theo hướng **Modern Gold Ledger**: bố cục đối xứng căn giữa, nét kẻ chỉ vàng thay cho hộp đổ bóng, bo góc lệch (`20px 6px 20px 6px`) và thẻ con dấu nền đỏ son. Chế độ tối là mặc định, chế độ sáng dùng đúng bộ token nhưng đảo bảng màu (nhấn chính chuyển từ vàng đồng thau sang đỏ son). Chữ dùng riêng Be Vietnam Pro. Các thẻ tính năng phía dưới dùng biểu đồ dựng bằng CSS/SVG, cấu hình bằng JSON.
 
 ## Chạy dự án
 
@@ -71,7 +71,7 @@ Các trang ngôn ngữ, pháp lý và bài viết kỹ thuật đều được d
 | `src/content/legal.vi.json` | Ba tài liệu pháp lý tiếng Việt và nguồn luật chính thức |
 | `src/content/legal.en.json` | Bản tiếng Anh tham khảo của ba tài liệu pháp lý |
 
-Trang giới thiệu **không dùng ảnh chụp ứng dụng**. Hero là thẻ con dấu sổ vàng dựng bằng số liệu mô phỏng khai báo tại `locales.*.hero.ledger`, kèm dòng chú thích bắt buộc ghi rõ đây là minh hoạ. Năm thẻ Ngũ Hành (Kim, Mộc, Thuỷ, Hoả, Thổ) cũng dựng bằng CSS: dùng lại đúng bộ số liệu của Hero, mỗi hành chỉ đổi chất liệu nền và sắc nhấn qua biến `--skin-*` trong `.skin-card--{id}`; nội dung song ngữ nằm ở `locales.*.premium.items`. Vì vậy sitemap không khai `<image:image>` nào và ảnh raster duy nhất còn lại trên trang là badge cửa hàng. Dữ liệu cho bốn biểu đồ mô phỏng nằm ở `locales.*.featureVisuals` trong `site.json`; các số liệu này chỉ minh hoạ cách trình bày, không phải giá vàng hoặc dữ liệu thị trường thực. Bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset đều được khai báo tại `site.json`.
+Trang giới thiệu **không dùng ảnh chụp ứng dụng**. Hero là thẻ con dấu sổ vàng dựng bằng số liệu khai báo tại `locales.*.hero.ledger`. Năm thẻ Ngũ Hành (Kim, Mộc, Thuỷ, Hoả, Thổ) cũng dựng bằng CSS: dùng lại đúng bộ số liệu của Hero, mỗi hành chỉ đổi chất liệu nền và sắc nhấn qua biến `--skin-*` trong `.skin-card--{id}`; nội dung song ngữ nằm ở `locales.*.premium.items`. Vì vậy sitemap không khai `<image:image>` nào và ảnh raster duy nhất còn lại trên trang là badge cửa hàng. Dữ liệu cho bốn biểu đồ tính năng nằm ở `locales.*.featureVisuals` trong `site.json`. Bộ nhận diện web nằm trong `public/icons/`. Badge tải ứng dụng chính thức, bản địa hoá cho VI/EN, nằm trong `public/badges/`. Đường dẫn và kích thước của các asset đều được khai báo tại `site.json`.
 
 Trong chế độ preview, `operator.publicName` và `operator.facebookUrl` là hai thông tin công khai được hiển thị trên các trang pháp lý; Facebook cũng được dùng làm kênh hỗ trợ tạm thời. Chúng không thay thế tên pháp lý, mã đăng ký, địa chỉ hoặc kênh bảo vệ dữ liệu cần có trước khi đặt `operator.configured` thành `true`.
 

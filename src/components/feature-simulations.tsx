@@ -4,7 +4,6 @@ import { AppIcon } from "@/components/app-icon";
 import type { FeatureId } from "@/lib/content";
 
 export interface FeatureVisualCopy {
-  illustrationLabel: string;
   portfolio: {
     title: string;
     primaryPurity: string;
@@ -18,7 +17,6 @@ export interface FeatureVisualCopy {
     primary: string;
     secondary: string;
     summary: string;
-    note: string;
     primarySeries: number[];
     secondarySeries: number[];
   };
@@ -69,19 +67,16 @@ function getPolylinePoints(series: number[]): string {
 }
 
 function PortfolioSimulation({
-  illustrationLabel,
   visual,
 }: {
-  illustrationLabel: string;
   visual: FeatureVisualCopy["portfolio"];
 }): ReactElement {
   return (
     <div
-      aria-label={`${illustrationLabel}: ${visual.title}. ${visual.primaryPurity}: ${visual.quantity}. ${visual.secondaryPurity}. ${visual.status}.`}
+      aria-label={`${visual.title}. ${visual.primaryPurity}: ${visual.quantity}. ${visual.secondaryPurity}. ${visual.status}.`}
       className="feature-simulation feature-simulation--portfolio"
       role="img"
     >
-      <p className="simulation-kicker">{illustrationLabel}</p>
       <div className="portfolio-chart">
         <div className="portfolio-chart__header">
           <span className="portfolio-chart__purity">{visual.primaryPurity}</span>
@@ -107,10 +102,8 @@ function PortfolioSimulation({
 }
 
 function MarketSimulation({
-  illustrationLabel,
   visual,
 }: {
-  illustrationLabel: string;
   visual: FeatureVisualCopy["market"];
 }): ReactElement {
   const primaryPoints = getPolylinePoints(visual.primarySeries);
@@ -118,11 +111,10 @@ function MarketSimulation({
 
   return (
     <div
-      aria-label={`${illustrationLabel}: ${visual.title}. ${visual.summary} ${visual.primary}; ${visual.secondary}. ${visual.note}.`}
+      aria-label={`${visual.title}. ${visual.summary} ${visual.primary}; ${visual.secondary}.`}
       className="feature-simulation feature-simulation--market"
       role="img"
     >
-      <p className="simulation-kicker">{illustrationLabel}</p>
       <div className="market-chart">
         <strong className="market-chart__title">{visual.title}</strong>
         <svg
@@ -161,28 +153,24 @@ function MarketSimulation({
             {visual.secondary}
           </li>
         </ul>
-        <p className="market-chart__note">{visual.note}</p>
       </div>
     </div>
   );
 }
 
 function LocalSimulation({
-  illustrationLabel,
   visual,
 }: {
-  illustrationLabel: string;
   visual: FeatureVisualCopy["local"];
 }): ReactElement {
   const centerIndex = Math.floor(visual.steps.length / 2);
 
   return (
     <div
-      aria-label={`${illustrationLabel}: ${visual.title}. ${visual.steps.join(", ")}. ${visual.status}.`}
+      aria-label={`${visual.title}. ${visual.steps.join(", ")}. ${visual.status}.`}
       className="feature-simulation feature-simulation--local"
       role="img"
     >
-      <p className="simulation-kicker">{illustrationLabel}</p>
       <div className="local-chart">
         <strong className="local-chart__title">{visual.title}</strong>
         <ol className="local-chart__nodes">
@@ -212,10 +200,8 @@ function LocalSimulation({
 }
 
 function PersonalizeSimulation({
-  illustrationLabel,
   visual,
 }: {
-  illustrationLabel: string;
   visual: FeatureVisualCopy["personalize"];
 }): ReactElement {
   const rowSummary = visual.rows
@@ -224,11 +210,10 @@ function PersonalizeSimulation({
 
   return (
     <div
-      aria-label={`${illustrationLabel}: ${visual.title}. ${rowSummary}.`}
+      aria-label={`${visual.title}. ${rowSummary}.`}
       className="feature-simulation feature-simulation--personalize"
       role="img"
     >
-      <p className="simulation-kicker">{illustrationLabel}</p>
       <div className="personalize-chart">
         <strong className="personalize-chart__title">{visual.title}</strong>
         <dl className="personalize-chart__rows">
@@ -261,32 +246,12 @@ export function FeatureSimulation({
 }): ReactElement {
   switch (featureId) {
     case "portfolio":
-      return (
-        <PortfolioSimulation
-          illustrationLabel={visuals.illustrationLabel}
-          visual={visuals.portfolio}
-        />
-      );
+      return <PortfolioSimulation visual={visuals.portfolio} />;
     case "market":
-      return (
-        <MarketSimulation
-          illustrationLabel={visuals.illustrationLabel}
-          visual={visuals.market}
-        />
-      );
+      return <MarketSimulation visual={visuals.market} />;
     case "local-first":
-      return (
-        <LocalSimulation
-          illustrationLabel={visuals.illustrationLabel}
-          visual={visuals.local}
-        />
-      );
+      return <LocalSimulation visual={visuals.local} />;
     case "personalize":
-      return (
-        <PersonalizeSimulation
-          illustrationLabel={visuals.illustrationLabel}
-          visual={visuals.personalize}
-        />
-      );
+      return <PersonalizeSimulation visual={visuals.personalize} />;
   }
 }

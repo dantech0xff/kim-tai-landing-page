@@ -632,13 +632,6 @@ button {
   color: var(--seal-gold);
 }
 
-.hero-seal__note {
-  margin-top: 1.25rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.1em;
-  color: var(--seal-muted);
-}
-
 /* --------------------------------------------------- Dải số liệu nguồn giá */
 
 .stats-section {
@@ -943,21 +936,12 @@ button {
   color: var(--panel-rose-dot);
 }
 
-/* ------------------------------------- Biểu đồ mô phỏng trong thẻ tính năng */
+/* ------------------------------------------- Biểu đồ trong thẻ tính năng */
 
 .feature-simulation {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
   margin-top: auto;
-}
-
-.simulation-kicker {
-  font-size: 0.5625rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
 }
 
 .portfolio-chart,
@@ -1109,13 +1093,6 @@ button {
 
 .market-chart__legend-mark--secondary {
   background: var(--panel-rose-dot);
-}
-
-.market-chart__note {
-  margin-top: 0.75rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
 }
 
 .local-chart__nodes {

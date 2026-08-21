@@ -809,7 +809,7 @@ function assertPage(snapshot, { device, expectedAlternate, expectedLang, expecte
     snapshot.premiumCards,
   );
   check(
-    `${label}: four accessible simulated visuals replace feature screenshots`,
+    `${label}: four accessible feature visuals replace feature screenshots`,
     snapshot.featureArea.simulations.length === 4 &&
       snapshot.featureArea.simulations.every(
         (simulation) =>

@@ -75,8 +75,6 @@ export function LandingPage({ locale }: LandingPageProps) {
                 </div>
               ))}
             </dl>
-
-            <p className="hero-seal__note">{copy.hero.ledger.note}</p>
           </div>
         </section>
 

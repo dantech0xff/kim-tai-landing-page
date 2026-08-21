@@ -127,14 +127,10 @@ for (const locale of expectedLocales) {
     !ledger?.label?.trim() ||
     !ledger?.valueLabel?.trim() ||
     !ledger?.value?.trim() ||
-    !ledger?.note?.trim() ||
     ledger?.items?.length !== 3 ||
     ledger.items.some((item) => !item.label?.trim() || !item.value?.trim())
   ) {
-    errors.push(`Locale ${locale} Hero ledger card needs a label, value, note, and three entries.`);
-  }
-  if (!/mô phỏng|[Ss]imulated/.test(ledger?.note ?? "")) {
-    errors.push(`Locale ${locale} Hero ledger note must mark the figures as simulated.`);
+    errors.push(`Locale ${locale} Hero ledger card needs a label, value, and three entries.`);
   }
 
   const ogImage = copy?.metadata?.ogImage;
@@ -189,9 +185,6 @@ for (const locale of expectedLocales) {
   }
 
   const visuals = copy?.featureVisuals;
-  if (!visuals?.illustrationLabel) {
-    errors.push(`Locale ${locale} is missing the simulated-illustration label.`);
-  }
   if (
     !visuals?.portfolio?.title ||
     !visuals?.portfolio?.primaryPurity ||
@@ -208,7 +201,6 @@ for (const locale of expectedLocales) {
     !visuals?.market?.primary ||
     !visuals?.market?.secondary ||
     !visuals?.market?.summary ||
-    !visuals?.market?.note ||
     !isPercentageSeries(visuals?.market?.primarySeries, 4) ||
     !isPercentageSeries(visuals?.market?.secondarySeries, 4) ||
     visuals.market.primarySeries.length !== visuals.market.secondarySeries.length
